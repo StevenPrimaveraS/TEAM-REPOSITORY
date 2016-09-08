@@ -42,29 +42,31 @@ public class Connexion {
                     + bd,
                     user,
                     pass);
-            } else if(serveur.equals("distant")) {
+            }
+            if(serveur.equals("distant")) {
                 d = (Driver) Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
                 DriverManager.registerDriver(d);
                 this.conn = DriverManager.getConnection("jdbc:oracle:thin:@collegeahuntsic.info:1521:"
                     + bd,
                     user,
                     pass);
-            } /*else if(serveur.equals("postgres")) {
-                d = (Driver) Class.forName("org.postgresql.Driver").newInstance();
-                DriverManager.registerDriver(d);
-                this.conn = DriverManager.getConnection("jdbc:postgresql:"
-                    + bd,
-                    user,
-                    pass);
-              }
-              else // access
+            }
+            /* else if (serveur.equals("postgres"))
+                 {
+                 d = (Driver) Class.forName("org.postgresql.Driver").newInstance();
+                 DriverManager.registerDriver(d);
+                 conn = DriverManager.getConnection(
+            "jdbc:postgresql:" + bd,
+            user, pass);
+                 }
+             else // access
                  {
                  d = (Driver) Class.forName("org.postgresql.Driver").newInstance();
                  DriverManager.registerDriver(new sun.jdbc.odbc.JdbcOdbcDriver());
                  conn = DriverManager.getConnection(
-              "jdbc:odbc:" + bd,
-              "", "");
-                 } */
+            "jdbc:odbc:" + bd,
+            "", "");
+                 }*/
 
             // mettre en mode de commit manuel
             this.conn.setAutoCommit(false);
