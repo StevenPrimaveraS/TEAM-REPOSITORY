@@ -1,3 +1,4 @@
+package ca.qc.collegeahuntsic.bibliotheque.dao;
 import java.sql.Date;
 import java.sql.SQLException;
 import ca.qc.collegeahuntsic.bibliotheque.dto.TupleLivre;
@@ -23,7 +24,7 @@ import ca.qc.collegeahuntsic.bibliotheque.service.Reservation;
  * </pre>
  */
 
-public class GestionReservation {
+public class ReservationDAO {
 
 private Livre livre;
 private Membre membre;
@@ -35,7 +36,7 @@ private Connexion cx;
   * La connection de l'instance de livre et de membre doit �tre la m�me que cx,
   * afin d'assurer l'int�grit� des transactions.
   */
-public GestionReservation(Livre livre, Membre membre, Reservation reservation)
+public ReservationDAO(Livre livre, Membre membre, Reservation reservation)
   throws BiblioException
 {
   if (livre.getConnexion() != membre.getConnexion() ||

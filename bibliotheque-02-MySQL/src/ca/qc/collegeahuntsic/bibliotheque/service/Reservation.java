@@ -1,6 +1,7 @@
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import ca.qc.collegeahuntsic.bibliotheque.dto.TupleReservation;
 
 /**
  * Permet d'effectuer les acc�s � la table reservation.

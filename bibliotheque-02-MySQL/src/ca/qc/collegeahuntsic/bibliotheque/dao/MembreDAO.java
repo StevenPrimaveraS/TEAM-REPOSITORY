@@ -1,3 +1,4 @@
+package ca.qc.collegeahuntsic.bibliotheque.dao;
 import java.sql.SQLException;
 import ca.qc.collegeahuntsic.bibliotheque.dto.TupleMembre;
 import ca.qc.collegeahuntsic.bibliotheque.service.Membre;
@@ -19,7 +20,7 @@ import ca.qc.collegeahuntsic.bibliotheque.service.Reservation;
  * </pre>
  */
 
-public class GestionMembre {
+public class MembreDAO {
 
 private Connexion cx;
 private Membre membre;
@@ -28,7 +29,7 @@ private Reservation reservation;
 /**
   * Creation d'une instance
   */
-public GestionMembre(Membre membre, Reservation reservation) {
+public MembreDAO(Membre membre, Reservation reservation) {
 
 this.cx = membre.getConnexion();
 this.membre = membre;
