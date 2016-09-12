@@ -7,8 +7,11 @@ import java.sql.Date;
 
 public class TupleReservation {
 
-  public int    idReservation;
-  public int    idLivre;
-  public int    idMembre;
-  public Date   dateReservation;
+    public int idReservation;
+
+    public int idLivre;
+
+    public int idMembre;
+
+    public Date dateReservation;
 }

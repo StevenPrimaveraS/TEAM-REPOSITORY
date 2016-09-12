@@ -7,10 +7,15 @@ import java.sql.Date;
 
 public class TupleLivre {
 
-  public int    idLivre;
-  public String titre;
-  public String auteur;
-  public Date   dateAcquisition;
-  public int    idMembre;
-  public Date   datePret;
+    public int idLivre;
+
+    public String titre;
+
+    public String auteur;
+
+    public Date dateAcquisition;
+
+    public int idMembre;
+
+    public Date datePret;
 }
