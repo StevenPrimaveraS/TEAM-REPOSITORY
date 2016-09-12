@@ -1,5 +1,11 @@
 import java.sql.Date;
 import java.sql.SQLException;
+import ca.qc.collegeahuntsic.bibliotheque.dto.TupleLivre;
+import ca.qc.collegeahuntsic.bibliotheque.dto.TupleMembre;
+import ca.qc.collegeahuntsic.bibliotheque.dto.TupleReservation;
+import ca.qc.collegeahuntsic.bibliotheque.service.Livre;
+import ca.qc.collegeahuntsic.bibliotheque.service.Membre;
+import ca.qc.collegeahuntsic.bibliotheque.service.Reservation;
 
 /**
  * Gestion des transactions de reli�es aux pr�ts de livres

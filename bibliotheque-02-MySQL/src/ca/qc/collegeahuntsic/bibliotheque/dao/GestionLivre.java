@@ -1,4 +1,7 @@
 import java.sql.SQLException;
+import ca.qc.collegeahuntsic.bibliotheque.dto.TupleLivre;
+import ca.qc.collegeahuntsic.bibliotheque.service.Livre;
+import ca.qc.collegeahuntsic.bibliotheque.service.Reservation;
 
 /**
  * Gestion des transactions de reli�es � la cr�ation et
