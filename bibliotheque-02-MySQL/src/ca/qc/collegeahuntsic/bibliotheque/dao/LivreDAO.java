@@ -1,109 +1,144 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.dao;
 
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.TupleLivre;
-import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
 
 /**
- * Gestion des transactions de reli�es � la cr�ation et
- * suppresion de livres dans une biblioth�que.
- *
- * Ce programme permet de g�rer les transaction reli�es � la
- * cr�ation et suppresion de livres.
- *
- * Pr�-condition
- *   la base de donn�es de la biblioth�que doit exister
- *
- * Post-condition
- *   le programme effectue les maj associ�es � chaque
- *   transaction
- * </pre>
+ * Permet d'effectuer les acc�s � la table livre.
  */
+
 public class LivreDAO {
 
-    private LivreDAO livre;
+    private PreparedStatement stmtExiste;
 
-    private ReservationDAO reservation;
+    private PreparedStatement stmtInsert;
+
+    private PreparedStatement stmtUpdate;
+
+    private PreparedStatement stmtDelete;
 
     private Connexion cx;
 
     /**
-      * Creation d'une instance
+      * Creation d'une instance. Des �nonc�s SQL pour chaque requ�te sont pr�compil�s.
       */
-    public LivreDAO(LivreDAO livre,
-        ReservationDAO reservation) {
-        this.cx = livre.getConnexion();
-        this.livre = livre;
-        this.reservation = reservation;
+    public LivreDAO(Connexion cx) throws SQLException {
+
+        this.cx = cx;
+        this.stmtExiste = cx.getConnection()
+            .prepareStatement("select idlivre, titre, auteur, dateAcquisition, idMembre, datePret from livre where idlivre = ?");
+        this.stmtInsert = cx.getConnection().prepareStatement("insert into livre (idLivre, titre, auteur, dateAcquisition, idMembre, datePret) "
+            + "values (?,?,?,?,null,null)");
+        this.stmtUpdate = cx.getConnection().prepareStatement("update livre set idMembre = ?, datePret = ? "
+            + "where idLivre = ?");
+        this.stmtDelete = cx.getConnection().prepareStatement("delete from livre where idlivre = ?");
     }
 
     /**
-      * Ajout d'un nouveau livre dans la base de donn�es.
-      * S'il existe deja, une exception est lev�e.
+      * Retourner la connexion associ�e.
+      */
+    public Connexion getConnexion() {
+
+        return this.cx;
+    }
+
+    /**
+      * Verifie si un livre existe.
+      */
+    public boolean existe(int idLivre) throws SQLException {
+
+        this.stmtExiste.setInt(1,
+            idLivre);
+        ResultSet rset = this.stmtExiste.executeQuery();
+        boolean livreExiste = rset.next();
+        rset.close();
+        return livreExiste;
+    }
+
+    /**
+      * Lecture d'un livre.
+      */
+    public TupleLivre getLivre(int idLivre) throws SQLException {
+
+        this.stmtExiste.setInt(1,
+            idLivre);
+        ResultSet rset = this.stmtExiste.executeQuery();
+        if(rset.next()) {
+            TupleLivre tupleLivre = new TupleLivre();
+            tupleLivre.idLivre = idLivre;
+            tupleLivre.titre = rset.getString(2);
+            tupleLivre.auteur = rset.getString(3);
+            tupleLivre.dateAcquisition = rset.getDate(4);
+            tupleLivre.idMembre = rset.getInt(5);
+            tupleLivre.datePret = rset.getDate(6);
+            return tupleLivre;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+      * Ajout d'un nouveau livre dans la base de donnees.
       */
     public void acquerir(int idLivre,
         String titre,
         String auteur,
-        String dateAcquisition) throws SQLException,
-        BibliothequeException,
-        Exception {
-        try {
-            /* V�rifie si le livre existe d�ja */
-            if(this.livre.existe(idLivre)) {
-                throw new BibliothequeException("Livre existe deja: "
-                    + idLivre);
-            }
-
-            /* Ajout du livre dans la table des livres */
-            this.livre.acquerir(idLivre,
-                titre,
-                auteur,
-                dateAcquisition);
-            this.cx.commit();
-        } catch(Exception e) {
-            //        System.out.println(e);
-            this.cx.rollback();
-            throw e;
-        }
+        String dateAcquisition) throws SQLException {
+        /* Ajout du livre. */
+        this.stmtInsert.setInt(1,
+            idLivre);
+        this.stmtInsert.setString(2,
+            titre);
+        this.stmtInsert.setString(3,
+            auteur);
+        this.stmtInsert.setDate(4,
+            Date.valueOf(dateAcquisition));
+        this.stmtInsert.executeUpdate();
     }
 
     /**
-      * Vente d'un livre.
+      * Enregistrement de l'emprunteur d'un livre.
       */
-    public void vendre(int idLivre) throws SQLException,
-        BibliothequeException,
-        Exception {
-        try {
-            TupleLivre tupleLivre = this.livre.getLivre(idLivre);
-            if(tupleLivre == null) {
-                throw new BibliothequeException("Livre inexistant: "
-                    + idLivre);
-            }
-            if(tupleLivre.idMembre != 0) {
-                throw new BibliothequeException("Livre "
-                    + idLivre
-                    + " prete a "
-                    + tupleLivre.idMembre);
-            }
-            if(this.reservation.getReservationLivre(idLivre) != null) {
-                throw new BibliothequeException("Livre "
-                    + idLivre
-                    + " r�serv� ");
-            }
+    public int preter(int idLivre,
+        int idMembre,
+        String datePret) throws SQLException {
+        /* Enregistrement du pret. */
+        this.stmtUpdate.setInt(1,
+            idMembre);
+        this.stmtUpdate.setDate(2,
+            Date.valueOf(datePret));
+        this.stmtUpdate.setInt(3,
+            idLivre);
+        return this.stmtUpdate.executeUpdate();
+    }
 
-            /* Suppression du livre. */
-            int nb = this.livre.vendre(idLivre);
-            if(nb == 0) {
-                throw new BibliothequeException("Livre "
-                    + idLivre
-                    + " inexistant");
-            }
-            this.cx.commit();
-        } catch(Exception e) {
-            this.cx.rollback();
-            throw e;
-        }
+    /**
+      * Rendre le livre disponible (non-pr�t�)
+      */
+    public int retourner(int idLivre) throws SQLException {
+        /* Enregistrement du pret. */
+        this.stmtUpdate.setNull(1,
+            Types.INTEGER);
+        this.stmtUpdate.setNull(2,
+            Types.DATE);
+        this.stmtUpdate.setInt(3,
+            idLivre);
+        return this.stmtUpdate.executeUpdate();
+    }
+
+    /**
+      * Suppression d'un livre.
+      */
+    public int vendre(int idLivre) throws SQLException {
+        /* Suppression du livre. */
+        this.stmtDelete.setInt(1,
+            idLivre);
+        return this.stmtDelete.executeUpdate();
     }
 }

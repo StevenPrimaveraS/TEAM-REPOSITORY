@@ -1,10 +1,9 @@
 
-package ca.qc.collegeahuntsic.bibliotheque.service;
+package ca.qc.collegeahuntsic.bibliotheque.util;
 
 import java.sql.SQLException;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.TupleLivre;
-import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
 
 /**
  * Gestion des transactions de reli�es � la cr�ation et
@@ -21,7 +20,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
  *   transaction
  * </pre>
  */
-public class LivreService {
+public class GestionLivre {
 
     private LivreService livre;
 
@@ -32,7 +31,7 @@ public class LivreService {
     /**
       * Creation d'une instance
       */
-    public LivreService(LivreService livre,
+    public GestionLivre(LivreService livre,
         ReservationService reservation) {
         this.cx = livre.getConnexion();
         this.livre = livre;
@@ -47,12 +46,12 @@ public class LivreService {
         String titre,
         String auteur,
         String dateAcquisition) throws SQLException,
-        BibliothequeException,
+        BiblioException,
         Exception {
         try {
             /* V�rifie si le livre existe d�ja */
             if(this.livre.existe(idLivre)) {
-                throw new BibliothequeException("Livre existe deja: "
+                throw new BiblioException("Livre existe deja: "
                     + idLivre);
             }
 
@@ -73,22 +72,22 @@ public class LivreService {
       * Vente d'un livre.
       */
     public void vendre(int idLivre) throws SQLException,
-        BibliothequeException,
+        BiblioException,
         Exception {
         try {
             TupleLivre tupleLivre = this.livre.getLivre(idLivre);
             if(tupleLivre == null) {
-                throw new BibliothequeException("Livre inexistant: "
+                throw new BiblioException("Livre inexistant: "
                     + idLivre);
             }
             if(tupleLivre.idMembre != 0) {
-                throw new BibliothequeException("Livre "
+                throw new BiblioException("Livre "
                     + idLivre
                     + " prete a "
                     + tupleLivre.idMembre);
             }
             if(this.reservation.getReservationLivre(idLivre) != null) {
-                throw new BibliothequeException("Livre "
+                throw new BiblioException("Livre "
                     + idLivre
                     + " r�serv� ");
             }
@@ -96,7 +95,7 @@ public class LivreService {
             /* Suppression du livre. */
             int nb = this.livre.vendre(idLivre);
             if(nb == 0) {
-                throw new BibliothequeException("Livre "
+                throw new BiblioException("Livre "
                     + idLivre
                     + " inexistant");
             }

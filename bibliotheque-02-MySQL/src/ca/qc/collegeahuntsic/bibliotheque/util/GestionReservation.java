@@ -1,5 +1,5 @@
 
-package ca.qc.collegeahuntsic.bibliotheque.service;
+package ca.qc.collegeahuntsic.bibliotheque.util;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -8,6 +8,9 @@ import ca.qc.collegeahuntsic.bibliotheque.dto.TupleLivre;
 import ca.qc.collegeahuntsic.bibliotheque.dto.TupleMembre;
 import ca.qc.collegeahuntsic.bibliotheque.dto.TupleReservation;
 import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
+import ca.qc.collegeahuntsic.bibliotheque.service.LivreService;
+import ca.qc.collegeahuntsic.bibliotheque.service.MembreService;
+import ca.qc.collegeahuntsic.bibliotheque.service.ReservationService;
 
 /**
  * Gestion des transactions de reli�es aux r�servations de livres
@@ -25,7 +28,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
  * </pre>
  */
 
-public class ReservationService {
+public class GestionReservation {
 
     private LivreService livre;
 
@@ -40,7 +43,7 @@ public class ReservationService {
       * La connection de l'instance de livre et de membre doit �tre la m�me que cx,
       * afin d'assurer l'int�grit� des transactions.
       */
-    public ReservationService(LivreService livre,
+    public GestionReservation(LivreService livre,
         MembreService membre,
         ReservationService reservation) throws BibliothequeException {
         if(livre.getConnexion() != membre.getConnexion()
@@ -61,22 +64,22 @@ public class ReservationService {
         int idLivre,
         int idMembre,
         String dateReservation) throws SQLException,
-        BibliothequeException,
+        BiblioException,
         Exception {
         try {
             /* Verifier que le livre est pret� */
             TupleLivre tupleLivre = this.livre.getLivre(idLivre);
             if(tupleLivre == null) {
-                throw new BibliothequeException("Livre inexistant: "
+                throw new BiblioException("Livre inexistant: "
                     + idLivre);
             }
             if(tupleLivre.idMembre == 0) {
-                throw new BibliothequeException("Livre "
+                throw new BiblioException("Livre "
                     + idLivre
                     + " n'est pas prete");
             }
             if(tupleLivre.idMembre == idMembre) {
-                throw new BibliothequeException("Livre "
+                throw new BiblioException("Livre "
                     + idLivre
                     + " deja prete a ce membre");
             }
@@ -84,18 +87,18 @@ public class ReservationService {
             /* V�rifier que le membre existe */
             TupleMembre tupleMembre = this.membre.getMembre(idMembre);
             if(tupleMembre == null) {
-                throw new BibliothequeException("Membre inexistant: "
+                throw new BiblioException("Membre inexistant: "
                     + idMembre);
             }
 
             /* Verifier si date reservation >= datePret */
             if(Date.valueOf(dateReservation).before(tupleLivre.datePret)) {
-                throw new BibliothequeException("Date de reservation inferieure � la date de pret");
+                throw new BiblioException("Date de reservation inferieure � la date de pret");
             }
 
             /* V�rifier que la r�servation n'existe pas */
             if(this.reservation.existe(idReservation)) {
-                throw new BibliothequeException("R�servation "
+                throw new BiblioException("R�servation "
                     + idReservation
                     + " existe deja");
             }
@@ -120,20 +123,20 @@ public class ReservationService {
       */
     public void prendreRes(int idReservation,
         String datePret) throws SQLException,
-        BibliothequeException,
+        BiblioException,
         Exception {
         try {
             /* V�rifie s'il existe une r�servation pour le livre */
             TupleReservation tupleReservation = this.reservation.getReservation(idReservation);
             if(tupleReservation == null) {
-                throw new BibliothequeException("R�servation inexistante : "
+                throw new BiblioException("R�servation inexistante : "
                     + idReservation);
             }
 
             /* V�rifie que c'est la premi�re r�servation pour le livre */
             TupleReservation tupleReservationPremiere = this.reservation.getReservationLivre(tupleReservation.idLivre);
             if(tupleReservation.idReservation != tupleReservationPremiere.idReservation) {
-                throw new BibliothequeException("La r�servation n'est pas la premi�re de la liste "
+                throw new BiblioException("La r�servation n'est pas la premi�re de la liste "
                     + "pour ce livre; la premiere est "
                     + tupleReservationPremiere.idReservation);
             }
@@ -141,11 +144,11 @@ public class ReservationService {
             /* Verifier si le livre est disponible */
             TupleLivre tupleLivre = this.livre.getLivre(tupleReservation.idLivre);
             if(tupleLivre == null) {
-                throw new BibliothequeException("Livre inexistant: "
+                throw new BiblioException("Livre inexistant: "
                     + tupleReservation.idLivre);
             }
             if(tupleLivre.idMembre != 0) {
-                throw new BibliothequeException("Livre "
+                throw new BiblioException("Livre "
                     + tupleLivre.idLivre
                     + " deja pr�t� � "
                     + tupleLivre.idMembre);
@@ -154,28 +157,28 @@ public class ReservationService {
             /* V�rifie si le membre existe et sa limite de pret */
             TupleMembre tupleMembre = this.membre.getMembre(tupleReservation.idMembre);
             if(tupleMembre == null) {
-                throw new BibliothequeException("Membre inexistant: "
+                throw new BiblioException("Membre inexistant: "
                     + tupleReservation.idMembre);
             }
             if(tupleMembre.nbPret >= tupleMembre.limitePret) {
-                throw new BibliothequeException("Limite de pr�t du membre "
+                throw new BiblioException("Limite de pr�t du membre "
                     + tupleReservation.idMembre
                     + " atteinte");
             }
 
             /* Verifier si datePret >= tupleReservation.dateReservation */
             if(Date.valueOf(datePret).before(tupleReservation.dateReservation)) {
-                throw new BibliothequeException("Date de pr�t inf�rieure � la date de r�servation");
+                throw new BiblioException("Date de pr�t inf�rieure � la date de r�servation");
             }
 
             /* Enregistrement du pret. */
             if(this.livre.preter(tupleReservation.idLivre,
                 tupleReservation.idMembre,
                 datePret) == 0) {
-                throw new BibliothequeException("Livre supprim� par une autre transaction");
+                throw new BiblioException("Livre supprim� par une autre transaction");
             }
             if(this.membre.preter(tupleReservation.idMembre) == 0) {
-                throw new BibliothequeException("Membre supprim� par une autre transaction");
+                throw new BiblioException("Membre supprim� par une autre transaction");
             }
             /* Eliminer la r�servation */
             this.reservation.annulerRes(idReservation);
@@ -191,13 +194,13 @@ public class ReservationService {
       * La r�servation doit exister.
       */
     public void annulerRes(int idReservation) throws SQLException,
-        BibliothequeException,
+        BiblioException,
         Exception {
         try {
 
             /* V�rifier que la r�servation existe */
             if(this.reservation.annulerRes(idReservation) == 0) {
-                throw new BibliothequeException("R�servation "
+                throw new BiblioException("R�servation "
                     + idReservation
                     + " n'existe pas");
             }
@@ -209,16 +212,3 @@ public class ReservationService {
         }
     }
 }
-
-/**
- * TODO Auto-generated method javadoc
- *
- * @param idLivre
- * @return
- */
-/**
- * TODO Auto-generated method javadoc
- *
- * @param idLivre
- * @return
- */
