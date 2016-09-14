@@ -1,6 +1,9 @@
+
+package ca.qc.collegeahuntsic.bibliotheque.dto;
+
 /**
  * Permet de repr�senter un tuple de la table membre.
- * 
+ *
  */
 
 public class TupleMembre {

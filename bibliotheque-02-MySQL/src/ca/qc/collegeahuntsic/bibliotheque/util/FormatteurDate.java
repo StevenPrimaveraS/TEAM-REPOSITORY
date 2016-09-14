@@ -1,3 +1,4 @@
+package ca.qc.collegeahuntsic.bibliotheque.util;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -7,7 +8,7 @@ import java.util.Date;
  * objet Date.
  * 
  */
-public class FormatDate
+public class FormatteurDate
 {
 private static SimpleDateFormat formatAMJ;
 static

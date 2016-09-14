@@ -4,6 +4,7 @@ package ca.qc.collegeahuntsic.bibliotheque.dao;
 import java.sql.SQLException;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.TupleLivre;
+import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
 
 /**
  * Gestion des transactions de reli�es � la cr�ation et
@@ -46,12 +47,12 @@ public class LivreDAO {
         String titre,
         String auteur,
         String dateAcquisition) throws SQLException,
-        BiblioException,
+        BibliothequeException,
         Exception {
         try {
             /* V�rifie si le livre existe d�ja */
             if(this.livre.existe(idLivre)) {
-                throw new BiblioException("Livre existe deja: "
+                throw new BibliothequeException("Livre existe deja: "
                     + idLivre);
             }
 
@@ -72,22 +73,22 @@ public class LivreDAO {
       * Vente d'un livre.
       */
     public void vendre(int idLivre) throws SQLException,
-        BiblioException,
+        BibliothequeException,
         Exception {
         try {
             TupleLivre tupleLivre = this.livre.getLivre(idLivre);
             if(tupleLivre == null) {
-                throw new BiblioException("Livre inexistant: "
+                throw new BibliothequeException("Livre inexistant: "
                     + idLivre);
             }
             if(tupleLivre.idMembre != 0) {
-                throw new BiblioException("Livre "
+                throw new BibliothequeException("Livre "
                     + idLivre
                     + " prete a "
                     + tupleLivre.idMembre);
             }
             if(this.reservation.getReservationLivre(idLivre) != null) {
-                throw new BiblioException("Livre "
+                throw new BibliothequeException("Livre "
                     + idLivre
                     + " r�serv� ");
             }
@@ -95,7 +96,7 @@ public class LivreDAO {
             /* Suppression du livre. */
             int nb = this.livre.vendre(idLivre);
             if(nb == 0) {
-                throw new BiblioException("Livre "
+                throw new BibliothequeException("Livre "
                     + idLivre
                     + " inexistant");
             }

@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
+import ca.qc.collegeahuntsic.bibliotheque.dto.TupleLivre;
 
 /**
  * Permet d'effectuer les acc�s � la table livre.
@@ -29,12 +31,13 @@ public class LivreService {
     public LivreService(Connexion cx) throws SQLException {
 
         this.cx = cx;
-        stmtExiste = cx.getConnection().prepareStatement("select idlivre, titre, auteur, dateAcquisition, idMembre, datePret from livre where idlivre = ?");
-        stmtInsert = cx.getConnection().prepareStatement("insert into livre (idLivre, titre, auteur, dateAcquisition, idMembre, datePret) "
+        this.stmtExiste = cx.getConnection()
+            .prepareStatement("select idlivre, titre, auteur, dateAcquisition, idMembre, datePret from livre where idlivre = ?");
+        this.stmtInsert = cx.getConnection().prepareStatement("insert into livre (idLivre, titre, auteur, dateAcquisition, idMembre, datePret) "
             + "values (?,?,?,?,null,null)");
-        stmtUpdate = cx.getConnection().prepareStatement("update livre set idMembre = ?, datePret = ? "
+        this.stmtUpdate = cx.getConnection().prepareStatement("update livre set idMembre = ?, datePret = ? "
             + "where idLivre = ?");
-        stmtDelete = cx.getConnection().prepareStatement("delete from livre where idlivre = ?");
+        this.stmtDelete = cx.getConnection().prepareStatement("delete from livre where idlivre = ?");
     }
 
     /**
@@ -42,7 +45,7 @@ public class LivreService {
       */
     public Connexion getConnexion() {
 
-        return cx;
+        return this.cx;
     }
 
     /**
@@ -50,9 +53,9 @@ public class LivreService {
       */
     public boolean existe(int idLivre) throws SQLException {
 
-        stmtExiste.setInt(1,
+        this.stmtExiste.setInt(1,
             idLivre);
-        ResultSet rset = stmtExiste.executeQuery();
+        ResultSet rset = this.stmtExiste.executeQuery();
         boolean livreExiste = rset.next();
         rset.close();
         return livreExiste;
@@ -63,9 +66,9 @@ public class LivreService {
       */
     public TupleLivre getLivre(int idLivre) throws SQLException {
 
-        stmtExiste.setInt(1,
+        this.stmtExiste.setInt(1,
             idLivre);
-        ResultSet rset = stmtExiste.executeQuery();
+        ResultSet rset = this.stmtExiste.executeQuery();
         if(rset.next()) {
             TupleLivre tupleLivre = new TupleLivre();
             tupleLivre.idLivre = idLivre;
@@ -75,8 +78,9 @@ public class LivreService {
             tupleLivre.idMembre = rset.getInt(5);
             tupleLivre.datePret = rset.getDate(6);
             return tupleLivre;
-        } else
+        } else {
             return null;
+        }
     }
 
     /**
@@ -87,15 +91,15 @@ public class LivreService {
         String auteur,
         String dateAcquisition) throws SQLException {
         /* Ajout du livre. */
-        stmtInsert.setInt(1,
+        this.stmtInsert.setInt(1,
             idLivre);
-        stmtInsert.setString(2,
+        this.stmtInsert.setString(2,
             titre);
-        stmtInsert.setString(3,
+        this.stmtInsert.setString(3,
             auteur);
-        stmtInsert.setDate(4,
+        this.stmtInsert.setDate(4,
             Date.valueOf(dateAcquisition));
-        stmtInsert.executeUpdate();
+        this.stmtInsert.executeUpdate();
     }
 
     /**
@@ -105,13 +109,13 @@ public class LivreService {
         int idMembre,
         String datePret) throws SQLException {
         /* Enregistrement du pret. */
-        stmtUpdate.setInt(1,
+        this.stmtUpdate.setInt(1,
             idMembre);
-        stmtUpdate.setDate(2,
+        this.stmtUpdate.setDate(2,
             Date.valueOf(datePret));
-        stmtUpdate.setInt(3,
+        this.stmtUpdate.setInt(3,
             idLivre);
-        return stmtUpdate.executeUpdate();
+        return this.stmtUpdate.executeUpdate();
     }
 
     /**
@@ -119,13 +123,13 @@ public class LivreService {
       */
     public int retourner(int idLivre) throws SQLException {
         /* Enregistrement du pret. */
-        stmtUpdate.setNull(1,
+        this.stmtUpdate.setNull(1,
             Types.INTEGER);
-        stmtUpdate.setNull(2,
+        this.stmtUpdate.setNull(2,
             Types.DATE);
-        stmtUpdate.setInt(3,
+        this.stmtUpdate.setInt(3,
             idLivre);
-        return stmtUpdate.executeUpdate();
+        return this.stmtUpdate.executeUpdate();
     }
 
     /**
@@ -133,8 +137,8 @@ public class LivreService {
       */
     public int vendre(int idLivre) throws SQLException {
         /* Suppression du livre. */
-        stmtDelete.setInt(1,
+        this.stmtDelete.setInt(1,
             idLivre);
-        return stmtDelete.executeUpdate();
+        return this.stmtDelete.executeUpdate();
     }
 }

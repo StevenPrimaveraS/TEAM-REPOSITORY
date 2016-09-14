@@ -4,6 +4,7 @@ package ca.qc.collegeahuntsic.bibliotheque.dao;
 import java.sql.SQLException;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.TupleMembre;
+import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
 
 /**
  * Gestion des transactions de reli�es � la cr�ation et
@@ -25,15 +26,15 @@ public class MembreDAO {
 
     private Connexion cx;
 
-    private Membre membre;
+    private MembreDAO membre;
 
-    private Reservation reservation;
+    private ReservationDAO reservation;
 
     /**
       * Creation d'une instance
       */
-    public MembreDAO(Membre membre,
-        Reservation reservation) {
+    public MembreDAO(MembreDAO membre,
+        ReservationDAO reservation) {
 
         this.cx = membre.getConnexion();
         this.membre = membre;
@@ -48,12 +49,12 @@ public class MembreDAO {
         String nom,
         long telephone,
         int limitePret) throws SQLException,
-        BiblioException,
+        BibliothequeException,
         Exception {
         try {
             /* V�rifie si le membre existe d�ja */
             if(this.membre.existe(idMembre)) {
-                throw new BiblioException("Membre existe deja: "
+                throw new BibliothequeException("Membre existe deja: "
                     + idMembre);
             }
 
@@ -73,22 +74,22 @@ public class MembreDAO {
       * Suppression d'un membre de la base de donnees.
       */
     public void desinscrire(int idMembre) throws SQLException,
-        BiblioException,
+        BibliothequeException,
         Exception {
         try {
             /* V�rifie si le membre existe et son nombre de pret en cours */
             TupleMembre tupleMembre = this.membre.getMembre(idMembre);
             if(tupleMembre == null) {
-                throw new BiblioException("Membre inexistant: "
+                throw new BibliothequeException("Membre inexistant: "
                     + idMembre);
             }
             if(tupleMembre.nbPret > 0) {
-                throw new BiblioException("Le membre "
+                throw new BibliothequeException("Le membre "
                     + idMembre
                     + " a encore des prets.");
             }
             if(this.reservation.getReservationMembre(idMembre) != null) {
-                throw new BiblioException("Membre "
+                throw new BibliothequeException("Membre "
                     + idMembre
                     + " a des r�servations");
             }
@@ -96,7 +97,7 @@ public class MembreDAO {
             /* Suppression du membre */
             int nb = this.membre.desinscrire(idMembre);
             if(nb == 0) {
-                throw new BiblioException("Membre "
+                throw new BibliothequeException("Membre "
                     + idMembre
                     + " inexistant");
             }
