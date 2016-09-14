@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
-import ca.qc.collegeahuntsic.bibliotheque.dto.TupleMembre;
+import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 
 /**
  * Permet d'effectuer les acc�s � la table membre.
@@ -64,12 +64,12 @@ public class MembreDAO {
     /**
       * Lecture d'un membre.
       */
-    public TupleMembre getMembre(int idMembre) throws SQLException {
+    public MembreDTO getMembre(int idMembre) throws SQLException {
         this.stmtExiste.setInt(1,
             idMembre);
         ResultSet rset = this.stmtExiste.executeQuery();
         if(rset.next()) {
-            TupleMembre tupleMembre = new TupleMembre();
+            MembreDTO tupleMembre = new MembreDTO();
             tupleMembre.idMembre = idMembre;
             tupleMembre.nom = rset.getString(2);
             tupleMembre.telephone = rset.getLong(3);

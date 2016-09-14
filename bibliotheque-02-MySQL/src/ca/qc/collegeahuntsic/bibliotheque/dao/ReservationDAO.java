@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
-import ca.qc.collegeahuntsic.bibliotheque.dto.TupleReservation;
+import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 
 /**
  * Permet d'effectuer les acc�s � la table reservation.
@@ -72,13 +72,13 @@ public class ReservationDAO {
     /**
       * Lecture d'une reservation.
       */
-    public TupleReservation getReservation(int idReservation) throws SQLException {
+    public ReservationDTO getReservation(int idReservation) throws SQLException {
 
         this.stmtExiste.setInt(1,
             idReservation);
         ResultSet rset = this.stmtExiste.executeQuery();
         if(rset.next()) {
-            TupleReservation tupleReservation = new TupleReservation();
+            ReservationDTO tupleReservation = new ReservationDTO();
             tupleReservation.idReservation = rset.getInt(1);
             tupleReservation.idLivre = rset.getInt(2);
             ;
@@ -93,13 +93,13 @@ public class ReservationDAO {
     /**
       * Lecture de la premi�re reservation d'un livre.
       */
-    public TupleReservation getReservationLivre(int idLivre) throws SQLException {
+    public ReservationDTO getReservationLivre(int idLivre) throws SQLException {
 
         this.stmtExisteLivre.setInt(1,
             idLivre);
         ResultSet rset = this.stmtExisteLivre.executeQuery();
         if(rset.next()) {
-            TupleReservation tupleReservation = new TupleReservation();
+            ReservationDTO tupleReservation = new ReservationDTO();
             tupleReservation.idReservation = rset.getInt(1);
             tupleReservation.idLivre = rset.getInt(2);
             ;
@@ -114,13 +114,13 @@ public class ReservationDAO {
     /**
       * Lecture de la premi�re reservation d'un livre.
       */
-    public TupleReservation getReservationMembre(int idMembre) throws SQLException {
+    public ReservationDTO getReservationMembre(int idMembre) throws SQLException {
 
         this.stmtExisteMembre.setInt(1,
             idMembre);
         ResultSet rset = this.stmtExisteMembre.executeQuery();
         if(rset.next()) {
-            TupleReservation tupleReservation = new TupleReservation();
+            ReservationDTO tupleReservation = new ReservationDTO();
             tupleReservation.idReservation = rset.getInt(1);
             tupleReservation.idLivre = rset.getInt(2);
             ;

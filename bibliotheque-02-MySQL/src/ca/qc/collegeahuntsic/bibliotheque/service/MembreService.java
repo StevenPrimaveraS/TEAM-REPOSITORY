@@ -3,7 +3,7 @@ package ca.qc.collegeahuntsic.bibliotheque.service;
 
 import java.sql.SQLException;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
-import ca.qc.collegeahuntsic.bibliotheque.dto.TupleMembre;
+import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
 
 /**
@@ -78,7 +78,7 @@ public class MembreService {
         Exception {
         try {
             /* V�rifie si le membre existe et son nombre de pret en cours */
-            TupleMembre tupleMembre = this.membre.getMembre(idMembre);
+            MembreDTO tupleMembre = this.membre.getMembre(idMembre);
             if(tupleMembre == null) {
                 throw new BibliothequeException("Membre inexistant: "
                     + idMembre);

@@ -2,8 +2,9 @@
 package ca.qc.collegeahuntsic.bibliotheque.service;
 
 import java.sql.SQLException;
+import ca.qc.collegeahuntsic.bibliotheque.dao.LivreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
-import ca.qc.collegeahuntsic.bibliotheque.dto.TupleLivre;
+import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
 
 /**
@@ -23,7 +24,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
  */
 public class LivreService {
 
-    private LivreService livre;
+    private LivreDAO livre;
 
     private ReservationService reservation;
 
@@ -32,7 +33,7 @@ public class LivreService {
     /**
       * Creation d'une instance
       */
-    public LivreService(LivreService livre,
+    public LivreService(LivreDAO livre,
         ReservationService reservation) {
         this.cx = livre.getConnexion();
         this.livre = livre;
@@ -71,12 +72,13 @@ public class LivreService {
 
     /**
       * Vente d'un livre.
+     * @return
       */
-    public void vendre(int idLivre) throws SQLException,
+    public int vendre(int idLivre) throws SQLException,
         BibliothequeException,
         Exception {
         try {
-            TupleLivre tupleLivre = this.livre.getLivre(idLivre);
+            LivreDTO tupleLivre = this.livre.getLivre(idLivre);
             if(tupleLivre == null) {
                 throw new BibliothequeException("Livre inexistant: "
                     + idLivre);

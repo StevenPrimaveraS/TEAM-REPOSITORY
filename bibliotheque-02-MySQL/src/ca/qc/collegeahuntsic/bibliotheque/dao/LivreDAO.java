@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
-import ca.qc.collegeahuntsic.bibliotheque.dto.TupleLivre;
+import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 
 /**
  * Permet d'effectuer les acc�s � la table livre.
@@ -64,13 +64,13 @@ public class LivreDAO {
     /**
       * Lecture d'un livre.
       */
-    public TupleLivre getLivre(int idLivre) throws SQLException {
+    public LivreDTO getLivre(int idLivre) throws SQLException {
 
         this.stmtExiste.setInt(1,
             idLivre);
         ResultSet rset = this.stmtExiste.executeQuery();
         if(rset.next()) {
-            TupleLivre tupleLivre = new TupleLivre();
+            LivreDTO tupleLivre = new LivreDTO();
             tupleLivre.idLivre = idLivre;
             tupleLivre.titre = rset.getString(2);
             tupleLivre.auteur = rset.getString(3);

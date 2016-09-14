@@ -8,7 +8,7 @@ import java.sql.Date;
  *
  */
 
-public class TupleReservation {
+public class ReservationDTO {
 
     public int idReservation;
 

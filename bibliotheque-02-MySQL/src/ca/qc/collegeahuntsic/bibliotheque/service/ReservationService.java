@@ -4,9 +4,9 @@ package ca.qc.collegeahuntsic.bibliotheque.service;
 import java.sql.Date;
 import java.sql.SQLException;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
-import ca.qc.collegeahuntsic.bibliotheque.dto.TupleLivre;
-import ca.qc.collegeahuntsic.bibliotheque.dto.TupleMembre;
-import ca.qc.collegeahuntsic.bibliotheque.dto.TupleReservation;
+import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
+import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
+import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
 
 /**
@@ -65,7 +65,7 @@ public class ReservationService {
         Exception {
         try {
             /* Verifier que le livre est pret� */
-            TupleLivre tupleLivre = this.livre.getLivre(idLivre);
+            LivreDTO tupleLivre = this.livre.getLivre(idLivre);
             if(tupleLivre == null) {
                 throw new BibliothequeException("Livre inexistant: "
                     + idLivre);
@@ -82,7 +82,7 @@ public class ReservationService {
             }
 
             /* V�rifier que le membre existe */
-            TupleMembre tupleMembre = this.membre.getMembre(idMembre);
+            MembreDTO tupleMembre = this.membre.getMembre(idMembre);
             if(tupleMembre == null) {
                 throw new BibliothequeException("Membre inexistant: "
                     + idMembre);
@@ -124,14 +124,14 @@ public class ReservationService {
         Exception {
         try {
             /* V�rifie s'il existe une r�servation pour le livre */
-            TupleReservation tupleReservation = this.reservation.getReservation(idReservation);
+            ReservationDTO tupleReservation = this.reservation.getReservation(idReservation);
             if(tupleReservation == null) {
                 throw new BibliothequeException("R�servation inexistante : "
                     + idReservation);
             }
 
             /* V�rifie que c'est la premi�re r�servation pour le livre */
-            TupleReservation tupleReservationPremiere = this.reservation.getReservationLivre(tupleReservation.idLivre);
+            ReservationDTO tupleReservationPremiere = this.reservation.getReservationLivre(tupleReservation.idLivre);
             if(tupleReservation.idReservation != tupleReservationPremiere.idReservation) {
                 throw new BibliothequeException("La r�servation n'est pas la premi�re de la liste "
                     + "pour ce livre; la premiere est "
@@ -139,7 +139,7 @@ public class ReservationService {
             }
 
             /* Verifier si le livre est disponible */
-            TupleLivre tupleLivre = this.livre.getLivre(tupleReservation.idLivre);
+            LivreDTO tupleLivre = this.livre.getLivre(tupleReservation.idLivre);
             if(tupleLivre == null) {
                 throw new BibliothequeException("Livre inexistant: "
                     + tupleReservation.idLivre);
@@ -152,7 +152,7 @@ public class ReservationService {
             }
 
             /* V�rifie si le membre existe et sa limite de pret */
-            TupleMembre tupleMembre = this.membre.getMembre(tupleReservation.idMembre);
+            MembreDTO tupleMembre = this.membre.getMembre(tupleReservation.idMembre);
             if(tupleMembre == null) {
                 throw new BibliothequeException("Membre inexistant: "
                     + tupleReservation.idMembre);
