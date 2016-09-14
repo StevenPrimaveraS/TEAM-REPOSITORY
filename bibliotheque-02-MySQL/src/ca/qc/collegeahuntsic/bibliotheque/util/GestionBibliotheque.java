@@ -6,7 +6,11 @@ import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
 import ca.qc.collegeahuntsic.bibliotheque.service.LivreService;
 import ca.qc.collegeahuntsic.bibliotheque.service.MembreService;
+import ca.qc.collegeahuntsic.bibliotheque.service.PretService;
 import ca.qc.collegeahuntsic.bibliotheque.service.ReservationService;
+import ca.qc.collegeahuntsic.bibliotheque.dao.LivreDAO;
+import ca.qc.collegeahuntsic.bibliotheque.dao.MembreDAO;
+import ca.qc.collegeahuntsic.bibliotheque.dao.ReservationDAO;
 
 /**
  * Syst�me de gestion d'une biblioth�que
@@ -28,19 +32,19 @@ import ca.qc.collegeahuntsic.bibliotheque.service.ReservationService;
 public class GestionBibliotheque {
     public Connexion cx;
 
-    public LivreService livre;
+    public LivreDAO livre;
 
-    public MembreService membre;
+    public MembreDAO membre;
 
-    public ReservationService reservation;
+    public ReservationDAO reservation;
 
-    public GestionLivre gestionLivre;
+    public LivreService gestionLivre;
 
-    public GestionMembre gestionMembre;
+    public MembreService gestionMembre;
 
-    public GestionPret gestionPret;
+    public PretService gestionPret;
 
-    public GestionReservation gestionReservation;
+    public ReservationService gestionReservation;
 
     public GestionInterrogation gestionInterrogation;
 
@@ -65,17 +69,17 @@ public class GestionBibliotheque {
             bd,
             user,
             password);
-        this.livre = new LivreService(this.cx);
-        this.membre = new MembreService(this.cx);
-        this.reservation = new ReservationService(this.cx);
-        this.gestionLivre = new GestionLivre(this.livre,
+        this.livre = new LivreDAO(this.cx);
+        this.membre = new MembreDAO(this.cx);
+        this.reservation = new ReservationDAO(this.cx);
+        this.gestionLivre = new LivreService(this.livre,
             this.reservation);
-        this.gestionMembre = new GestionMembre(this.membre,
+        this.gestionMembre = new MembreService(this.membre,
             this.reservation);
-        this.gestionPret = new GestionPret(this.livre,
+        this.gestionPret = new PretService(this.livre,
             this.membre,
             this.reservation);
-        this.gestionReservation = new GestionReservation(this.livre,
+        this.gestionReservation = new ReservationService(this.livre,
             this.membre,
             this.reservation);
         this.gestionInterrogation = new GestionInterrogation(this.cx);

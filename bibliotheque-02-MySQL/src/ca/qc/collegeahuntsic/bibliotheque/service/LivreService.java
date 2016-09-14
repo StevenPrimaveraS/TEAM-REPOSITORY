@@ -3,6 +3,7 @@ package ca.qc.collegeahuntsic.bibliotheque.service;
 
 import java.sql.SQLException;
 import ca.qc.collegeahuntsic.bibliotheque.dao.LivreDAO;
+import ca.qc.collegeahuntsic.bibliotheque.dao.ReservationDAO;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
@@ -26,7 +27,7 @@ public class LivreService {
 
     private LivreDAO livre;
 
-    private ReservationService reservation;
+    private ReservationDAO reservation;
 
     private Connexion cx;
 
@@ -34,7 +35,7 @@ public class LivreService {
       * Creation d'une instance
       */
     public LivreService(LivreDAO livre,
-        ReservationService reservation) {
+        ReservationDAO reservation) {
         this.cx = livre.getConnexion();
         this.livre = livre;
         this.reservation = reservation;
@@ -72,9 +73,8 @@ public class LivreService {
 
     /**
       * Vente d'un livre.
-     * @return
       */
-    public int vendre(int idLivre) throws SQLException,
+    public void vendre(int idLivre) throws SQLException,
         BibliothequeException,
         Exception {
         try {

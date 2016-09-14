@@ -3,6 +3,10 @@ package ca.qc.collegeahuntsic.bibliotheque.service;
 
 import java.sql.Date;
 import java.sql.SQLException;
+
+import ca.qc.collegeahuntsic.bibliotheque.dao.LivreDAO;
+import ca.qc.collegeahuntsic.bibliotheque.dao.MembreDAO;
+import ca.qc.collegeahuntsic.bibliotheque.dao.ReservationDAO;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
@@ -27,11 +31,11 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
 
 public class ReservationService {
 
-    private LivreService livre;
+    private LivreDAO livre;
 
-    private MembreService membre;
+    private MembreDAO membre;
 
-    private ReservationService reservation;
+    private ReservationDAO reservation;
 
     private Connexion cx;
 
@@ -40,9 +44,9 @@ public class ReservationService {
       * La connection de l'instance de livre et de membre doit �tre la m�me que cx,
       * afin d'assurer l'int�grit� des transactions.
       */
-    public ReservationService(LivreService livre,
-        MembreService membre,
-        ReservationService reservation) throws BibliothequeException {
+    public ReservationService(LivreDAO livre,
+        MembreDAO membre,
+        ReservationDAO reservation) throws BibliothequeException {
         if(livre.getConnexion() != membre.getConnexion()
             || reservation.getConnexion() != membre.getConnexion()) {
             throw new BibliothequeException("Les instances de livre, de membre et de reservation n'utilisent pas la m�me connexion au serveur");
