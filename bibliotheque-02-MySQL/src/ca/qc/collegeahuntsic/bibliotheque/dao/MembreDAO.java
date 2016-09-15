@@ -8,13 +8,13 @@ import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 
 /**
- * Permet d'effectuer les acc�s � la table membre.
- * Cette classe g�re tous les acc�s � la table membre.
+ * Permet d'effectuer les acces a la table membre.
+ * Cette classe gere tous les acces a la table membre.
  *
  *</pre>
  */
 
-public class MembreDAO {
+public class MembreDAO extends DAO {
 
     private PreparedStatement stmtExiste;
 
@@ -26,27 +26,17 @@ public class MembreDAO {
 
     private PreparedStatement stmtDelete;
 
-    private Connexion cx;
-
     /**
-      * Creation d'une instance. Pr�compilation d'�nonc�s SQL.
+      * Creation d'une instance. Precompilation d'enonces SQL.
       */
     public MembreDAO(Connexion cx) throws SQLException {
-        this.cx = cx;
+        super(cx);
         this.stmtExiste = cx.getConnection().prepareStatement("select idMembre, nom, telephone, limitePret, nbpret from membre where idmembre = ?");
         this.stmtInsert = cx.getConnection().prepareStatement("insert into membre (idmembre, nom, telephone, limitepret, nbpret) "
             + "values (?,?,?,?,0)");
         this.stmtUpdateIncrNbPret = cx.getConnection().prepareStatement("update membre set nbpret = nbPret + 1 where idMembre = ?");
         this.stmtUpdateDecNbPret = cx.getConnection().prepareStatement("update membre set nbpret = nbPret - 1 where idMembre = ?");
         this.stmtDelete = cx.getConnection().prepareStatement("delete from membre where idmembre = ?");
-    }
-
-    /**
-      * Retourner la connexion associ�e.
-      */
-    public Connexion getConnexion() {
-
-        return this.cx;
     }
 
     /**

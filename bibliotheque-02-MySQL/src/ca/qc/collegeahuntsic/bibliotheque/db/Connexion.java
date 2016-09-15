@@ -11,14 +11,14 @@ import java.sql.SQLException;
  * Gestionnaire d'une connexion avec une BD relationnelle via JDBC.
  *
  * Ce programme ouvrir une connexion avec une BD via JDBC.
- * La m�thode serveursSupportes() indique les serveurs support�s.
+ * La methode serveursSupportes() indique les serveurs support�s.
  *
  * Pr�-condition
- *   le driver JDBC appropri� doit �tre accessible.
+ *   le driver JDBC approprie doit etre accessible.
  *
  * Post-condition
- *   la connexion est ouverte en mode autocommit false et s�rialisable,
- *   (s'il est support� par le serveur).
+ *   la connexion est ouverte en mode autocommit false et serialisable,
+ *   (s'il est supporte par le serveur).
  * </pre>
  */
 public class Connexion {
@@ -26,9 +26,9 @@ public class Connexion {
     private Connection conn;
 
     /**
-     * Ouverture d'une connexion en mode autocommit false et s�rialisable (si support�)
+     * Ouverture d'une connexion en mode autocommit false et serialisable (si supporte)
      * @param serveur serveur SQL de la BD
-     * @bd nom de la base de donn�es
+     * @bd nom de la base de donnees
      * @user userid sur le serveur SQL
      * @pass mot de passe sur le serveur SQL
      */
@@ -74,8 +74,8 @@ public class Connexion {
             // mettre en mode de commit manuel
             this.conn.setAutoCommit(false);
 
-            // mettre en mode s�rialisable si possible
-            // (plus haut niveau d'integrit� l'acc�s concurrent aux donn�es)
+            // mettre en mode serialisable si possible
+            // (plus haut niveau d'integrite l'acces concurrent aux donnees)
             DatabaseMetaData dbmd = this.conn.getMetaData();
             if(dbmd.supportsTransactionIsolationLevel(Connection.TRANSACTION_SERIALIZABLE)) {
                 this.conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);

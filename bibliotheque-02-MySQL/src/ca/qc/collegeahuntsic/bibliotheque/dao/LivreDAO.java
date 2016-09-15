@@ -10,10 +10,10 @@ import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 
 /**
- * Permet d'effectuer les acc�s � la table livre.
+ * Permet d'effectuer les acces a la table livre.
  */
 
-public class LivreDAO {
+public class LivreDAO extends DAO {
 
     private PreparedStatement stmtExiste;
 
@@ -23,14 +23,11 @@ public class LivreDAO {
 
     private PreparedStatement stmtDelete;
 
-    private Connexion cx;
-
     /**
-      * Creation d'une instance. Des �nonc�s SQL pour chaque requ�te sont pr�compil�s.
+      * Creation d'une instance. Des enonces SQL pour chaque requete sont precompiles.
       */
     public LivreDAO(Connexion cx) throws SQLException {
-
-        this.cx = cx;
+        super(cx);
         this.stmtExiste = cx.getConnection()
             .prepareStatement("select idlivre, titre, auteur, dateAcquisition, idMembre, datePret from livre where idlivre = ?");
         this.stmtInsert = cx.getConnection().prepareStatement("insert into livre (idLivre, titre, auteur, dateAcquisition, idMembre, datePret) "
@@ -38,14 +35,6 @@ public class LivreDAO {
         this.stmtUpdate = cx.getConnection().prepareStatement("update livre set idMembre = ?, datePret = ? "
             + "where idLivre = ?");
         this.stmtDelete = cx.getConnection().prepareStatement("delete from livre where idlivre = ?");
-    }
-
-    /**
-      * Retourner la connexion associ�e.
-      */
-    public Connexion getConnexion() {
-
-        return this.cx;
     }
 
     /**
@@ -119,7 +108,7 @@ public class LivreDAO {
     }
 
     /**
-      * Rendre le livre disponible (non-pr�t�)
+      * Rendre le livre disponible (non-prete)
       */
     public int retourner(int idLivre) throws SQLException {
         /* Enregistrement du pret. */

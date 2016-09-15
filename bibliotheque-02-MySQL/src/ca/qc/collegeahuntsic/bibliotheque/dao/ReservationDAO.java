@@ -8,15 +8,15 @@ import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 
 /**
- * Permet d'effectuer les acc�s � la table reservation.
+ * Permet d'effectuer les acces a la table reservation.
  *<pre>
  *
- * Cette classe g�re tous les acc�s � la table reservation.
+ * Cette classe gere tous les acces a la table reservation.
  *
  *</pre>
  */
 
-public class ReservationDAO {
+public class ReservationDAO extends DAO {
 
     private PreparedStatement stmtExiste;
 
@@ -28,14 +28,11 @@ public class ReservationDAO {
 
     private PreparedStatement stmtDelete;
 
-    private Connexion cx;
-
     /**
       * Creation d'une instance.
       */
     public ReservationDAO(Connexion cx) throws SQLException {
-
-        this.cx = cx;
+        super(cx);
         this.stmtExiste = cx.getConnection().prepareStatement("select idReservation, idLivre, idMembre, dateReservation "
             + "from reservation where idReservation = ?");
         this.stmtExisteLivre = cx.getConnection().prepareStatement("select idReservation, idLivre, idMembre, dateReservation "
@@ -46,14 +43,6 @@ public class ReservationDAO {
         this.stmtInsert = cx.getConnection().prepareStatement("insert into reservation (idReservation, idlivre, idMembre, dateReservation) "
             + "values (?,?,?,to_date(?,'YYYY-MM-DD'))");
         this.stmtDelete = cx.getConnection().prepareStatement("delete from reservation where idReservation = ?");
-    }
-
-    /**
-      * Retourner la connexion associ�e.
-      */
-    public Connexion getConnexion() {
-
-        return this.cx;
     }
 
     /**
@@ -91,7 +80,7 @@ public class ReservationDAO {
     }
 
     /**
-      * Lecture de la premi�re reservation d'un livre.
+      * Lecture de la premiere reservation d'un livre.
       */
     public ReservationDTO getReservationLivre(int idLivre) throws SQLException {
 
@@ -112,7 +101,7 @@ public class ReservationDAO {
     }
 
     /**
-      * Lecture de la premi�re reservation d'un livre.
+      * Lecture de la premiere reservation d'un livre.
       */
     public ReservationDTO getReservationMembre(int idMembre) throws SQLException {
 
@@ -133,7 +122,7 @@ public class ReservationDAO {
     }
 
     /**
-      * R�servation d'un livre.
+      * Reservation d'un livre.
       */
     public void reserver(int idReservation,
         int idLivre,
