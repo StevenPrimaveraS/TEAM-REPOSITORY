@@ -1,3 +1,6 @@
+// Fichier DAO.java
+// Auteur : Dominic Leroux
+// Date de création : 2016-09-14
 
 package ca.qc.collegeahuntsic.bibliotheque.dto;
 
