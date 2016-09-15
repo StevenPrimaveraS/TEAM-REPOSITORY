@@ -1,3 +1,6 @@
+// Fichier MembreDAO.java
+// Auteur : Mathieu Lafond
+// Date de création : 2016-09-14
 
 package ca.qc.collegeahuntsic.bibliotheque.dao;
 
