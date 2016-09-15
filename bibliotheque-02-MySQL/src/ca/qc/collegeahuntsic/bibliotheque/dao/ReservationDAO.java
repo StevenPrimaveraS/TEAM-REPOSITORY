@@ -8,10 +8,10 @@ import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 
 /**
- * Permet d'effectuer les acc�s � la table reservation.
+ * Permet d'effectuer les acces a la table reservation.
  *<pre>
  *
- * Cette classe g�re tous les acc�s � la table reservation.
+ * Cette classe gere tous les acces a la table reservation.
  *
  *</pre>
  */
@@ -80,7 +80,7 @@ public class ReservationDAO extends DAO {
     }
 
     /**
-      * Lecture de la premi�re reservation d'un livre.
+      * Lecture de la premiere reservation d'un livre.
       */
     public ReservationDTO getReservationLivre(int idLivre) throws SQLException {
 
@@ -101,7 +101,7 @@ public class ReservationDAO extends DAO {
     }
 
     /**
-      * Lecture de la premi�re reservation d'un livre.
+      * Lecture de la premiere reservation d'un livre.
       */
     public ReservationDTO getReservationMembre(int idMembre) throws SQLException {
 
@@ -122,7 +122,7 @@ public class ReservationDAO extends DAO {
     }
 
     /**
-      * R�servation d'un livre.
+      * Reservation d'un livre.
       */
     public void reserver(int idReservation,
         int idLivre,

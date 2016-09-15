@@ -10,7 +10,7 @@ import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 
 /**
- * Permet d'effectuer les acc�s � la table livre.
+ * Permet d'effectuer les acces a la table livre.
  */
 
 public class LivreDAO extends DAO {
@@ -24,7 +24,7 @@ public class LivreDAO extends DAO {
     private PreparedStatement stmtDelete;
 
     /**
-      * Creation d'une instance. Des �nonc�s SQL pour chaque requ�te sont pr�compil�s.
+      * Creation d'une instance. Des enonces SQL pour chaque requete sont precompiles.
       */
     public LivreDAO(Connexion cx) throws SQLException {
         super(cx);
@@ -108,7 +108,7 @@ public class LivreDAO extends DAO {
     }
 
     /**
-      * Rendre le livre disponible (non-pr�t�)
+      * Rendre le livre disponible (non-prete)
       */
     public int retourner(int idLivre) throws SQLException {
         /* Enregistrement du pret. */
