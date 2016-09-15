@@ -40,14 +40,6 @@ public class MembreDAO extends DAO {
     }
 
     /**
-      * Retourner la connexion associ�e.
-      */
-    public Connexion getConnexion() {
-
-        return this.cx;
-    }
-
-    /**
       * Verifie si un membre existe.
       */
     public boolean existe(int idMembre) throws SQLException {

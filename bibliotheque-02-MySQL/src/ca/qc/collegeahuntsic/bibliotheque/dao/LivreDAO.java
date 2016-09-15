@@ -38,14 +38,6 @@ public class LivreDAO extends DAO {
     }
 
     /**
-      * Retourner la connexion associ�e.
-      */
-    public Connexion getConnexion() {
-
-        return this.cx;
-    }
-
-    /**
       * Verifie si un livre existe.
       */
     public boolean existe(int idLivre) throws SQLException {

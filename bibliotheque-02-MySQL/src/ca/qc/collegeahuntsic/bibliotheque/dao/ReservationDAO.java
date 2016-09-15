@@ -46,14 +46,6 @@ public class ReservationDAO extends DAO {
     }
 
     /**
-      * Retourner la connexion associ�e.
-      */
-    public Connexion getConnexion() {
-
-        return this.cx;
-    }
-
-    /**
       * Verifie si une reservation existe.
       */
     public boolean existe(int idReservation) throws SQLException {

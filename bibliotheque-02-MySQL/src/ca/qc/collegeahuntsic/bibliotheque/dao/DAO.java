@@ -22,4 +22,12 @@ public class DAO implements Serializable {
         this.cx = cx;
     }
 
+    /**
+     * Retourner la connexion associ�e.
+     */
+    public Connexion getConnexion() {
+
+        return this.cx;
+    }
+
 }
