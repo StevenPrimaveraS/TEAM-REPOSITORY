@@ -2,7 +2,6 @@
 package ca.qc.collegeahuntsic.bibliotheque.service;
 
 import java.sql.SQLException;
-
 import ca.qc.collegeahuntsic.bibliotheque.dao.MembreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.ReservationDAO;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
@@ -86,7 +85,7 @@ public class MembreService {
                 throw new BibliothequeException("Membre inexistant: "
                     + idMembre);
             }
-            if(tupleMembre.nbPret > 0) {
+            if(tupleMembre.getNbPret() > 0) {
                 throw new BibliothequeException("Le membre "
                     + idMembre
                     + " a encore des prets.");

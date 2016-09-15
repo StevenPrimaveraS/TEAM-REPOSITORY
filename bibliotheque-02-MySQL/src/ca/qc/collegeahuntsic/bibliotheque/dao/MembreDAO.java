@@ -63,11 +63,11 @@ public class MembreDAO extends DAO {
         ResultSet rset = this.stmtExiste.executeQuery();
         if(rset.next()) {
             MembreDTO tupleMembre = new MembreDTO();
-            tupleMembre.idMembre = idMembre;
-            tupleMembre.nom = rset.getString(2);
-            tupleMembre.telephone = rset.getLong(3);
-            tupleMembre.limitePret = rset.getInt(4);
-            tupleMembre.nbPret = rset.getInt(5);
+            tupleMembre.setIdMembre(idMembre);
+            tupleMembre.setNom(rset.getString(2));
+            tupleMembre.setTelephone(rset.getLong(3));
+            tupleMembre.setLimitePret(rset.getInt(4));
+            tupleMembre.setNbPret(rset.getInt(5));
             return tupleMembre;
         } else {
             return null;

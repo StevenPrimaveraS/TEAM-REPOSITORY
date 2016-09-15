@@ -3,7 +3,6 @@ package ca.qc.collegeahuntsic.bibliotheque.service;
 
 import java.sql.Date;
 import java.sql.SQLException;
-
 import ca.qc.collegeahuntsic.bibliotheque.dao.LivreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.MembreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.ReservationDAO;
@@ -87,7 +86,7 @@ public class PretService {
                 throw new BibliothequeException("Membre inexistant: "
                     + idMembre);
             }
-            if(tupleMembre.nbPret >= tupleMembre.limitePret) {
+            if(tupleMembre.getNbPret() >= tupleMembre.getLimitePret()) {
                 throw new BibliothequeException("Limite de pret du membre "
                     + idMembre
                     + " atteinte");
