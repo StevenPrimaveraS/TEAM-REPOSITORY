@@ -83,11 +83,11 @@ public class LivreService {
                 throw new BibliothequeException("Livre inexistant: "
                     + idLivre);
             }
-            if(tupleLivre.idMembre != 0) {
+            if(tupleLivre.getIdMembre() != 0) {
                 throw new BibliothequeException("Livre "
                     + idLivre
                     + " prete a "
-                    + tupleLivre.idMembre);
+                    + tupleLivre.getIdMembre());
             }
             if(this.reservation.getReservationLivre(idLivre) != null) {
                 throw new BibliothequeException("Livre "

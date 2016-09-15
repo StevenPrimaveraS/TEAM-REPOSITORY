@@ -63,12 +63,12 @@ public class LivreDAO extends DAO {
         ResultSet rset = this.stmtExiste.executeQuery();
         if(rset.next()) {
             LivreDTO tupleLivre = new LivreDTO();
-            tupleLivre.idLivre = idLivre;
-            tupleLivre.titre = rset.getString(2);
-            tupleLivre.auteur = rset.getString(3);
-            tupleLivre.dateAcquisition = rset.getDate(4);
-            tupleLivre.idMembre = rset.getInt(5);
-            tupleLivre.datePret = rset.getDate(6);
+            tupleLivre.setIdLivre(idLivre);
+            tupleLivre.setTitre(rset.getString(2));
+            tupleLivre.setAuteur(rset.getString(3));
+            tupleLivre.setDateAcquisition(rset.getDate(4));
+            tupleLivre.setIdMembre(rset.getInt(5));
+            tupleLivre.setDatePret(rset.getDate(6));
             return tupleLivre;
         } else {
             return null;
