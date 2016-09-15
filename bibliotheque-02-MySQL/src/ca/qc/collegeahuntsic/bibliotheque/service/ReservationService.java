@@ -73,12 +73,12 @@ public class ReservationService {
                 throw new BibliothequeException("Livre inexistant: "
                     + idLivre);
             }
-            if(tupleLivre.idMembre == 0) {
+            if(tupleLivre.getIdMembre() == 0) {
                 throw new BibliothequeException("Livre "
                     + idLivre
                     + " n'est pas prete");
             }
-            if(tupleLivre.idMembre == idMembre) {
+            if(tupleLivre.getIdMembre() == idMembre) {
                 throw new BibliothequeException("Livre "
                     + idLivre
                     + " deja prete a ce membre");
@@ -92,7 +92,7 @@ public class ReservationService {
             }
 
             /* Verifier si date reservation >= datePret */
-            if(Date.valueOf(dateReservation).before(tupleLivre.datePret)) {
+            if(Date.valueOf(dateReservation).before(tupleLivre.getDatePret())) {
                 throw new BibliothequeException("Date de reservation inferieure � la date de pret");
             }
 
@@ -147,11 +147,11 @@ public class ReservationService {
                 throw new BibliothequeException("Livre inexistant: "
                     + tupleReservation.idLivre);
             }
-            if(tupleLivre.idMembre != 0) {
+            if(tupleLivre.getIdMembre() != 0) {
                 throw new BibliothequeException("Livre "
-                    + tupleLivre.idLivre
+                    + tupleLivre.getIdLivre()
                     + " deja pr�t� � "
-                    + tupleLivre.idMembre);
+                    + tupleLivre.getIdMembre());
             }
 
             /* V�rifie si le membre existe et sa limite de pret */
