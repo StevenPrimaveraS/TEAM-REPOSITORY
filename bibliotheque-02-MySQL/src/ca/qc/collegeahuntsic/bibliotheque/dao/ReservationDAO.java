@@ -16,7 +16,7 @@ import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
  *</pre>
  */
 
-public class ReservationDAO {
+public class ReservationDAO extends DAO {
 
     private PreparedStatement stmtExiste;
 
@@ -28,14 +28,11 @@ public class ReservationDAO {
 
     private PreparedStatement stmtDelete;
 
-    private Connexion cx;
-
     /**
       * Creation d'une instance.
       */
     public ReservationDAO(Connexion cx) throws SQLException {
-
-        this.cx = cx;
+        super(cx);
         this.stmtExiste = cx.getConnection().prepareStatement("select idReservation, idLivre, idMembre, dateReservation "
             + "from reservation where idReservation = ?");
         this.stmtExisteLivre = cx.getConnection().prepareStatement("select idReservation, idLivre, idMembre, dateReservation "

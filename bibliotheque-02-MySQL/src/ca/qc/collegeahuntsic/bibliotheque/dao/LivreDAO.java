@@ -13,7 +13,7 @@ import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
  * Permet d'effectuer les acc�s � la table livre.
  */
 
-public class LivreDAO {
+public class LivreDAO extends DAO {
 
     private PreparedStatement stmtExiste;
 
@@ -23,14 +23,11 @@ public class LivreDAO {
 
     private PreparedStatement stmtDelete;
 
-    private Connexion cx;
-
     /**
       * Creation d'une instance. Des �nonc�s SQL pour chaque requ�te sont pr�compil�s.
       */
     public LivreDAO(Connexion cx) throws SQLException {
-
-        this.cx = cx;
+        super(cx);
         this.stmtExiste = cx.getConnection()
             .prepareStatement("select idlivre, titre, auteur, dateAcquisition, idMembre, datePret from livre where idlivre = ?");
         this.stmtInsert = cx.getConnection().prepareStatement("insert into livre (idLivre, titre, auteur, dateAcquisition, idMembre, datePret) "

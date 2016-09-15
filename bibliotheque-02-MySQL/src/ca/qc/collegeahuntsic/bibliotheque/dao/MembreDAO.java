@@ -14,7 +14,7 @@ import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
  *</pre>
  */
 
-public class MembreDAO {
+public class MembreDAO extends DAO {
 
     private PreparedStatement stmtExiste;
 
@@ -26,13 +26,11 @@ public class MembreDAO {
 
     private PreparedStatement stmtDelete;
 
-    private Connexion cx;
-
     /**
       * Creation d'une instance. Pr�compilation d'�nonc�s SQL.
       */
     public MembreDAO(Connexion cx) throws SQLException {
-        this.cx = cx;
+        super(cx);
         this.stmtExiste = cx.getConnection().prepareStatement("select idMembre, nom, telephone, limitePret, nbpret from membre where idmembre = ?");
         this.stmtInsert = cx.getConnection().prepareStatement("insert into membre (idmembre, nom, telephone, limitepret, nbpret) "
             + "values (?,?,?,?,0)");
