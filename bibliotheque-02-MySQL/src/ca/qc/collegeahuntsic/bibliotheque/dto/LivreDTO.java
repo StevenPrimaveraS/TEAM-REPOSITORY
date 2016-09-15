@@ -1,4 +1,4 @@
-// Fichier DAO.java
+// Fichier LivreDTO.java
 // Auteur : Dominic Leroux
 // Date de création : 2016-09-14
 
