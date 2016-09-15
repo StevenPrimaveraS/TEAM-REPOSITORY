@@ -8,8 +8,8 @@ import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 
 /**
- * Permet d'effectuer les acc�s � la table membre.
- * Cette classe g�re tous les acc�s � la table membre.
+ * Permet d'effectuer les acces a la table membre.
+ * Cette classe gere tous les acces a la table membre.
  *
  *</pre>
  */
@@ -27,7 +27,7 @@ public class MembreDAO extends DAO {
     private PreparedStatement stmtDelete;
 
     /**
-      * Creation d'une instance. Pr�compilation d'�nonc�s SQL.
+      * Creation d'une instance. Precompilation d'enonces SQL.
       */
     public MembreDAO(Connexion cx) throws SQLException {
         super(cx);

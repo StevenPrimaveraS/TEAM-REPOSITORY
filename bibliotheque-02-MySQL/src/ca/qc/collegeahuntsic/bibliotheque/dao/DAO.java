@@ -23,7 +23,7 @@ public class DAO implements Serializable {
     }
 
     /**
-     * Retourner la connexion associ�e.
+     * Retourner la connexion associee.
      */
     public Connexion getConnexion() {
 
