@@ -13,11 +13,84 @@ import java.sql.Date;
 
 public class ReservationDTO {
 
-    public int idReservation;
+    private int idReservation;
 
-    public int idLivre;
+    private int idLivre;
 
-    public int idMembre;
+    private int idMembre;
 
-    public Date dateReservation;
+    private Date dateReservation;
+
+    /**
+     * Getter de la variable d'instance <code>this.idReservation</code>.
+     *
+     * @return La variable d'instance <code>this.idReservation</code>
+     */
+    public int getIdReservation() {
+        return this.idReservation;
+    }
+
+    /**
+     * Setter de la variable d'instance <code>this.idReservation</code>.
+     *
+     * @param idReservation La valeur à utiliser pour la variable d'instance <code>this.idReservation</code>
+     */
+    public void setIdReservation(int idReservation) {
+        this.idReservation = idReservation;
+    }
+
+    /**
+     * Getter de la variable d'instance <code>this.idLivre</code>.
+     *
+     * @return La variable d'instance <code>this.idLivre</code>
+     */
+    public int getIdLivre() {
+        return this.idLivre;
+    }
+
+    /**
+     * Setter de la variable d'instance <code>this.idLivre</code>.
+     *
+     * @param idLivre La valeur à utiliser pour la variable d'instance <code>this.idLivre</code>
+     */
+    public void setIdLivre(int idLivre) {
+        this.idLivre = idLivre;
+    }
+
+    /**
+     * Getter de la variable d'instance <code>this.idMembre</code>.
+     *
+     * @return La variable d'instance <code>this.idMembre</code>
+     */
+    public int getIdMembre() {
+        return this.idMembre;
+    }
+
+    /**
+     * Setter de la variable d'instance <code>this.idMembre</code>.
+     *
+     * @param idMembre La valeur à utiliser pour la variable d'instance <code>this.idMembre</code>
+     */
+    public void setIdMembre(int idMembre) {
+        this.idMembre = idMembre;
+    }
+
+    /**
+     * Getter de la variable d'instance <code>this.dateReservation</code>.
+     *
+     * @return La variable d'instance <code>this.dateReservation</code>
+     */
+    public Date getDateReservation() {
+        return this.dateReservation;
+    }
+
+    /**
+     * Setter de la variable d'instance <code>this.dateReservation</code>.
+     *
+     * @param dateReservation La valeur à utiliser pour la variable d'instance <code>this.dateReservation</code>
+     */
+    public void setDateReservation(Date dateReservation) {
+        this.dateReservation = dateReservation;
+    }
+
 }

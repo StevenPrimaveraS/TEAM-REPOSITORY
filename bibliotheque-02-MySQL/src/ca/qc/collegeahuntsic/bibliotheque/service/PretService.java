@@ -96,9 +96,9 @@ public class PretService {
             ReservationDTO tupleReservation = this.reservation.getReservationLivre(idLivre);
             if(tupleReservation != null) {
                 throw new BibliothequeException("Livre r�serv� par : "
-                    + tupleReservation.idMembre
+                    + tupleReservation.getIdMembre()
                     + " idReservation : "
-                    + tupleReservation.idReservation);
+                    + tupleReservation.getIdReservation());
             }
 
             /* Enregistrement du pret. */
@@ -150,9 +150,9 @@ public class PretService {
             ReservationDTO tupleReservation = this.reservation.getReservationLivre(idLivre);
             if(tupleReservation != null) {
                 throw new BibliothequeException("Livre r�serv� par : "
-                    + tupleReservation.idMembre
+                    + tupleReservation.getIdMembre()
                     + " idReservation : "
-                    + tupleReservation.idReservation);
+                    + tupleReservation.getIdReservation());
             }
 
             /* Enregistrement du pret. */

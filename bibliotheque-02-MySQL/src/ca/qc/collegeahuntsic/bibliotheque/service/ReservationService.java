@@ -134,18 +134,18 @@ public class ReservationService {
             }
 
             /* V�rifie que c'est la premi�re r�servation pour le livre */
-            ReservationDTO tupleReservationPremiere = this.reservation.getReservationLivre(tupleReservation.idLivre);
-            if(tupleReservation.idReservation != tupleReservationPremiere.idReservation) {
+            ReservationDTO tupleReservationPremiere = this.reservation.getReservationLivre(tupleReservation.getIdLivre());
+            if(tupleReservation.getIdReservation() != tupleReservationPremiere.getIdReservation()) {
                 throw new BibliothequeException("La r�servation n'est pas la premi�re de la liste "
                     + "pour ce livre; la premiere est "
-                    + tupleReservationPremiere.idReservation);
+                    + tupleReservationPremiere.getIdReservation());
             }
 
             /* Verifier si le livre est disponible */
-            LivreDTO tupleLivre = this.livre.getLivre(tupleReservation.idLivre);
+            LivreDTO tupleLivre = this.livre.getLivre(tupleReservation.getIdLivre());
             if(tupleLivre == null) {
                 throw new BibliothequeException("Livre inexistant: "
-                    + tupleReservation.idLivre);
+                    + tupleReservation.getIdLivre());
             }
             if(tupleLivre.idMembre != 0) {
                 throw new BibliothequeException("Livre "
@@ -155,29 +155,29 @@ public class ReservationService {
             }
 
             /* V�rifie si le membre existe et sa limite de pret */
-            MembreDTO tupleMembre = this.membre.getMembre(tupleReservation.idMembre);
+            MembreDTO tupleMembre = this.membre.getMembre(tupleReservation.getIdMembre());
             if(tupleMembre == null) {
                 throw new BibliothequeException("Membre inexistant: "
-                    + tupleReservation.idMembre);
+                    + tupleReservation.getIdMembre());
             }
             if(tupleMembre.getNbPret() >= tupleMembre.getLimitePret()) {
                 throw new BibliothequeException("Limite de pr�t du membre "
-                    + tupleReservation.idMembre
+                    + tupleReservation.getIdMembre()
                     + " atteinte");
             }
 
             /* Verifier si datePret >= tupleReservation.dateReservation */
-            if(Date.valueOf(datePret).before(tupleReservation.dateReservation)) {
+            if(Date.valueOf(datePret).before(tupleReservation.getDateReservation())) {
                 throw new BibliothequeException("Date de pr�t inf�rieure � la date de r�servation");
             }
 
             /* Enregistrement du pret. */
-            if(this.livre.preter(tupleReservation.idLivre,
-                tupleReservation.idMembre,
+            if(this.livre.preter(tupleReservation.getIdLivre(),
+                tupleReservation.getIdMembre(),
                 datePret) == 0) {
                 throw new BibliothequeException("Livre supprim� par une autre transaction");
             }
-            if(this.membre.preter(tupleReservation.idMembre) == 0) {
+            if(this.membre.preter(tupleReservation.getIdMembre()) == 0) {
                 throw new BibliothequeException("Membre supprim� par une autre transaction");
             }
             /* Eliminer la r�servation */
