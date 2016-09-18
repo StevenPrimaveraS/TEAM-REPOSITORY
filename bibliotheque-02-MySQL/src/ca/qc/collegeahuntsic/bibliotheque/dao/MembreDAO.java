@@ -11,10 +11,10 @@ import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 
 /**
- * Permet d'effectuer les acces a la table membre.
- * Cette classe gere tous les acces a la table membre.
- *
- *</pre>
+ * DAO pour effectuer des CRUDs avec la table membre.
+ * 
+ * @author Mathieu Lafond
+ * </pre>
  */
 
 public class MembreDAO extends DAO {
@@ -31,8 +31,10 @@ public class MembreDAO extends DAO {
     private PreparedStatement stmtDelete;
 
     /**
-      * Creation d'une instance. Precompilation d'enonces SQL.
-      */
+     * Crée un DAO à partir d'une connexion à la base de données.
+     * 
+     * @param connexion - La connexion à utiliser
+     */
     public MembreDAO(Connexion cx) throws SQLException {
         super(cx);
         this.stmtExiste = cx.getConnection().prepareStatement("select idMembre, nom, telephone, limitePret, nbpret from membre where idmembre = ?");

@@ -8,29 +8,25 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * Gestionnaire d'une connexion avec une BD relationnelle via JDBC.
+ * Cette classe encapsule une connexion JDBC en fonction d'un type et d'une instance de base de données.
  *
- * Ce programme ouvrir une connexion avec une BD via JDBC.
- * La methode serveursSupportes() indique les serveurs support�s.
+ * La méthode getServeursSupportes() indique les type de serveur supportés.
  *
- * Pr�-condition
- *   le driver JDBC approprie doit etre accessible.
- *
- * Post-condition
- *   la connexion est ouverte en mode autocommit false et serialisable,
- *   (s'il est supporte par le serveur).
+ * Pré-condition : Le driver JDBC approprié doit être accessible.
+ * Post-condition : La connexion est créée en mode autocommit false.
  * </pre>
+ * @author Mathieu Lafond
  */
 public class Connexion {
 
     private Connection conn;
 
     /**
-     * Ouverture d'une connexion en mode autocommit false et serialisable (si supporte)
+	 * Crée une connexion en mode autocommit false
      * @param serveur serveur SQL de la BD
-     * @bd nom de la base de donnees
-     * @user userid sur le serveur SQL
-     * @pass mot de passe sur le serveur SQL
+     * @param nom de la base de donnees
+     * @param userid sur le serveur SQL
+     * @param mot de passe sur le serveur SQL
      */
     public Connexion(String serveur,
         String bd,
@@ -79,7 +75,7 @@ public class Connexion {
             DatabaseMetaData dbmd = this.conn.getMetaData();
             if(dbmd.supportsTransactionIsolationLevel(Connection.TRANSACTION_SERIALIZABLE)) {
                 this.conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-                System.out.println("Ouverture de la connexion en mode s�rialisable :\n"
+                System.out.println("Ouverture de la connexion en mode sérialisable :\n"
                     + "Estampille "
                     + System.currentTimeMillis()
                     + " "
@@ -97,49 +93,59 @@ public class Connexion {
             throw e;
         } catch(Exception e) {
             e.printStackTrace(System.out);
-            throw new SQLException("JDBC Driver non instanci�");
+            throw new SQLException("JDBC Driver non instancié");
         }
     }
 
     /**
-     *fermeture d'une connexion
+     * fermeture d'une connexion
      */
     public void fermer() throws SQLException {
         this.conn.rollback();
         this.conn.close();
-        System.out.println("Connexion ferm�e"
+        System.out.println("Connexion fermée"
             + " "
             + this.conn);
     }
 
     /**
-     *commit
+     * Effectue un commit sur la Connection JDBC.
+     * @throws SQLException - S'il y a une erreur avec la base de données
      */
     public void commit() throws SQLException {
         this.conn.commit();
     }
 
     /**
-     *rollback
+     * Effectue un rollback sur la Connection JDBC.
+     * @throws SQLException - S'il y a une erreur avec la base de données
      */
     public void rollback() throws SQLException {
         this.conn.rollback();
     }
 
     /**
-     *retourne la Connection jdbc
+     * Getter de la variable d'instance this.connection.
+     * @param connection - La valeur à utiliser pour la variable d'instance this.connection
      */
     public Connection getConnection() {
         return this.conn;
     }
 
     /**
-      * Retourne la liste des serveurs support�s par ce gestionnaire de connexions
+      * Retourne la liste des serveurs supportés par ce gestionnaire de connexion :
+      * 
+      * . local : MySQL installé localement
+      * distant : Oracle installé au Département d'Informatique du Collège Ahuntsic
+      * postgres : Postgres installé localement
+      * access : Microsoft Access installé localement et inscrit dans ODBC
+      * 
+      * @return La liste des serveurs supportés par ce gestionnaire de connexion
       */
     public static String serveursSupportes() {
-        return "local : MySQL install� localement\n"
-            + "distant : Oracle install� au D�partement d'Informatique du Coll�ge Ahuntsic\n"
-            + "postgres : Postgres install� localement\n"
-            + "access : Microsoft Access install� localement et inscrit dans ODBC";
+        return "local : MySQL installé localement\n"
+            + "distant : Oracle installé au Département d'Informatique du Collège Ahuntsic\n"
+            + "postgres : Postgres installé localement\n"
+            + "access : Microsoft Access installé localement et inscrit dans ODBC";
     }
 }// Classe Connexion

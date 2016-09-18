@@ -13,7 +13,9 @@ import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 
 /**
- * Permet d'effectuer les acces a la table livre.
+ * DAO pour effectuer des CRUDs avec la table livre.
+ * 
+ * @author Mathieu Lafond
  */
 
 public class LivreDAO extends DAO {
@@ -28,8 +30,10 @@ public class LivreDAO extends DAO {
     private PreparedStatement stmtDelete;
 
     /**
-      * Creation d'une instance. Des enonces SQL pour chaque requete sont precompiles.
-      */
+	 * Crée un DAO à partir d'une connexion à la base de données.
+	 * 
+	 * @param connexion - La connexion à utiliser
+     */
     public LivreDAO(Connexion cx) throws SQLException {
         super(cx);
         this.stmtExiste = cx.getConnection()

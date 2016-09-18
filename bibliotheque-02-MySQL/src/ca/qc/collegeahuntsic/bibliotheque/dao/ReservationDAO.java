@@ -11,12 +11,9 @@ import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 
 /**
- * Permet d'effectuer les acces a la table reservation.
- *<pre>
- *
- * Cette classe gere tous les acces a la table reservation.
- *
- *</pre>
+ * DAO pour effectuer des CRUDs avec la table reservation.
+ * 
+ * @author Mathieu Lafond
  */
 
 public class ReservationDAO extends DAO {
@@ -33,7 +30,9 @@ public class ReservationDAO extends DAO {
     private PreparedStatement stmtDelete;
 
     /**
-      * Creation d'une instance.
+      * Crée un DAO à partir d'une connexion à la base de données.
+      * 
+      * @param connexion - La connexion à utiliser
       */
     public ReservationDAO(Connexion cx) throws SQLException {
         super(cx);

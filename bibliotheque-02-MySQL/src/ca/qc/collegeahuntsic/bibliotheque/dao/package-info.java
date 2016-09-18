@@ -1,10 +1,10 @@
 // Fichier package-info.java
 // Auteur : Primavera Sequeira Steven
-// Date de crÃ©ation : 2016-09-12
+// Date de creation : 2016-09-12
 /**
- * TODO Auto-generated class javadoc
+ * Provides the DAO classes used with the bibliothèque.
  *
- * @author Primavera Sequeira Steven
+ * @author Mathieu Lafond
  */
 
 package ca.qc.collegeahuntsic.bibliotheque.dao;

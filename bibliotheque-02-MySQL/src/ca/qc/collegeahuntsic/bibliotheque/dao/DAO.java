@@ -8,13 +8,17 @@ import java.io.Serializable;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 
 /**
- * TODO Auto-generated class javadoc
+ * Classe de base pour tous les DAOs.
  *
- * @author Primavera Sequeira Steven
+ * @author Mathieu Lafond
  */
 public class DAO implements Serializable {
     private static final long serialVersionUID = 1L;
-
+    /**
+     * Crée un DAO à partir d'une connexion à la base de données.
+     * 
+     * @param connexion - La connexion à utiliser
+     */
     protected Connexion cx;
 
     public DAO(Connexion cx) {
@@ -23,7 +27,8 @@ public class DAO implements Serializable {
     }
 
     /**
-     * Retourner la connexion associee.
+     * Getter de la variable d'instance this.connexion.
+     * @param La variable d'instance this.connexion
      */
     public Connexion getConnexion() {
 
