@@ -7,7 +7,9 @@ package ca.qc.collegeahuntsic.bibliotheque.exception;
  */
 
 public final class BibliothequeException extends Exception {
-    public BibliothequeException(String message) {
+	private static final long serialVersionUID = 1L;
+
+	public BibliothequeException(String message) {
         super(message);
     }
 }
