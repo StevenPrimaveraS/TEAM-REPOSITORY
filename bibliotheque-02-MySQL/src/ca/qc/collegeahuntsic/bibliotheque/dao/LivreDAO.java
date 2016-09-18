@@ -17,8 +17,9 @@ import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
  */
 
 public class LivreDAO extends DAO {
+	private static final long serialVersionUID = 1L;
 
-    private PreparedStatement stmtExiste;
+	private PreparedStatement stmtExiste;
 
     private PreparedStatement stmtInsert;
 
