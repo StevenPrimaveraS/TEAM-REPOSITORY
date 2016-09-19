@@ -1,15 +1,20 @@
 // Fichier DAOException.java
-// Auteur : Primavera Sequeira Steven
+// Auteur : Anthony Chan
 // Date de création : 2016-09-14
 
 package ca.qc.collegeahuntsic.bibliotheque.exception;
 
 /**
- * TODO Auto-generated class javadoc
+ * TODO Auto-generated class javadoc.
  *
- * @author Primavera Sequeira Steven
+ * @author Anthony Chan
  */
 public class DAOException {
+    /**
+     * TODO Auto-generated class javadoc.
+     *
+     * @author Anthony Chan
+     */
     public DAOException() {
         super();
     }

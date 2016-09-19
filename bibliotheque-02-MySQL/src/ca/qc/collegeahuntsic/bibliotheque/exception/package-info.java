@@ -1,10 +1,10 @@
 // Fichier package-info.java
-// Auteur : Primavera Sequeira Steven
+// Auteur : Anthony Chan
 // Date de création : 2016-09-12
 /**
- * TODO Auto-generated class javadoc
+ * TODO Auto-generated class javadoc.
  *
- * @author Primavera Sequeira Steven
+ * @author Anthony Chan
  */
 
 package ca.qc.collegeahuntsic.bibliotheque.exception;
