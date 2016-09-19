@@ -1,7 +1,6 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.util;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Statement;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
@@ -19,8 +18,7 @@ import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
  */
 class BDCreateur {
     public static void main(String args[]) throws Exception,
-        SQLException,
-        IOException {
+        SQLException {
 
         if(args.length < 3) {
             System.out.println("Usage: java CreerBD <serveur> <bd> <user> <password>");

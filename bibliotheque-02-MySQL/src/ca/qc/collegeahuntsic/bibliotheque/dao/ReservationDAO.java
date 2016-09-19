@@ -12,12 +12,12 @@ import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 
 /**
  * DAO pour effectuer des CRUDs avec la table reservation.
- * 
+ *
  * @author Mathieu Lafond
  */
 
 public class ReservationDAO extends DAO {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     private PreparedStatement stmtExiste;
 
@@ -31,7 +31,7 @@ public class ReservationDAO extends DAO {
 
     /**
       * Crée un DAO à partir d'une connexion à la base de données.
-      * 
+      *
       * @param connexion - La connexion à utiliser
       */
     public ReservationDAO(Connexion cx) throws SQLException {
@@ -73,13 +73,13 @@ public class ReservationDAO extends DAO {
             ReservationDTO tupleReservation = new ReservationDTO();
             tupleReservation.setIdReservation(rset.getInt(1));
             tupleReservation.setIdLivre(rset.getInt(2));
-            ;
             tupleReservation.setIdMembre(rset.getInt(3));
             tupleReservation.setDateReservation(rset.getDate(4));
+            rset.close();
             return tupleReservation;
-        } else {
-            return null;
         }
+        rset.close();
+        return null;
     }
 
     /**
@@ -94,13 +94,13 @@ public class ReservationDAO extends DAO {
             ReservationDTO tupleReservation = new ReservationDTO();
             tupleReservation.setIdReservation(rset.getInt(1));
             tupleReservation.setIdLivre(rset.getInt(2));
-            ;
             tupleReservation.setIdMembre(rset.getInt(3));
             tupleReservation.setDateReservation(rset.getDate(4));
+            rset.close();
             return tupleReservation;
-        } else {
-            return null;
         }
+        rset.close();
+        return null;
     }
 
     /**
@@ -115,13 +115,13 @@ public class ReservationDAO extends DAO {
             ReservationDTO tupleReservation = new ReservationDTO();
             tupleReservation.setIdReservation(rset.getInt(1));
             tupleReservation.setIdLivre(rset.getInt(2));
-            ;
             tupleReservation.setIdMembre(rset.getInt(3));
             tupleReservation.setDateReservation(rset.getDate(4));
+            rset.close();
             return tupleReservation;
-        } else {
-            return null;
         }
+        rset.close();
+        return null;
     }
 
     /**

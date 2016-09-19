@@ -12,13 +12,13 @@ import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 
 /**
  * DAO pour effectuer des CRUDs avec la table membre.
- * 
+ *
  * @author Mathieu Lafond
  * </pre>
  */
 
 public class MembreDAO extends DAO {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     private PreparedStatement stmtExiste;
 
@@ -32,7 +32,7 @@ public class MembreDAO extends DAO {
 
     /**
      * Crée un DAO à partir d'une connexion à la base de données.
-     * 
+     *
      * @param connexion - La connexion à utiliser
      */
     public MembreDAO(Connexion cx) throws SQLException {
@@ -71,10 +71,11 @@ public class MembreDAO extends DAO {
             tupleMembre.setTelephone(rset.getLong(3));
             tupleMembre.setLimitePret(rset.getInt(4));
             tupleMembre.setNbPret(rset.getInt(5));
+            rset.close();
             return tupleMembre;
-        } else {
-            return null;
         }
+        rset.close();
+        return null;
     }
 
     /**

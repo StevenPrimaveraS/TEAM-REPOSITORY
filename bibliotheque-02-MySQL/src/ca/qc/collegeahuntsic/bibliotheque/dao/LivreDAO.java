@@ -14,14 +14,14 @@ import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 
 /**
  * DAO pour effectuer des CRUDs avec la table livre.
- * 
+ *
  * @author Mathieu Lafond
  */
 
 public class LivreDAO extends DAO {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private PreparedStatement stmtExiste;
+    private PreparedStatement stmtExiste;
 
     private PreparedStatement stmtInsert;
 
@@ -30,9 +30,9 @@ public class LivreDAO extends DAO {
     private PreparedStatement stmtDelete;
 
     /**
-	 * Crée un DAO à partir d'une connexion à la base de données.
-	 * 
-	 * @param connexion - La connexion à utiliser
+     * Crée un DAO à partir d'une connexion à la base de données.
+     *
+     * @param connexion - La connexion à utiliser
      */
     public LivreDAO(Connexion cx) throws SQLException {
         super(cx);
@@ -74,10 +74,11 @@ public class LivreDAO extends DAO {
             tupleLivre.setDateAcquisition(rset.getDate(4));
             tupleLivre.setIdMembre(rset.getInt(5));
             tupleLivre.setDatePret(rset.getDate(6));
+            rset.close();
             return tupleLivre;
-        } else {
-            return null;
         }
+        rset.close();
+        return null;
     }
 
     /**

@@ -16,10 +16,10 @@ import ca.qc.collegeahuntsic.bibliotheque.util.GestionBibliotheque;
 /**
  * Interface du système de gestion d'une bibliothèque.
  *
- * Ce programme permet d'appeler les transactions de base d'une bibliothèque. 
- * Il gère des livres, des membres et des réservations. 
- * Les données sont conservées dans une base de données relationnelles 
- * accédée avec JDBC. Pour une liste des transactions traitées, 
+ * Ce programme permet d'appeler les transactions de base d'une bibliothèque.
+ * Il gère des livres, des membres et des réservations.
+ * Les données sont conservées dans une base de données relationnelles
+ * accédée avec JDBC. Pour une liste des transactions traitées,
  * voir la méthode afficherAide().
  *
  * Paramètres :
@@ -35,7 +35,7 @@ import ca.qc.collegeahuntsic.bibliotheque.util.GestionBibliotheque;
  * Post-condition :
  * Le programme effectue les maj associées à chaque transaction
  * </pre>
- * 
+ *
  * @author Mathieu Lafond
  */
 public class Bibliotheque {
@@ -44,10 +44,10 @@ public class Bibliotheque {
     private static boolean lectureAuClavier;
 
     /**
-     * Crée une connexion sur la base de données, 
-     * traite toutes les transactions et 
+     * Crée une connexion sur la base de données,
+     * traite toutes les transactions et
      * détruit la connexion.
-     * 
+     *
      * @param arguments - Les arguments du main.
      * @throws Exception - Si une erreur survient.
      */
@@ -75,16 +75,18 @@ public class Bibliotheque {
                 argv[2],
                 argv[3]);
             traiterTransactions(reader);
+            reader.close();
         } catch(Exception e) {
             e.printStackTrace(System.out);
         } finally {
             gestionBiblio.fermer();
+
         }
     }
 
     /**
       * Traite le fichier de transactions.
-      * 
+      *
       * @param reader - Le flux d'entrée à lire.
       * @throws Exception - Si une erreur survient.
       */
@@ -104,7 +106,7 @@ public class Bibliotheque {
 
     /**
       * Lit une transaction.
-      * 
+      *
       * @param reader Le flux d'entrée à lire
       * @return La transaction lue
       * @throws IOException - Si une erreur de lecture survient
@@ -121,10 +123,10 @@ public class Bibliotheque {
 
     /**
       * Décode et traite une transaction.
-      * 
+      *
       * @param tokenizer - L'entrée à décoder
       * @throws BibliothequeException - Si une erreur survient
-      * 
+      *
       */
     static void executerTransaction(StringTokenizer tokenizer) throws Exception {
         try {
@@ -173,7 +175,6 @@ public class Bibliotheque {
                 gestionBiblio.gestionInterrogation.listerLivres();
             } else if("listerLivresTitre".startsWith(command)) {
                 gestionBiblio.gestionInterrogation.listerLivresTitre(readString(tokenizer) /* mot */);
-            } else if("--".startsWith(command)) {
             } // ne rien faire; c'est un commentaire
             /* ***********************   */
             /* TRANSACTION NON RECONNUEE */
@@ -186,7 +187,7 @@ public class Bibliotheque {
         }
     }
 
-    /** 
+    /**
      * Affiche le menu des transactions acceptées par le système.
      */
     static void afficherAide() {
@@ -214,9 +215,9 @@ public class Bibliotheque {
     }
 
     /**
-     * Vérifie si la fin du traitement des transactions 
+     * Vérifie si la fin du traitement des transactions
      * est atteinte.
-     * 
+     *
      * @param transaction - La transaction à traiter
      * @return true Si la fin du fichier est atteinte, false sinon
      */
@@ -236,34 +237,33 @@ public class Bibliotheque {
 
         /* commande "exit" */
         String commande = tokenizer.nextToken();
+        //On peut enlever le if...
         if(commande.equals("exit")) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
-    /** 
-	 * Lit une chaîne de caractères de la transaction
-	 * 
-	 * @param tokenizer - La transaction à décoder
-	 * @return La chaîne de caractères lue
-	 * @throws BibliothequeException - Si l'élément lu est manquant
+    /**
+     * Lit une chaîne de caractères de la transaction
+     *
+     * @param tokenizer - La transaction à décoder
+     * @return La chaîne de caractères lue
+     * @throws BibliothequeException - Si l'élément lu est manquant
      */
     static String readString(StringTokenizer tokenizer) throws BibliothequeException {
         if(tokenizer.hasMoreElements()) {
             return tokenizer.nextToken();
-        } else {
-            throw new BibliothequeException("autre parametre attendu");
         }
+        throw new BibliothequeException("autre parametre attendu");
     }
 
     /**
-	 * Lit un integer de la transaction.
-	 * 
-	 * @param tokenizer - La transaction à décoder
-	 * @return Le integer lu
-	 * @throws BibliothequeException - Si l'élément lu est manquant ou n'est pas un integer
+     * Lit un integer de la transaction.
+     *
+     * @param tokenizer - La transaction à décoder
+     * @return Le integer lu
+     * @throws BibliothequeException - Si l'élément lu est manquant ou n'est pas un integer
      */
     static int readInt(StringTokenizer tokenizer) throws BibliothequeException {
         if(tokenizer.hasMoreElements()) {
@@ -275,17 +275,16 @@ public class Bibliotheque {
                     + token
                     + "\"");
             }
-        } else {
-            throw new BibliothequeException("autre paramï¿½tre attendu");
         }
+        throw new BibliothequeException("autre paramï¿½tre attendu");
     }
 
     /**
-	  * Lit un long de la transaction.
-	  * 
-	  * @param tokenizer - La transaction à décoder
-	  * @return Le long lu
-	  * @throws BibliothequeException - Si l'élément lu est manquant ou n'est pas un long
+      * Lit un long de la transaction.
+      *
+      * @param tokenizer - La transaction à décoder
+      * @return Le long lu
+      * @throws BibliothequeException - Si l'élément lu est manquant ou n'est pas un long
       */
     static long readLong(StringTokenizer tokenizer) throws BibliothequeException {
         if(tokenizer.hasMoreElements()) {
@@ -297,14 +296,13 @@ public class Bibliotheque {
                     + token
                     + "\"");
             }
-        } else {
-            throw new BibliothequeException("autre paramï¿½tre attendu");
         }
+        throw new BibliothequeException("autre paramï¿½tre attendu");
     }
 
     /**
       * Lit une date au format YYYY-MM-DD de la transaction.
-      * 
+      *
       * @param tokenizer - La transaction à décoder
       * @return La date lue
       * @throws BibliothequeException - Si l'élément lu est manquant ou n'est pas une date correctement formatée
@@ -320,8 +318,7 @@ public class Bibliotheque {
                     + token
                     + "\"");
             }
-        } else {
-            throw new BibliothequeException("autre paramï¿½tre attendu");
         }
+        throw new BibliothequeException("autre paramï¿½tre attendu");
     }
 }//class

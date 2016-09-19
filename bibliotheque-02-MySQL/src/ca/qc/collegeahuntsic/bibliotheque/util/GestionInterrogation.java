@@ -76,6 +76,7 @@ public class GestionInterrogation {
             System.out.println();
         }
         this.cx.commit();
+        rset.close();
     }
 
     /**
@@ -103,5 +104,6 @@ public class GestionInterrogation {
             System.out.println();
         }
         this.cx.commit();
+        rset.close();
     }
 }

@@ -10,5 +10,7 @@ package ca.qc.collegeahuntsic.bibliotheque.exception;
  * @author Primavera Sequeira Steven
  */
 public class BDCreateurException {
-
+    public BDCreateurException() {
+        super();
+    }
 }

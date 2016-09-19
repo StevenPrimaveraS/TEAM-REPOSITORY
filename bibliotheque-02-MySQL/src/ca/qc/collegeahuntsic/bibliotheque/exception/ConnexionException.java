@@ -10,5 +10,7 @@ package ca.qc.collegeahuntsic.bibliotheque.exception;
  * @author Primavera Sequeira Steven
  */
 public class ConnexionException {
-
+    public ConnexionException() {
+        super();
+    }
 }
