@@ -7,15 +7,21 @@ package ca.qc.collegeahuntsic.bibliotheque.dto;
 import java.io.Serializable;
 
 /**
- * TODO Auto-generated class javadoc
+ * TODO Auto-generated class javadoc.
  *
  * @author Primavera Sequeira Steven
  */
 public class DTO implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public DTO() {
-		super();
-	}
+    /**
+     * Constructeur de DTO.
+     *
+     *@author Leroux Dominic
+     */
+    public DTO() {
+
+        super();
+    }
 
 }

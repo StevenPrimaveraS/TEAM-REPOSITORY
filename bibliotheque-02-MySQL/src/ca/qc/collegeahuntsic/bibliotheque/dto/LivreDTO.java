@@ -9,11 +9,14 @@ import java.sql.Date;
 /**
  * Permet de representer un tuple de la table livre.
  *
+ *@author Leroux Dominic
 */
 
 public class LivreDTO {
 
     private int idLivre;
+
+    private int idMembre;
 
     private String titre;
 
@@ -21,9 +24,17 @@ public class LivreDTO {
 
     private Date dateAcquisition;
 
-    private int idMembre;
-
     private Date datePret;
+
+    /**
+     * Constructeur de LivreDTO.
+     *
+     *@author Leroux Dominic
+    */
+
+    public LivreDTO() {
+
+    }
 
     /**
      * Getter de la variable d'instance <code>this.idLivre</code>.

@@ -7,9 +7,29 @@ package ca.qc.collegeahuntsic.bibliotheque.dto;
 /**
  * Permet de representer un tuple de la table membre.
  *
+ *@author Leroux Dominic
  */
 
 public class MembreDTO {
+
+    private int limitePret;
+
+    private int nbPret;
+
+    private int idMembre;
+
+    private long telephone;
+
+    private String nom;
+
+    /**
+     * Constructeur de MembreDTO.
+     *
+     *@author Leroux Dominic
+     */
+    public MembreDTO() {
+
+    }
 
     /**
      * Getter de la variable d'instance <code>this.idMembre</code>.
@@ -101,13 +121,4 @@ public class MembreDTO {
         this.nbPret = nbPret;
     }
 
-    private int idMembre;
-
-    private String nom;
-
-    private long telephone;
-
-    private int limitePret;
-
-    private int nbPret;
 }

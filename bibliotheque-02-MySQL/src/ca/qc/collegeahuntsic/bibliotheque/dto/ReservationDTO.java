@@ -9,17 +9,27 @@ import java.sql.Date;
 /**
  * Permet de representer un tuple de la table membre.
  *
+ *@author Leroux Dominic
  */
 
 public class ReservationDTO {
-
-    private int idReservation;
 
     private int idLivre;
 
     private int idMembre;
 
     private Date dateReservation;
+
+    private int idReservation;
+
+    /**
+     * Constructeur de ReservationDTO.
+     *
+     *@author Leroux Dominic
+     */
+    public ReservationDTO() {
+
+    }
 
     /**
      * Getter de la variable d'instance <code>this.idReservation</code>.
