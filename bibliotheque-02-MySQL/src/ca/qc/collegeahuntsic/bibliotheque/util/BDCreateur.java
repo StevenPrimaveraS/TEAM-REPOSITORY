@@ -21,9 +21,10 @@ import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 class BDCreateur {
     /**
      * Methode main.
-     * @param args
-     * @throws Exception
-     * @throws SQLException
+     * @param args -
+     * @throws Exception -
+     * @throws SQLException -
+     *
      * @author Mathieu
      */
     public static void main(String args[]) throws Exception,
@@ -34,12 +35,12 @@ class BDCreateur {
             return;
         }
 
-        Connexion cx = new Connexion(args[0],
+        final Connexion cx = new Connexion(args[0],
             args[1],
             args[2],
             args[3]);
 
-        Statement stmt = cx.getConnection().createStatement();
+        final Statement stmt = cx.getConnection().createStatement();
 
         stmt.executeUpdate("DROP TABLE membre CASCADE CONSTRAINTS");
         stmt.executeUpdate("CREATE TABLE membre ( "

@@ -60,8 +60,8 @@ public class GestionBibliotheque {
      * @param bd nom de la bade de données
      * @param user user id pour établir une connexion avec le serveur SQL
      * @param password mot de passe pour le user id
-     * @throws BibliothequeException
-     * @throws SQLException
+     * @throws BibliothequeException -
+     * @throws SQLException -
      */
     public GestionBibliotheque(String serveur,
         String bd,
@@ -90,7 +90,8 @@ public class GestionBibliotheque {
     }
 
     /**
-     * Fermeture de la connexion
+     * Fermeture de la connexion.
+     * @throws SQLException -
      */
     public void fermer() throws SQLException {
         // fermeture de la connexion
