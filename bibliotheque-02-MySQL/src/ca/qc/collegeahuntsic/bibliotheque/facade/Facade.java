@@ -6,7 +6,7 @@ package ca.qc.collegeahuntsic.bibliotheque.facade;
 
 import java.io.Serializable;
 
-/**
+/**.
  * TODO Auto-generated class javadoc
  *
  * @author Primavera Sequeira Steven
@@ -14,7 +14,13 @@ import java.io.Serializable;
 public class Facade implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    /**.
+     * TODO Auto-generated class javadoc
+     *
+     * @author Primavera Sequeira Steven
+     */
     public Facade() {
+
         super();
     }
 }

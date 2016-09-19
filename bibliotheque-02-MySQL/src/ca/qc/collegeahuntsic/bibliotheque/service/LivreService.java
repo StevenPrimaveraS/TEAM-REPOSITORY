@@ -21,7 +21,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
  * Post-condition
  *   le programme effectue les maj associ�es � chaque
  *   transaction
- * </pre>
+ *   @author Primavera Sequeira Steven
  */
 public class LivreService {
 
@@ -31,8 +31,10 @@ public class LivreService {
 
     private Connexion cx;
 
-    /**
+    /**.
       * Creation d'une instance
+      * @param livre - livreDAO
+      * @param reservation - Gere une reservation
       */
     public LivreService(LivreDAO livre,
         ReservationDAO reservation) {
@@ -44,6 +46,13 @@ public class LivreService {
     /**
       * Ajout d'un nouveau livre dans la base de donn�es.
       * S'il existe deja, une exception est lev�e.
+      * @param idLivre id du livre qu'on veux acquerir.
+      * @param titre titre du livre qu'on veux acquerir.
+      * @param auteur auteur du livre qu'on veux acquerir.
+      * @param dateAcquisition date d'acquisition du livre qu'on veux acquerir.
+      * @throws SQLException -
+      * @throws BibliothequeException -
+      * @throws Exception -
       */
     public void acquerir(int idLivre,
         String titre,
@@ -73,12 +82,16 @@ public class LivreService {
 
     /**
       * Vente d'un livre.
+      * @param idLivre id du livre qu'on veux vendre.
+      * @throws SQLException -
+      * @throws BibliothequeException -
+      * @throws Exception -
       */
     public void vendre(int idLivre) throws SQLException,
         BibliothequeException,
         Exception {
         try {
-            LivreDTO tupleLivre = this.livre.getLivre(idLivre);
+            final LivreDTO tupleLivre = this.livre.getLivre(idLivre);
             if(tupleLivre == null) {
                 throw new BibliothequeException("Livre inexistant: "
                     + idLivre);
@@ -96,7 +109,7 @@ public class LivreService {
             }
 
             /* Suppression du livre. */
-            int nb = this.livre.vendre(idLivre);
+            final int nb = this.livre.vendre(idLivre);
             if(nb == 0) {
                 throw new BibliothequeException("Livre "
                     + idLivre

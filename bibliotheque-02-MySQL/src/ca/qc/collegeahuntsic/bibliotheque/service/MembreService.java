@@ -21,7 +21,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
  * Post-condition
  *   le programme effectue les maj associ�es � chaque
  *   transaction
- * </pre>
+ *  @author Primavera Sequeira Steven
  */
 
 public class MembreService {
@@ -32,8 +32,10 @@ public class MembreService {
 
     private ReservationDAO reservation;
 
-    /**
+    /**.
       * Creation d'une instance
+      * @param membre MembreDao qu'on recoit en parametre.
+      * @param reservation ReservationDAO qu'on recoit en parametre.
       */
     public MembreService(MembreDAO membre,
         ReservationDAO reservation) {
@@ -46,6 +48,13 @@ public class MembreService {
     /**
       * Ajout d'un nouveau membre dans la base de donnees.
       * S'il existe deja, une exception est levee.
+      * @param idMembre id du membre qu'on veux inscrire.
+      * @param nom nom du membre qu'on veux inscrire.
+      * @param telephone numero de telephone du membre qu'on veux inscrire.
+      * @param limitePret limite de pret du membre qu'on veux inscrire.
+      * @throws SQLException -
+      * @throws BibliothequeException -
+      * @throws Exception -
       */
     public void inscrire(int idMembre,
         String nom,
@@ -74,13 +83,17 @@ public class MembreService {
 
     /**
       * Suppression d'un membre de la base de donnees.
+      * @param idMembre id du membre qu'on veux desinscrire.
+      * @throws SQLException -
+      * @throws BibliothequeException -
+      * @throws Exception -
       */
     public void desinscrire(int idMembre) throws SQLException,
         BibliothequeException,
         Exception {
         try {
             /* V�rifie si le membre existe et son nombre de pret en cours */
-            MembreDTO tupleMembre = this.membre.getMembre(idMembre);
+            final MembreDTO tupleMembre = this.membre.getMembre(idMembre);
             if(tupleMembre == null) {
                 throw new BibliothequeException("Membre inexistant: "
                     + idMembre);
@@ -97,7 +110,7 @@ public class MembreService {
             }
 
             /* Suppression du membre */
-            int nb = this.membre.desinscrire(idMembre);
+            final int nb = this.membre.desinscrire(idMembre);
             if(nb == 0) {
                 throw new BibliothequeException("Membre "
                     + idMembre
@@ -109,4 +122,4 @@ public class MembreService {
             throw e;
         }
     }
-}//class
+} //class

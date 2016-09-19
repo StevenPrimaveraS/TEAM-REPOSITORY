@@ -22,7 +22,7 @@ public class Connexion {
     private Connection conn;
 
     /**
-	 * Crée une connexion en mode autocommit false
+     * Crée une connexion en mode autocommit false
      * @param serveur serveur SQL de la BD
      * @param nom de la base de donnees
      * @param userid sur le serveur SQL
@@ -126,7 +126,7 @@ public class Connexion {
 
     /**
      * Getter de la variable d'instance this.connection.
-     * @param connection - La valeur à utiliser pour la variable d'instance this.connection
+     * connection - La valeur à utiliser pour la variable d'instance this.connection
      */
     public Connection getConnection() {
         return this.conn;
@@ -134,12 +134,12 @@ public class Connexion {
 
     /**
       * Retourne la liste des serveurs supportés par ce gestionnaire de connexion :
-      * 
+      *
       * . local : MySQL installé localement
       * distant : Oracle installé au Département d'Informatique du Collège Ahuntsic
       * postgres : Postgres installé localement
       * access : Microsoft Access installé localement et inscrit dans ODBC
-      * 
+      *
       * @return La liste des serveurs supportés par ce gestionnaire de connexion
       */
     public static String serveursSupportes() {
