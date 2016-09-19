@@ -14,13 +14,19 @@ import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
  */
 public class DAO implements Serializable {
     private static final long serialVersionUID = 1L;
+
     /**
      * Crée un DAO à partir d'une connexion à la base de données.
-     * 
+     *
      * @param connexion - La connexion à utiliser
      */
-    protected Connexion cx;
+    private Connexion cx;
 
+    /**
+     * Constructeur de DAO de base.
+     *
+     * @param cx connexion à utiliser
+     */
     public DAO(Connexion cx) {
         super();
         this.cx = cx;
@@ -28,7 +34,7 @@ public class DAO implements Serializable {
 
     /**
      * Getter de la variable d'instance this.connexion.
-     * @param La variable d'instance this.connexion
+     * @return Connexion retourne la variable d'instance connexion
      */
     public Connexion getConnexion() {
 

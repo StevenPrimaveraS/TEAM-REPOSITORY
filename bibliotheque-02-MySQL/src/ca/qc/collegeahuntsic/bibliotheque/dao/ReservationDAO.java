@@ -32,7 +32,8 @@ public class ReservationDAO extends DAO {
     /**
       * Crée un DAO à partir d'une connexion à la base de données.
       *
-      * @param connexion - La connexion à utiliser
+      * @param cx - La connexion à utiliser
+      * @throws SQLException si une erreur survient
       */
     public ReservationDAO(Connexion cx) throws SQLException {
         super(cx);
@@ -50,27 +51,35 @@ public class ReservationDAO extends DAO {
 
     /**
       * Verifie si une reservation existe.
+      *
+      * @param idReservation identifiant de la reservation
+      * @return boolean si le livre existe ou pas
+      * @throws SQLException si une erreur survient
       */
     public boolean existe(int idReservation) throws SQLException {
 
         this.stmtExiste.setInt(1,
             idReservation);
-        ResultSet rset = this.stmtExiste.executeQuery();
-        boolean reservationExiste = rset.next();
+        final ResultSet rset = this.stmtExiste.executeQuery();
+        final boolean reservationExiste = rset.next();
         rset.close();
         return reservationExiste;
     }
 
     /**
       * Lecture d'une reservation.
+      *
+      * @param idReservation identifiant de la reservation.
+      * @throws SQLException si une erreur survient
+      * @return ReservationDTO retourne un DTO de reservation
       */
     public ReservationDTO getReservation(int idReservation) throws SQLException {
 
         this.stmtExiste.setInt(1,
             idReservation);
-        ResultSet rset = this.stmtExiste.executeQuery();
+        final ResultSet rset = this.stmtExiste.executeQuery();
         if(rset.next()) {
-            ReservationDTO tupleReservation = new ReservationDTO();
+            final ReservationDTO tupleReservation = new ReservationDTO();
             tupleReservation.setIdReservation(rset.getInt(1));
             tupleReservation.setIdLivre(rset.getInt(2));
             tupleReservation.setIdMembre(rset.getInt(3));
@@ -84,14 +93,18 @@ public class ReservationDAO extends DAO {
 
     /**
       * Lecture de la premiere reservation d'un livre.
+      *
+      * @param idLivre identifiant du livre.
+      * @throws SQLException si une erreur survient
+      * @return ReservationDTO retourne un DTO de reservation
       */
     public ReservationDTO getReservationLivre(int idLivre) throws SQLException {
 
         this.stmtExisteLivre.setInt(1,
             idLivre);
-        ResultSet rset = this.stmtExisteLivre.executeQuery();
+        final ResultSet rset = this.stmtExisteLivre.executeQuery();
         if(rset.next()) {
-            ReservationDTO tupleReservation = new ReservationDTO();
+            final ReservationDTO tupleReservation = new ReservationDTO();
             tupleReservation.setIdReservation(rset.getInt(1));
             tupleReservation.setIdLivre(rset.getInt(2));
             tupleReservation.setIdMembre(rset.getInt(3));
@@ -105,14 +118,18 @@ public class ReservationDAO extends DAO {
 
     /**
       * Lecture de la premiere reservation d'un livre.
+      *
+      * @param idMembre identifiant de la reservation.
+      * @throws SQLException si une erreur survient
+      * @return ReservationDTO retourne un DTO de reservation
       */
     public ReservationDTO getReservationMembre(int idMembre) throws SQLException {
 
         this.stmtExisteMembre.setInt(1,
             idMembre);
-        ResultSet rset = this.stmtExisteMembre.executeQuery();
+        final ResultSet rset = this.stmtExisteMembre.executeQuery();
         if(rset.next()) {
-            ReservationDTO tupleReservation = new ReservationDTO();
+            final ReservationDTO tupleReservation = new ReservationDTO();
             tupleReservation.setIdReservation(rset.getInt(1));
             tupleReservation.setIdLivre(rset.getInt(2));
             tupleReservation.setIdMembre(rset.getInt(3));
@@ -126,6 +143,12 @@ public class ReservationDAO extends DAO {
 
     /**
       * Reservation d'un livre.
+      *
+      * @param idReservation identifiant de la reservation.
+      * @param idLivre identifiant du livre
+      * @param idMembre identifiant du membre
+      * @param dateReservation date de la reservation
+      * @throws SQLException si une erreur survient
       */
     public void reserver(int idReservation,
         int idLivre,
@@ -144,6 +167,10 @@ public class ReservationDAO extends DAO {
 
     /**
       * Suppression d'une reservation.
+      *
+      * @param idReservation identifiant de la reservation.
+      * @throws SQLException si une erreur survient
+      * @return ReservationDTO retourne un DTO de reservation
       */
     public int annulerRes(int idReservation) throws SQLException {
         this.stmtDelete.setInt(1,

@@ -32,7 +32,8 @@ public class LivreDAO extends DAO {
     /**
      * Crée un DAO à partir d'une connexion à la base de données.
      *
-     * @param connexion - La connexion à utiliser
+     * @param cx - La connexion à utiliser
+     * @throws SQLException si une erreur survient
      */
     public LivreDAO(Connexion cx) throws SQLException {
         super(cx);
@@ -47,27 +48,33 @@ public class LivreDAO extends DAO {
 
     /**
       * Verifie si un livre existe.
+      * @param idLivre identifiant du livre
+      * @throws SQLException si une erreur survient
+      * @return boolean si le livre existe ou pas
       */
     public boolean existe(int idLivre) throws SQLException {
 
         this.stmtExiste.setInt(1,
             idLivre);
-        ResultSet rset = this.stmtExiste.executeQuery();
-        boolean livreExiste = rset.next();
+        final ResultSet rset = this.stmtExiste.executeQuery();
+        final boolean livreExiste = rset.next();
         rset.close();
         return livreExiste;
     }
 
     /**
       * Lecture d'un livre.
+      * @param idLivre identifiant du livre
+      * @throws SQLException si une erreur survient
+      * @return LivreDTO retourne un DTO de livre
       */
     public LivreDTO getLivre(int idLivre) throws SQLException {
 
         this.stmtExiste.setInt(1,
             idLivre);
-        ResultSet rset = this.stmtExiste.executeQuery();
+        final ResultSet rset = this.stmtExiste.executeQuery();
         if(rset.next()) {
-            LivreDTO tupleLivre = new LivreDTO();
+            final LivreDTO tupleLivre = new LivreDTO();
             tupleLivre.setIdLivre(idLivre);
             tupleLivre.setTitre(rset.getString(2));
             tupleLivre.setAuteur(rset.getString(3));
@@ -83,6 +90,11 @@ public class LivreDAO extends DAO {
 
     /**
       * Ajout d'un nouveau livre dans la base de donnees.
+      * @param idLivre identifiant du livre
+      * @param titre titre du livre
+      * @param auteur auteur du livre
+      * @param dateAcquisition date d'acquisition
+      * @throws SQLException si une erreur survient
       */
     public void acquerir(int idLivre,
         String titre,
@@ -102,6 +114,11 @@ public class LivreDAO extends DAO {
 
     /**
       * Enregistrement de l'emprunteur d'un livre.
+      * @param idLivre identifiant du livre
+      * @param idMembre identifiant du membre
+      * @param datePret date du Pret
+      * @throws SQLException si une erreur survient
+      * @return int resultat de la commande de pret
       */
     public int preter(int idLivre,
         int idMembre,
@@ -117,7 +134,10 @@ public class LivreDAO extends DAO {
     }
 
     /**
-      * Rendre le livre disponible (non-prete)
+      * Rendre le livre disponible (non-prete).
+      * @param idLivre identifiant du livre
+      * @throws SQLException si une erreur survient
+      * @return int resultat de la commande de pret
       */
     public int retourner(int idLivre) throws SQLException {
         /* Enregistrement du pret. */
@@ -132,6 +152,9 @@ public class LivreDAO extends DAO {
 
     /**
       * Suppression d'un livre.
+      * @param idLivre identifiant du livre
+      * @throws SQLException si une erreur survient
+      * @return int resultat de la commande de pret
       */
     public int vendre(int idLivre) throws SQLException {
         /* Suppression du livre. */

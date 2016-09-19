@@ -14,7 +14,7 @@ import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
  * DAO pour effectuer des CRUDs avec la table membre.
  *
  * @author Mathieu Lafond
- * </pre>
+ *
  */
 
 public class MembreDAO extends DAO {
@@ -33,7 +33,8 @@ public class MembreDAO extends DAO {
     /**
      * Crée un DAO à partir d'une connexion à la base de données.
      *
-     * @param connexion - La connexion à utiliser
+     * @param cx - La connexion à utiliser
+     * @throws SQLException si une erreur survient
      */
     public MembreDAO(Connexion cx) throws SQLException {
         super(cx);
@@ -47,25 +48,31 @@ public class MembreDAO extends DAO {
 
     /**
       * Verifie si un membre existe.
+      * @param idMembre identifiant du membre
+      * @return boolean si le livre existe ou pas
+      * @throws SQLException si une erreur survient
       */
     public boolean existe(int idMembre) throws SQLException {
         this.stmtExiste.setInt(1,
             idMembre);
-        ResultSet rset = this.stmtExiste.executeQuery();
-        boolean membreExiste = rset.next();
+        final ResultSet rset = this.stmtExiste.executeQuery();
+        final boolean membreExiste = rset.next();
         rset.close();
         return membreExiste;
     }
 
     /**
       * Lecture d'un membre.
+      * @param idMembre identifiant du membre.
+      * @throws SQLException si une erreur survient.
+      * @return MembreDTO
       */
     public MembreDTO getMembre(int idMembre) throws SQLException {
         this.stmtExiste.setInt(1,
             idMembre);
-        ResultSet rset = this.stmtExiste.executeQuery();
+        final ResultSet rset = this.stmtExiste.executeQuery();
         if(rset.next()) {
-            MembreDTO tupleMembre = new MembreDTO();
+            final MembreDTO tupleMembre = new MembreDTO();
             tupleMembre.setIdMembre(idMembre);
             tupleMembre.setNom(rset.getString(2));
             tupleMembre.setTelephone(rset.getLong(3));
@@ -80,6 +87,11 @@ public class MembreDAO extends DAO {
 
     /**
       * Ajout d'un nouveau membre.
+      * @param idMembre identificateur du membre
+      * @param nom nom du membre
+      * @param telephone numero de telephone du membre
+      * @param limitePret limite de pret du membre
+      * @throws SQLException si une erreur survient
       */
     public void inscrire(int idMembre,
         String nom,
@@ -99,6 +111,9 @@ public class MembreDAO extends DAO {
 
     /**
       * Incrementer le nb de pret d'un membre.
+      * @param idMembre identifiant du membre
+      * @throws SQLException si une erreur survient
+      * @return int resultat de la commande de pret
       */
     public int preter(int idMembre) throws SQLException {
         this.stmtUpdateIncrNbPret.setInt(1,
@@ -108,6 +123,9 @@ public class MembreDAO extends DAO {
 
     /**
       * Decrementer le nb de pret d'un membre.
+      * @param idMembre identifiant du membre
+      * @throws SQLException si une erreur survient
+      * @return int resultat de la commande de retour
       */
     public int retourner(int idMembre) throws SQLException {
         this.stmtUpdateDecNbPret.setInt(1,
@@ -117,6 +135,9 @@ public class MembreDAO extends DAO {
 
     /**
       * Suppression d'un membre.
+      * @param idMembre identifiant du membre
+      * @throws SQLException si une erreur survient
+      * @return int resultat de la suppression
       */
     public int desinscrire(int idMembre) throws SQLException {
         this.stmtDelete.setInt(1,
