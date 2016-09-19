@@ -67,7 +67,7 @@ public class PretService {
       * @param idLivre paramtere livre a donner en utilisant la méthode.
       * @param idMembre paramadetre idMembre qu'on doit donner en utilisant la méthode.
       * @param datePret date dur pret qu'on recoit dans la méthode.
-      * @throws SQLException -
+      * @throws SQLException -s
       * @throws BibliothequeException -
       * @throws Exception -
       */
