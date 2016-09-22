@@ -51,6 +51,45 @@ public class GestionBibliotheque {
     private GestionInterrogation gestionInterrogation;
 
     /**
+     * Ouvre une connexion avec la BD relationnelle et alloue les gestionnaires
+     * de transactions et de tables.
+     *
+     *
+     *
+     * @param serveur SQL
+     * @param bd nom de la bade de données
+     * @param user user id pour établir une connexion avec le serveur SQL
+     * @param password mot de passe pour le user id
+     * @throws BibliothequeException -
+     * @throws SQLException -
+     */
+    public GestionBibliotheque(String serveur,
+        String bd,
+        String user,
+        String password) throws BibliothequeException,
+        SQLException {
+        // allocation des objets pour le traitement des transactions
+        this.cx = new Connexion(serveur,
+            bd,
+            user,
+            password);
+        this.livre = new LivreDAO(this.cx);
+        this.membre = new MembreDAO(this.cx);
+        this.reservation = new ReservationDAO(this.cx);
+        this.gestionLivre = new LivreService(this.livre,
+            this.reservation);
+        this.gestionMembre = new MembreService(this.membre,
+            this.reservation);
+        this.gestionPret = new PretService(this.livre,
+            this.membre,
+            this.reservation);
+        this.gestionReservation = new ReservationService(this.livre,
+            this.membre,
+            this.reservation);
+        this.gestionInterrogation = new GestionInterrogation(this.cx);
+    }
+
+    /**
      * Getter de la variable d'instance <code>this.cx</code>.
      *
      * @return La variable d'instance <code>this.cx</code>
@@ -210,45 +249,6 @@ public class GestionBibliotheque {
      */
     public void setGestionInterrogation(GestionInterrogation gestionInterrogation) {
         this.gestionInterrogation = gestionInterrogation;
-    }
-
-    /**
-     * Ouvre une connexion avec la BD relationnelle et alloue les gestionnaires
-     * de transactions et de tables.
-     *
-     *
-     *
-     * @param serveur SQL
-     * @param bd nom de la bade de données
-     * @param user user id pour établir une connexion avec le serveur SQL
-     * @param password mot de passe pour le user id
-     * @throws BibliothequeException -
-     * @throws SQLException -
-     */
-    public GestionBibliotheque(String serveur,
-        String bd,
-        String user,
-        String password) throws BibliothequeException,
-        SQLException {
-        // allocation des objets pour le traitement des transactions
-        this.cx = new Connexion(serveur,
-            bd,
-            user,
-            password);
-        this.livre = new LivreDAO(this.cx);
-        this.membre = new MembreDAO(this.cx);
-        this.reservation = new ReservationDAO(this.cx);
-        this.gestionLivre = new LivreService(this.livre,
-            this.reservation);
-        this.gestionMembre = new MembreService(this.membre,
-            this.reservation);
-        this.gestionPret = new PretService(this.livre,
-            this.membre,
-            this.reservation);
-        this.gestionReservation = new ReservationService(this.livre,
-            this.membre,
-            this.reservation);
-        this.gestionInterrogation = new GestionInterrogation(this.cx);
     }
 
     /**

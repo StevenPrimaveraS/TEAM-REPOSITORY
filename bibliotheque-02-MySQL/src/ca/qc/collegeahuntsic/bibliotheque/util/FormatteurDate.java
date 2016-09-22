@@ -11,7 +11,7 @@ import java.util.Date;
  *
  * @author Math -
  */
-public class FormatteurDate {
+public final class FormatteurDate {
     private static SimpleDateFormat formatAMJ;
     static {
         formatAMJ = new SimpleDateFormat("yyyy-MM-dd");
@@ -23,7 +23,7 @@ public class FormatteurDate {
      *
      * @author Primavera Sequeira Steven
      */
-    public FormatteurDate() {
+    private FormatteurDate() {
         super();
     }
 
@@ -42,7 +42,7 @@ public class FormatteurDate {
 
     /**
      * Affiche la date.
-     * 
+     *
      * @return -
      * @param date
      *            -

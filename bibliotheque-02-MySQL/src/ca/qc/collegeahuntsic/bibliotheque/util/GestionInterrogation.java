@@ -4,7 +4,6 @@ package ca.qc.collegeahuntsic.bibliotheque.util;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 
 /**
@@ -30,79 +29,96 @@ import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 
 public class GestionInterrogation {
 
-	private PreparedStatement stmtLivresTitreMot;
+    private PreparedStatement stmtLivresTitreMot;
 
-	private PreparedStatement stmtListeTousLivres;
+    private PreparedStatement stmtListeTousLivres;
 
-	private Connexion cx;
+    private Connexion cx;
 
-	/**
-	 * Creation d'une instance.
-	 *
-	 * @throws SQLException
-	 *             -
-	 * @param cx
-	 *            -
-	 */
-	public GestionInterrogation(Connexion cx) throws SQLException {
+    /**
+     * Creation d'une instance.
+     *
+     * @throws SQLException
+     *             -
+     * @param cx
+     *            -
+     */
+    public GestionInterrogation(Connexion cx) throws SQLException {
 
-		this.cx = cx;
-		this.stmtLivresTitreMot = cx.getConnection()
-				.prepareStatement("select t1.idLivre, t1.titre, t1.auteur, t1.idmembre, t1.datePret + 14 "
-						+ "from livre t1 " + "where lower(titre) like ?");
+        this.cx = cx;
+        this.stmtLivresTitreMot = cx.getConnection().prepareStatement("select t1.idLivre, t1.titre, t1.auteur, t1.idmembre, t1.datePret + 14 "
+            + "from livre t1 "
+            + "where lower(titre) like ?");
 
-		this.stmtListeTousLivres = cx.getConnection().prepareStatement(
-				"select t1.idLivre, t1.titre, t1.auteur, t1.idmembre, t1.datePret " + "from livre t1");
-	}
+        this.stmtListeTousLivres = cx.getConnection().prepareStatement("select t1.idLivre, t1.titre, t1.auteur, t1.idmembre, t1.datePret "
+            + "from livre t1");
+    }
 
-	/**
-	 * Affiche les livres contenu un mot dans le titre.
-	 *
-	 * @param mot
-	 *            -
-	 * @throws SQLException
-	 *             -
-	 */
-	public void listerLivresTitre(String mot) throws SQLException {
+    /**
+     * Affiche les livres contenu un mot dans le titre.
+     *
+     * @param mot
+     *            -
+     * @throws SQLException
+     *             -
+     */
+    public void listerLivresTitre(String mot) throws SQLException {
 
-		this.stmtLivresTitreMot.setString(1, "%" + mot + "%");
-		ResultSet rset = this.stmtLivresTitreMot.executeQuery();
+        this.stmtLivresTitreMot.setString(1,
+            "%"
+                + mot
+                + "%");
+        final ResultSet rset = this.stmtLivresTitreMot.executeQuery();
 
-		int idMembre;
-		System.out.println("idLivre titre auteur idMembre dateRetour");
-		while (rset.next()) {
-			System.out.print(rset.getInt(1) + " " + rset.getString(2) + " " + rset.getString(3));
-			idMembre = rset.getInt(4);
-			if (!rset.wasNull()) {
-				System.out.print(" " + idMembre + " " + rset.getDate(5));
-			}
-			System.out.println();
-		}
-		this.cx.commit();
-		rset.close();
-	}
+        int idMembre;
+        System.out.println("idLivre titre auteur idMembre dateRetour");
+        while(rset.next()) {
+            System.out.print(rset.getInt(1)
+                + " "
+                + rset.getString(2)
+                + " "
+                + rset.getString(3));
+            idMembre = rset.getInt(4);
+            if(!rset.wasNull()) {
+                System.out.print(" "
+                    + idMembre
+                    + " "
+                    + rset.getDate(5));
+            }
+            System.out.println();
+        }
+        this.cx.commit();
+        rset.close();
+    }
 
-	/**
-	 * Affiche tous les livres de la BD.
-	 *
-	 * @throws SQLException
-	 *             -
-	 */
-	public void listerLivres() throws SQLException {
+    /**
+     * Affiche tous les livres de la BD.
+     *
+     * @throws SQLException
+     *             -
+     */
+    public void listerLivres() throws SQLException {
 
-		ResultSet rset = this.stmtListeTousLivres.executeQuery();
+        final ResultSet rset = this.stmtListeTousLivres.executeQuery();
 
-		System.out.println("idLivre titre auteur idMembre datePret");
-		int idMembre;
-		while (rset.next()) {
-			System.out.print(rset.getInt("idLivre") + " " + rset.getString("titre") + " " + rset.getString("auteur"));
-			idMembre = rset.getInt("idMembre");
-			if (!rset.wasNull()) {
-				System.out.print(" " + idMembre + " " + rset.getDate("datePret"));
-			}
-			System.out.println();
-		}
-		this.cx.commit();
-		rset.close();
-	}
+        System.out.println("idLivre titre auteur idMembre datePret");
+        int idMembre;
+        while(rset.next()) {
+            System.out.print(rset.getInt("idLivre")
+                + " "
+                + rset.getString("titre")
+                + " "
+                + rset.getString("auteur"));
+            idMembre = rset.getInt("idMembre");
+            if(!rset.wasNull()) {
+                System.out.print(" "
+                    + idMembre
+                    + " "
+                    + rset.getDate("datePret"));
+            }
+            System.out.println();
+        }
+        this.cx.commit();
+        rset.close();
+    }
 }
