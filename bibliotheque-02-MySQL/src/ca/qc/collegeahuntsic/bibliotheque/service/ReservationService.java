@@ -218,7 +218,7 @@ public class ReservationService {
         Exception {
         try {
 
-            /* V�rifier que la r�servation existe */
+            /* V�rifier que la réservation existe */
             if(this.reservation.annulerRes(idReservation) == 0) {
                 throw new BibliothequeException("R�servation "
                     + idReservation

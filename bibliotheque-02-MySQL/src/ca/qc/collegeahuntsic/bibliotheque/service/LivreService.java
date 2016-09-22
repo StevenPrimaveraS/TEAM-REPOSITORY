@@ -44,8 +44,8 @@ public class LivreService {
     }
 
     /**
-      * Ajout d'un nouveau livre dans la base de donn�es.
-      * S'il existe deja, une exception est lev�e.
+      * Ajout d'un nouveau livre dans la base de données.
+      * S'il existe deja, une exception est levée.
       * @param idLivre id du livre qu'on veux acquerir.
       * @param titre titre du livre qu'on veux acquerir.
       * @param auteur auteur du livre qu'on veux acquerir.
@@ -61,7 +61,7 @@ public class LivreService {
         BibliothequeException,
         Exception {
         try {
-            /* V�rifie si le livre existe d�ja */
+            /* Vérifie si le livre existe déja */
             if(this.livre.existe(idLivre)) {
                 throw new BibliothequeException("Livre existe deja: "
                     + idLivre);

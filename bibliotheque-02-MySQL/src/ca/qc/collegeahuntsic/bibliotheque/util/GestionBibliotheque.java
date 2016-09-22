@@ -53,9 +53,6 @@ public class GestionBibliotheque {
     /**
      * Ouvre une connexion avec la BD relationnelle et alloue les gestionnaires
      * de transactions et de tables.
-     *
-     *
-     *
      * @param serveur SQL
      * @param bd nom de la bade de données
      * @param user user id pour établir une connexion avec le serveur SQL
