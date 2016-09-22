@@ -6,6 +6,7 @@ import ca.qc.collegeahuntsic.bibliotheque.dao.LivreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.ReservationDAO;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
+import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.ServiceException;
 
@@ -51,16 +52,20 @@ public class LivreService {
       * @param titre titre du livre qu'on veux acquerir.
       * @param auteur auteur du livre qu'on veux acquerir.
       * @param dateAcquisition date d'acquisition du livre qu'on veux acquerir.
-      * @throws ServiceException -
+      * @throws SQLException -
+      * @throws BibliothequeException -
+      * @throws Exception -
       */
     public void acquerir(int idLivre,
         String titre,
         String auteur,
-        String dateAcquisition) throws ServiceException {
+        String dateAcquisition) throws SQLException,
+        BibliothequeException,
+        Exception {
         try {
             /* Vérifie si le livre existe déja */
             if(this.livre.existe(idLivre)) {
-                throw new ServiceException("Livre existe deja: "
+                throw new BibliothequeException("Livre existe deja: "
                     + idLivre);
             }
 
@@ -70,9 +75,10 @@ public class LivreService {
                 auteur,
                 dateAcquisition);
             this.cx.commit();
-        } catch(DAOException daoException) {
-            // TODO Auto-generated catch block
-            throw new ServiceException(daoException);
+        } catch(Exception e) {
+            //        System.out.println(e);
+            this.cx.rollback();
+            throw e;
         }
     }
 
