@@ -10,6 +10,7 @@ import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
+import ca.qc.collegeahuntsic.bibliotheque.exception.ConnexionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.ServiceException;
 
@@ -122,9 +123,19 @@ public class PretService {
             if(nb2 == 0) {
                 throw new ServiceException("Membre supprim� par une autre transaction");
             }
-            this.cx.commit();
+            try {
+                this.cx.commit();
+            } catch(ConnexionException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         } catch(DAOException daoException) {
-            this.cx.rollback();
+            try {
+                this.cx.rollback();
+            } catch(ConnexionException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
             throw new ServiceException(daoException);
         }
     }
@@ -179,8 +190,15 @@ public class PretService {
                 throw new ServiceException("Livre supprime par une autre transaction");
             }
             this.cx.commit();
-        } catch(DAOException daoException) {
-            this.cx.rollback();
+        } catch(
+            DAOException
+            | ConnexionException daoException) {
+            try {
+                this.cx.rollback();
+            } catch(ConnexionException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
             throw new ServiceException(daoException);
         }
     }
@@ -225,8 +243,15 @@ public class PretService {
                 throw new ServiceException("Livre supprim� par une autre transaction");
             }
             this.cx.commit();
-        } catch(DAOException daoException) {
-            this.cx.rollback();
+        } catch(
+            DAOException
+            | ConnexionException daoException) {
+            try {
+                this.cx.rollback();
+            } catch(ConnexionException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
             throw new ServiceException(daoException);
         }
     }

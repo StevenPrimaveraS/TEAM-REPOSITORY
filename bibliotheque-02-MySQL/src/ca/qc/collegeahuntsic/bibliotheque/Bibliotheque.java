@@ -244,7 +244,7 @@ public final class Bibliotheque {
         /* commande "exit" */
         final String commande = tokenizer.nextToken();
         //On peut enlever le if...
-        if(commande.equals("exit")) {
+        if("exit".equals(commande)) {
             return true;
         }
         return false;

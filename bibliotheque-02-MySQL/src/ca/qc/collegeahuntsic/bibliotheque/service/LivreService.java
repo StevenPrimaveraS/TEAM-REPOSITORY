@@ -6,6 +6,7 @@ import ca.qc.collegeahuntsic.bibliotheque.dao.LivreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.ReservationDAO;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
+import ca.qc.collegeahuntsic.bibliotheque.exception.ConnexionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.ServiceException;
 
@@ -69,7 +70,12 @@ public class LivreService {
                 titre,
                 auteur,
                 dateAcquisition);
-            this.cx.commit();
+            try {
+                this.cx.commit();
+            } catch(ConnexionException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         } catch(DAOException daoException) {
             // TODO Auto-generated catch block
             throw new ServiceException(daoException);
@@ -127,9 +133,9 @@ public class LivreService {
         }
         try {
             this.cx.commit();
-        } catch(DAOException daoException) {
+        } catch(ConnexionException e) {
             // TODO Auto-generated catch block
-            throw new ServiceException(daoException);
+            e.printStackTrace();
         }
 
     }

@@ -11,6 +11,7 @@ import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.ConnexionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.ServiceException;
 
@@ -71,13 +72,14 @@ public class ReservationService {
      * @throws ServiceException -
      * @throws SQLException -
      * @throws BibliothequeException -
-     * @throws Exception -
+     * @throws ConnexionException -
      */
     public void reserver(int idReservation,
         int idLivre,
         int idMembre,
         String dateReservation) throws ServiceException,
-        SQLException {
+        SQLException,
+        ConnexionException {
         try {
             /* Verifier que le livre est pret� */
             final LivreDTO tupleLivre = this.livre.getLivre(idLivre);
@@ -121,13 +123,10 @@ public class ReservationService {
                 idMembre,
                 dateReservation);
             this.cx.commit();
-        } catch(DAOException daoException) {
-            try {
-                this.cx.rollback();
-            } catch(SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+        } catch(
+            DAOException
+            | ConnexionException daoException) {
+            this.cx.rollback();
             throw new ServiceException(daoException);
         }
     }
@@ -204,9 +203,19 @@ public class ReservationService {
             }
             /* Eliminer la réservation */
             this.reservation.annulerRes(idReservation);
-            this.cx.commit();
+            try {
+                this.cx.commit();
+            } catch(ConnexionException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         } catch(DAOException daoException) {
-            this.cx.rollback();
+            try {
+                this.cx.rollback();
+            } catch(ConnexionException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
             throw new ServiceException(daoException);
         }
     }

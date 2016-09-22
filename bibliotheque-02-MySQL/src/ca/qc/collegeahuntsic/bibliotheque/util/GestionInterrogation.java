@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
+import ca.qc.collegeahuntsic.bibliotheque.exception.ConnexionException;
 
 /**
  * Gestion des transactions d'interrogation dans une biblioth�que.
@@ -87,7 +88,12 @@ public class GestionInterrogation {
             }
             System.out.println();
         }
-        this.cx.commit();
+        try {
+            this.cx.commit();
+        } catch(ConnexionException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         rset.close();
     }
 
@@ -118,7 +124,12 @@ public class GestionInterrogation {
             }
             System.out.println();
         }
-        this.cx.commit();
+        try {
+            this.cx.commit();
+        } catch(ConnexionException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         rset.close();
     }
 }

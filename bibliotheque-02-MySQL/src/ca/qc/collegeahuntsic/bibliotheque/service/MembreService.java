@@ -8,6 +8,7 @@ import ca.qc.collegeahuntsic.bibliotheque.dao.MembreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.ReservationDAO;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
+import ca.qc.collegeahuntsic.bibliotheque.exception.ConnexionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.ServiceException;
 
@@ -75,9 +76,14 @@ public class MembreService {
                 limitePret);
             this.cx.commit();
         } catch(DAOException daoException) {
-            this.cx.rollback();
+            try {
+                this.cx.rollback();
+            } catch(ConnexionException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
             throw new ServiceException(daoException);
-        } catch(ConnectionException connexionException) {
+        } catch(ConnexionException connexionException) {
             throw new ServiceException(connexionException);
         }
     }
@@ -115,9 +121,14 @@ public class MembreService {
             }
             this.cx.commit();
         } catch(DAOException daoException) {
-            this.cx.rollback();
+            try {
+                this.cx.rollback();
+            } catch(ConnexionException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
             throw new ServiceException(daoException);
-        } catch(ConnectionException connexionException) {
+        } catch(ConnexionException connexionException) {
             throw new ServiceException(connexionException);
         }
     }
