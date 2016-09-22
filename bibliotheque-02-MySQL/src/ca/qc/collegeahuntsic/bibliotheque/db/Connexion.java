@@ -6,6 +6,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.ConnexionException;
 
 /**
  * Cette classe encapsule une connexion JDBC en fonction d'un type et d'une
@@ -28,15 +29,15 @@ public class Connexion {
      * @param bd -
      * @param user -
      * @param pass -
-     * @throws SQLException -
+     * @throws ConnexionException -
      */
     public Connexion(String serveur,
         String bd,
         String user,
-        String pass) throws SQLException {
-        Driver d;
+        String pass) throws ConnexionException {
+        Driver d = null;
         try {
-            if(serveur.equals("local")) {
+            if("local".equals(serveur)) {
                 d = (Driver) Class.forName("com.mysql.jdbc.Driver").newInstance();
                 DriverManager.registerDriver(d);
                 this.conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/"
@@ -44,7 +45,7 @@ public class Connexion {
                     user,
                     pass);
             }
-            if(serveur.equals("distant")) {
+            if("distant".equals(serveur)) {
                 d = (Driver) Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
                 DriverManager.registerDriver(d);
                 this.conn = DriverManager.getConnection("jdbc:oracle:thin:@collegeahuntsic.info:1521:"
@@ -83,45 +84,60 @@ public class Connexion {
                     + " "
                     + this.conn);
             }
-        } catch(SQLException e) {
-            throw e;
-        } catch(Exception e) {
-            e.printStackTrace(System.out);
-            throw new SQLException("JDBC Driver non instancié");
+        } catch(SQLException sqlException) {
+            throw new ConnexionException(sqlException);
+        } catch(InstantiationException instantiationException) {
+            throw new ConnexionException(instantiationException);
+        } catch(IllegalAccessException illegalAccessException) {
+            throw new ConnexionException(illegalAccessException);
+        } catch(ClassNotFoundException classNotFoundException) {
+            throw new ConnexionException(classNotFoundException);
         }
 
     }
 
     /**
      * fermeture d'une connexion.
-     * @throws SQLException -
+     * @throws ConnexionException -
      */
-    public void fermer() throws SQLException {
-        this.conn.rollback();
-        this.conn.close();
-        System.out.println("Connexion fermée"
-            + " "
-            + this.conn);
+    public void fermer() throws ConnexionException {
+        try {
+            this.conn.rollback();
+            this.conn.close();
+            System.out.println("Connexion fermée"
+                + " "
+                + this.conn);
+        } catch(SQLException sqlException) {
+            throw new ConnexionException(sqlException);
+        }
     }
 
     /**
      * Effectue un commit sur la Connection JDBC.
      *
-     * @throws SQLException
+     * @throws ConnexionException
      *             - S'il y a une erreur avec la base de données
      */
-    public void commit() throws SQLException {
-        this.conn.commit();
+    public void commit() throws ConnexionException {
+        try {
+            this.conn.commit();
+        } catch(SQLException sqlException) {
+            throw new ConnexionException(sqlException);
+        }
     }
 
     /**
      * Effectue un rollback sur la Connection JDBC.
      *
-     * @throws SQLException
+     * @throws ConnexionException
      *             - S'il y a une erreur avec la base de données
      */
-    public void rollback() throws SQLException {
-        this.conn.rollback();
+    public void rollback() throws ConnexionException {
+        try {
+            this.conn.rollback();
+        } catch(SQLException sqlException) {
+            throw new ConnexionException(sqlException);
+        }
     }
 
     /**
