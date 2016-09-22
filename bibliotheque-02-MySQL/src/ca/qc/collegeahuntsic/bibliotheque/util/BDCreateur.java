@@ -18,7 +18,17 @@ import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
  *
  * @author Mathieu
  */
-class BDCreateur {
+final class BDCreateur {
+    /**.
+     * TODO Auto-generated class javadoc
+     *
+     * @author Primavera Sequeira Steven
+     */
+    private BDCreateur() {
+
+        super();
+    }
+
     /**
      * Methode main.
      * @param args -
@@ -27,7 +37,7 @@ class BDCreateur {
      *
      * @author Mathieu
      */
-    public static void main(String args[]) throws Exception,
+    public static void main(String[] args) throws Exception,
         SQLException {
 
         if(args.length < 3) {

@@ -34,7 +34,6 @@ import ca.qc.collegeahuntsic.bibliotheque.util.GestionBibliotheque;
  *
  * Post-condition :
  * Le programme effectue les maj associées à chaque transaction
- * </pre>
  *
  * @author Mathieu Lafond
  */
@@ -47,11 +46,10 @@ public class Bibliotheque {
      * Crée une connexion sur la base de données,
      * traite toutes les transactions et
      * détruit la connexion.
-     *
-     * @param arguments - Les arguments du main.
+     * @param argv Donner en parametre
      * @throws Exception - Si une erreur survient.
      */
-    public static void main(String argv[]) throws Exception {
+    public static void main(String[] argv) throws Exception {
         // validation du nombre de paramètres
         if(argv.length < 4) {
             System.out.println("Usage: java Biblio <serveur> <bd> <user> <password> [<fichier-transactions>]");
@@ -175,10 +173,7 @@ public class Bibliotheque {
                 gestionBiblio.gestionInterrogation.listerLivres();
             } else if("listerLivresTitre".startsWith(command)) {
                 gestionBiblio.gestionInterrogation.listerLivresTitre(readString(tokenizer) /* mot */);
-            } // ne rien faire; c'est un commentaire
-            /* ***********************   */
-            /* TRANSACTION NON RECONNUEE */
-            /* ***********************   */ else {
+            } else {
                 System.out.println("  Transactions non reconnue.  Essayer \"aide\"");
             }
         } catch(BibliothequeException e) {
@@ -227,7 +222,7 @@ public class Bibliotheque {
             return true;
         }
 
-        StringTokenizer tokenizer = new StringTokenizer(transaction,
+        final StringTokenizer tokenizer = new StringTokenizer(transaction,
             " ");
 
         /* ligne ne contenant que des espaces */
@@ -236,7 +231,7 @@ public class Bibliotheque {
         }
 
         /* commande "exit" */
-        String commande = tokenizer.nextToken();
+        final String commande = tokenizer.nextToken();
         //On peut enlever le if...
         if(commande.equals("exit")) {
             return true;
@@ -245,7 +240,7 @@ public class Bibliotheque {
     }
 
     /**
-     * Lit une chaîne de caractères de la transaction
+     * Lit une chaîne de caractères de la transaction.
      *
      * @param tokenizer - La transaction à décoder
      * @return La chaîne de caractères lue
@@ -267,7 +262,7 @@ public class Bibliotheque {
      */
     static int readInt(StringTokenizer tokenizer) throws BibliothequeException {
         if(tokenizer.hasMoreElements()) {
-            String token = tokenizer.nextToken();
+            final String token = tokenizer.nextToken();
             try {
                 return Integer.valueOf(token).intValue();
             } catch(NumberFormatException e) {
@@ -288,7 +283,7 @@ public class Bibliotheque {
       */
     static long readLong(StringTokenizer tokenizer) throws BibliothequeException {
         if(tokenizer.hasMoreElements()) {
-            String token = tokenizer.nextToken();
+            final String token = tokenizer.nextToken();
             try {
                 return Long.valueOf(token).longValue();
             } catch(NumberFormatException e) {
@@ -309,7 +304,7 @@ public class Bibliotheque {
       */
     static String readDate(StringTokenizer tokenizer) throws BibliothequeException {
         if(tokenizer.hasMoreElements()) {
-            String token = tokenizer.nextToken();
+            final String token = tokenizer.nextToken();
             try {
                 FormatteurDate.convertirDate(token);
                 return token;
@@ -321,4 +316,4 @@ public class Bibliotheque {
         }
         throw new BibliothequeException("autre paramï¿½tre attendu");
     }
-}//class
+} //class
