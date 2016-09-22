@@ -1,25 +1,28 @@
+// Fichier MembreService.java
+// Auteur : Dominic Leroux
+// Date de création : 2016-09-14
 
 package ca.qc.collegeahuntsic.bibliotheque.service;
 
-import java.sql.SQLException;
 import ca.qc.collegeahuntsic.bibliotheque.dao.MembreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.ReservationDAO;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
-import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.ServiceException;
 
 /**
- * Gestion des transactions de reli�es � la cr�ation et
- * suppresion de membres dans une biblioth�que.
+ * Gestion des transactions de reliées à la création et
+ * suppression de membres dans une bibliothèque.
  *
- * Ce programme permet de g�rer les transaction reli�es � la
- * cr�ation et suppresion de membres.
+ * Ce programme permet de gérer les transaction reliées à la
+ * création et suppression de membres.
  *
- * Pr�-condition
- *   la base de donn�es de la biblioth�que doit exister
+ * Pré-condition
+ *   la base de données de la bibliothèque doit exister
  *
  * Post-condition
- *   le programme effectue les maj associ�es � chaque
+ *   le programme effectue les maj associées à chaque
  *   transaction
  *  @author Primavera Sequeira Steven
  */
@@ -32,10 +35,10 @@ public class MembreService {
 
     private ReservationDAO reservation;
 
-    /**.
-      * Creation d'une instance
-      * @param membre MembreDao qu'on recoit en parametre.
-      * @param reservation ReservationDAO qu'on recoit en parametre.
+    /**
+      * Création d'une instance.
+      * @param membre MembreDao qu'on reçoit en paramètre.
+      * @param reservation ReservationDAO qu'on reçoit en paramètre.
       */
     public MembreService(MembreDAO membre,
         ReservationDAO reservation) {
@@ -46,26 +49,22 @@ public class MembreService {
     }
 
     /**
-      * Ajout d'un nouveau membre dans la base de donnees.
-      * S'il existe deja, une exception est levee.
+      * Ajout d'un nouveau membre dans la base de donnée.
+      * S'il existe déja, une exception est levée.
       * @param idMembre id du membre qu'on veux inscrire.
-      * @param nom nom du membre qu'on veux inscrire.
-      * @param telephone numero de telephone du membre qu'on veux inscrire.
-      * @param limitePret limite de pret du membre qu'on veux inscrire.
-      * @throws SQLException -
-      * @throws BibliothequeException -
-      * @throws Exception -
+      * @param nom nom du membre qu'on veut inscrire.
+      * @param telephone numéro de téléphone du membre qu'on veux inscrire.
+      * @param limitePret limite de prêt du membre qu'on veux inscrire.
+      * @throws ServiceException -
       */
     public void inscrire(int idMembre,
         String nom,
         long telephone,
-        int limitePret) throws SQLException,
-        BibliothequeException,
-        Exception {
+        int limitePret) throws ServiceException {
         try {
-            /* V�rifie si le membre existe d�ja */
+            /* Vérifie si le membre existe déja */
             if(this.membre.existe(idMembre)) {
-                throw new BibliothequeException("Membre existe deja: "
+                throw new ServiceException("Membre existe déja: "
                     + idMembre);
             }
 
@@ -75,51 +74,51 @@ public class MembreService {
                 telephone,
                 limitePret);
             this.cx.commit();
-        } catch(Exception e) {
+        } catch(DAOException daoException) {
             this.cx.rollback();
-            throw e;
+            throw new ServiceException(daoException);
+        } catch(ConnectionException connexionException) {
+            throw new ServiceException(connexionException);
         }
     }
 
     /**
-      * Suppression d'un membre de la base de donnees.
-      * @param idMembre id du membre qu'on veux desinscrire.
-      * @throws SQLException -
-      * @throws BibliothequeException -
-      * @throws Exception -
+      * Suppression d'un membre de la base de données.
+      * @param idMembre id du membre qu'on veux désinscrire.
+      * @throws ServiceException -
       */
-    public void desinscrire(int idMembre) throws SQLException,
-        BibliothequeException,
-        Exception {
+    public void desinscrire(int idMembre) throws ServiceException {
         try {
-            /* V�rifie si le membre existe et son nombre de pret en cours */
+            /* Vérifie si le membre existe et son nombre de prêt en cours */
             final MembreDTO tupleMembre = this.membre.getMembre(idMembre);
             if(tupleMembre == null) {
-                throw new BibliothequeException("Membre inexistant: "
+                throw new ServiceException("Membre inexistant: "
                     + idMembre);
             }
             if(tupleMembre.getNbPret() > 0) {
-                throw new BibliothequeException("Le membre "
+                throw new ServiceException("Le membre "
                     + idMembre
-                    + " a encore des prets.");
+                    + " a encore des prêts.");
             }
             if(this.reservation.getReservationMembre(idMembre) != null) {
-                throw new BibliothequeException("Membre "
+                throw new ServiceException("Membre "
                     + idMembre
-                    + " a des r�servations");
+                    + " a des réservations");
             }
 
             /* Suppression du membre */
             final int nb = this.membre.desinscrire(idMembre);
             if(nb == 0) {
-                throw new BibliothequeException("Membre "
+                throw new ServiceException("Membre "
                     + idMembre
                     + " inexistant");
             }
             this.cx.commit();
-        } catch(Exception e) {
+        } catch(DAOException daoException) {
             this.cx.rollback();
-            throw e;
+            throw new ServiceException(daoException);
+        } catch(ConnectionException connexionException) {
+            throw new ServiceException(connexionException);
         }
     }
 } //class
