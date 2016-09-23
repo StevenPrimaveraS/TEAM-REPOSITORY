@@ -8,18 +8,18 @@ import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.exception.ConnexionException;
 
 /**
- * Gestion des transactions d'interrogation dans une biblioth�que.
+ * Gestion des transactions d'interrogation dans une bibliothèque.
  *
  * <pre>
  *
  *   Ce programme permet de faire diverses interrogations
- *   sur l'�tat de la biblioth�que.
+ *   sur l'état de la bibliothèque.
  *
- *   Pr�-condition
- *     la base de donn�es de la biblioth�que doit exister
+ *   Pré-condition
+ *     la base de données de la bibliothèque doit exister
  *
  *   Post-condition
- *     le programme effectue les maj associ�es � chaque
+ *     le programme effectue les maj associées à chaque
  *     transaction
  *
  *
@@ -39,10 +39,8 @@ public class GestionInterrogation {
     /**
      * Creation d'une instance.
      *
-     * @throws SQLException
-     *             -
-     * @param cx
-     *            -
+     * @throws SQLException - Exception SQl pour la classe GestionInterrogation
+     * @param cx - connexion de la classe
      */
     public GestionInterrogation(Connexion cx) throws SQLException {
 
@@ -58,10 +56,8 @@ public class GestionInterrogation {
     /**
      * Affiche les livres contenu un mot dans le titre.
      *
-     * @param mot
-     *            -
-     * @throws SQLException
-     *             -
+     * @param mot - String reçue en paramètre pour lister les livres
+     * @throws SQLException - Exception SQl pour la classe GestionInterrogation
      */
     public void listerLivresTitre(String mot) throws SQLException {
 
@@ -100,8 +96,7 @@ public class GestionInterrogation {
     /**
      * Affiche tous les livres de la BD.
      *
-     * @throws SQLException
-     *             -
+     * @throws SQLException - Exception SQl pour la classe GestionInterrogation
      */
     public void listerLivres() throws SQLException {
 
