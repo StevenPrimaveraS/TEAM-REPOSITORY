@@ -19,17 +19,17 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.ConnexionException;
  *
  * @author Mathieu Lafond
  */
-public class Connexion {
+public class Connexion implements AutoCloseable {
 
     private Connection conn;
 
     /**
      * Crée une connexion en mode autocommit false.
-     * @param serveur -
+     * @param serveur - serveur qu'on veut connecter
      * @param bd -
-     * @param user -
-     * @param pass -
-     * @throws ConnexionException -
+     * @param user - identifiant de l'utilisateur
+     * @param pass - mot de passe
+     * @throws ConnexionException - Exception de la classe Connexion
      */
     public Connexion(String serveur,
         String bd,
@@ -138,6 +138,19 @@ public class Connexion {
         } catch(SQLException sqlException) {
             throw new ConnexionException(sqlException);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void close() throws Exception {
+        rollback();
+        getConnection().close();
+        System.out.println("\nConnexion fermée"
+            + " "
+            + getConnection());
+
     }
 
     /**
