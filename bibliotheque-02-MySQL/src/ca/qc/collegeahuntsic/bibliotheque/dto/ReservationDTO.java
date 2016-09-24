@@ -7,7 +7,7 @@ package ca.qc.collegeahuntsic.bibliotheque.dto;
 import java.sql.Date;
 
 /**
- * Permet de representer un tuple de la table membre.
+ * DTO de la table reservation.
  *
  *@author Leroux Dominic
  */

@@ -33,22 +33,22 @@ public class ReservationDAO extends DAO {
     /**
       * Crée un DAO à partir d'une connexion à la base de données.
       *
-      * @param cx - La connexion à utiliser
+      * @param connexion - La connexion à utiliser
       * @throws DAOException si une erreur survient
       */
-    public ReservationDAO(Connexion cx) throws DAOException {
-        super(cx);
+    public ReservationDAO(Connexion connexion) throws DAOException {
+        super(connexion);
         try {
-            this.stmtExiste = cx.getConnection().prepareStatement("select idReservation, idLivre, idMembre, dateReservation "
+            this.stmtExiste = connexion.getConnection().prepareStatement("select idReservation, idLivre, idMembre, dateReservation "
                 + "from reservation where idReservation = ?");
-            this.stmtExisteLivre = cx.getConnection().prepareStatement("select idReservation, idLivre, idMembre, dateReservation "
+            this.stmtExisteLivre = connexion.getConnection().prepareStatement("select idReservation, idLivre, idMembre, dateReservation "
                 + "from reservation where idLivre = ? "
                 + "order by dateReservation");
-            this.stmtExisteMembre = cx.getConnection().prepareStatement("select idReservation, idLivre, idMembre, dateReservation "
+            this.stmtExisteMembre = connexion.getConnection().prepareStatement("select idReservation, idLivre, idMembre, dateReservation "
                 + "from reservation where idMembre = ? ");
-            this.stmtInsert = cx.getConnection().prepareStatement("insert into reservation (idReservation, idlivre, idMembre, dateReservation) "
+            this.stmtInsert = connexion.getConnection().prepareStatement("insert into reservation (idReservation, idlivre, idMembre, dateReservation) "
                 + "values (?,?,?,to_date(?,'YYYY-MM-DD'))");
-            this.stmtDelete = cx.getConnection().prepareStatement("delete from reservation where idReservation = ?");
+            this.stmtDelete = connexion.getConnection().prepareStatement("delete from reservation where idReservation = ?");
         } catch(SQLException sqlException) {
             throw new DAOException(sqlException);
         }

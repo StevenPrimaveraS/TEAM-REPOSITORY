@@ -7,15 +7,15 @@ package ca.qc.collegeahuntsic.bibliotheque.facade;
 import java.io.Serializable;
 
 /**.
- * TODO Auto-generated class javadoc
+ * Classe de base pour toutes les façades.
  *
  * @author Primavera Sequeira Steven
  */
 public class Facade implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    /**.
-     * TODO Auto-generated class javadoc
+    /**
+     * Constructeur par défaut.
      *
      * @author Primavera Sequeira Steven
      */

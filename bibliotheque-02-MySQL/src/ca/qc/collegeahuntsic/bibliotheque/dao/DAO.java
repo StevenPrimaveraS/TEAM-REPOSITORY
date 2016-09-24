@@ -20,25 +20,26 @@ public class DAO implements Serializable {
      *
      * @param connexion - La connexion à utiliser
      */
-    private Connexion cx;
+    private Connexion connexion;
 
     /**
      * Constructeur de DAO de base.
      *
-     * @param cx connexion à utiliser
+     * @param connexion connexion à utiliser
      */
-    public DAO(Connexion cx) {
+    public DAO(Connexion connexion) {
         super();
-        this.cx = cx;
+        this.connexion = connexion;
     }
 
     /**
      * Getter de la variable d'instance this.connexion.
+     * 
      * @return Connexion retourne la variable d'instance connexion
      */
     public Connexion getConnexion() {
 
-        return this.cx;
+        return this.connexion;
     }
 
 }

@@ -2,7 +2,7 @@
 // Auteur : Anthony Chan
 // Date de création : 2016-09-12
 /**
- * TODO Auto-generated class javadoc.
+ * Provides the exception classes used with the bibliothèque.
  *
  * @author Anthony Chan
  */

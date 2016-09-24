@@ -2,7 +2,7 @@
 // Auteur : Primavera Sequeira Steven
 // Date de creation : 2016-09-12
 /**
- * Provides the DAO classes used with the biblioth�que.
+ * Provides the DAO classes used with the bibliothèque.
  *
  * @author Mathieu Lafond
  */

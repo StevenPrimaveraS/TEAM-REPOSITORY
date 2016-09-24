@@ -5,7 +5,7 @@
 package ca.qc.collegeahuntsic.bibliotheque.dto;
 
 /**
- * Permet de representer un tuple de la table membre.
+ * DTO de la table membre.
  *
  *@author Leroux Dominic
  */
@@ -23,7 +23,7 @@ public class MembreDTO {
     private String nom;
 
     /**
-     * Constructeur de MembreDTO.
+     * Constructeur de MembreDTO par défaut.
      *
      *@author Leroux Dominic
      */

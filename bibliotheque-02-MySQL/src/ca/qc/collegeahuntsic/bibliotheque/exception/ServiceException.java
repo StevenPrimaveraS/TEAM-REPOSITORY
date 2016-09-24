@@ -5,7 +5,7 @@
 package ca.qc.collegeahuntsic.bibliotheque.exception;
 
 /**
- * TODO Auto-generated class javadoc.
+ * Cette exception est utilisée en cas de problème avec un objet Service.
  *
  * @author Anthony Chan
  */

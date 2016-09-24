@@ -32,6 +32,7 @@ public class LivreDAO extends DAO {
 
     /**
      * Crée un DAO à partir d'une connexion à la base de données.
+     * 
      * @param cx - La connexion à utiliser.
      * @throws SQLException si une erreur survient.
      * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
@@ -53,6 +54,7 @@ public class LivreDAO extends DAO {
 
     /**
       * Verifie si un livre existe.
+      * 
       * @param idLivre identifiant du livre
       * @throws SQLException si une erreur survient
       * @return boolean si le livre existe ou pas
@@ -73,6 +75,7 @@ public class LivreDAO extends DAO {
 
     /**
       * Lecture d'un livre.
+      * 
       * @param idLivre identifiant du livre
       * @throws SQLException si une erreur survient
       * @return LivreDTO retourne un DTO de livre
@@ -103,6 +106,7 @@ public class LivreDAO extends DAO {
 
     /**
       * Ajout d'un nouveau livre dans la base de donnees.
+      * 
       * @param idLivre identifiant du livre
       * @param titre titre du livre
       * @param auteur auteur du livre
@@ -132,6 +136,7 @@ public class LivreDAO extends DAO {
 
     /**
       * Enregistrement de l'emprunteur d'un livre.
+      * 
       * @param idLivre identifiant du livre
       * @param idMembre identifiant du membre
       * @param datePret date du Pret
@@ -158,6 +163,7 @@ public class LivreDAO extends DAO {
 
     /**
       * Rendre le livre disponible (non-prete).
+      * 
       * @param idLivre identifiant du livre
       * @throws SQLException si une erreur survient
       * @return int resultat de la commande de pret
@@ -180,6 +186,7 @@ public class LivreDAO extends DAO {
 
     /**
       * Suppression d'un livre.
+      * 
       * @param idLivre identifiant du livre
       * @throws SQLException si une erreur survient
       * @return int resultat de la commande de pret

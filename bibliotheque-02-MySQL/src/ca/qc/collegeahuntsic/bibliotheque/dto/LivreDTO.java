@@ -7,7 +7,7 @@ package ca.qc.collegeahuntsic.bibliotheque.dto;
 import java.sql.Date;
 
 /**
- * Permet de representer un tuple de la table livre.
+ * DTO de la table livre.
  *
  *@author Leroux Dominic
 */
@@ -27,7 +27,7 @@ public class LivreDTO {
     private Date datePret;
 
     /**
-     * Constructeur de LivreDTO.
+     * Constructeur de LivreDTO par défaut.
      *
      *@author Leroux Dominic
     */

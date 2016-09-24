@@ -15,7 +15,6 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
  * DAO pour effectuer des CRUDs avec la table membre.
  *
  * @author Mathieu Lafond
- *
  */
 
 public class MembreDAO extends DAO {
@@ -33,19 +32,20 @@ public class MembreDAO extends DAO {
 
     /**
      * Crée un DAO à partir d'une connexion à la base de données.
-     * @param cx - La connexion à utiliser
+     * 
+     * @param connexion - La connexion à utiliser
      * @throws SQLException si une erreur survient
      * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
      */
-    public MembreDAO(Connexion cx) throws DAOException {
-        super(cx);
+    public MembreDAO(Connexion connexion) throws DAOException {
+        super(connexion);
         try {
-            this.stmtExiste = cx.getConnection().prepareStatement("select idMembre, nom, telephone, limitePret, nbpret from membre where idmembre = ?");
-            this.stmtInsert = cx.getConnection().prepareStatement("insert into membre (idmembre, nom, telephone, limitepret, nbpret) "
+            this.stmtExiste = connexion.getConnection().prepareStatement("select idMembre, nom, telephone, limitePret, nbpret from membre where idmembre = ?");
+            this.stmtInsert = connexion.getConnection().prepareStatement("insert into membre (idmembre, nom, telephone, limitepret, nbpret) "
                 + "values (?,?,?,?,0)");
-            this.stmtUpdateIncrNbPret = cx.getConnection().prepareStatement("update membre set nbpret = nbPret + 1 where idMembre = ?");
-            this.stmtUpdateDecNbPret = cx.getConnection().prepareStatement("update membre set nbpret = nbPret - 1 where idMembre = ?");
-            this.stmtDelete = cx.getConnection().prepareStatement("delete from membre where idmembre = ?");
+            this.stmtUpdateIncrNbPret = connexion.getConnection().prepareStatement("update membre set nbpret = nbPret + 1 where idMembre = ?");
+            this.stmtUpdateDecNbPret = connexion.getConnection().prepareStatement("update membre set nbpret = nbPret - 1 where idMembre = ?");
+            this.stmtDelete = connexion.getConnection().prepareStatement("delete from membre where idmembre = ?");
         } catch(SQLException sqlException) {
             throw new DAOException(sqlException);
         }
@@ -53,6 +53,7 @@ public class MembreDAO extends DAO {
 
     /**
       * Verifie si un membre existe.
+      * 
       * @param idMembre identifiant du membre
       * @return boolean si le livre existe ou pas
       * @throws SQLException si une erreur survient
@@ -73,6 +74,7 @@ public class MembreDAO extends DAO {
 
     /**
       * Lecture d'un membre.
+      * 
       * @param idMembre identifiant du membre.
       * @throws SQLException si une erreur survient.
       * @return MembreDTO.
@@ -102,6 +104,7 @@ public class MembreDAO extends DAO {
 
     /**
       * Ajout d'un nouveau membre.
+      * 
       * @param idMembre identificateur du membre
       * @param nom nom du membre
       * @param telephone numero de telephone du membre
@@ -131,6 +134,7 @@ public class MembreDAO extends DAO {
 
     /**
       * Incrementer le nb de pret d'un membre.
+      * 
       * @param idMembre identifiant du membre
       * @throws SQLException si une erreur survient
       * @return int resultat de la commande de pret
@@ -148,6 +152,7 @@ public class MembreDAO extends DAO {
 
     /**
       * Decrementer le nb de pret d'un membre.
+      * 
       * @param idMembre identifiant du membre
       * @throws SQLException si une erreur survient
       * @return int resultat de la commande de retour
@@ -165,6 +170,7 @@ public class MembreDAO extends DAO {
 
     /**
       * Suppression d'un membre.
+      * 
       * @param idMembre identifiant du membre
       * @throws SQLException si une erreur survient
       * @return int resultat de la suppression

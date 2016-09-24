@@ -5,18 +5,13 @@
 package ca.qc.collegeahuntsic.bibliotheque.exception;
 
 /**
- * L'exception BibliothequeException est levée lorsqu'une transaction est inadéquate.
- * Par exemple -- livre inexistant
+ * Cette exception est utilisée en cas de problème avec l'exécution de la bibliothèque.
  *
  * @author Anthony Chan
  */
 
 public final class BibliothequeException extends Exception {
-    /**
-     * TODO Auto-generated class javadoc.
-     *
-     * @author Anthony Chan
-     */
+	
     private static final long serialVersionUID = 1L;
 
     /**
