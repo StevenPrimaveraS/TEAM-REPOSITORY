@@ -9,7 +9,7 @@ import java.sql.Date;
 /**
  * DTO de la table reservation.
  *
- *@author Leroux Dominic
+ * @author Leroux Dominic
  */
 
 public class ReservationDTO {
@@ -25,7 +25,7 @@ public class ReservationDTO {
     /**
      * Constructeur de ReservationDTO.
      *
-     *@author Leroux Dominic
+     * @author Leroux Dominic
      */
     public ReservationDTO() {
 

@@ -1,3 +1,6 @@
+// Fichier GestionBibliotheque.java
+// Auteur : Mathieu Lafond
+// Date de création : 2016-09-14
 
 package ca.qc.collegeahuntsic.bibliotheque.util;
 
@@ -6,7 +9,6 @@ import ca.qc.collegeahuntsic.bibliotheque.dao.LivreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.MembreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.ReservationDAO;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
-import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.ConnexionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.ServiceException;
@@ -54,18 +56,17 @@ public class GestionBibliotheque {
     /**
      * Ouvre une connexion avec la BD relationnelle et alloue les gestionnaires
      * de transactions et de tables.
+     * 
      * @param serveur SQL
      * @param bd nom de la bade de données
      * @param user user id pour établir une connexion avec le serveur SQL
      * @param password mot de passe pour le user id
-     * @throws BibliothequeException -
-     * @throws SQLException -
+     * @throws SQLException - si une erreur survient
      */
     public GestionBibliotheque(String serveur,
         String bd,
         String user,
-        String password) throws BibliothequeException,
-        SQLException {
+        String password) throws SQLException {
         // allocation des objets pour le traitement des transactions
         try {
             this.cx = new Connexion(serveur,
@@ -265,7 +266,7 @@ public class GestionBibliotheque {
     /**
      * Fermeture de la connexion.
      * 
-     * @throws SQLException -
+     * @throws SQLException - si une erreur survient
      */
     public void fermer() {
         // fermeture de la connexion

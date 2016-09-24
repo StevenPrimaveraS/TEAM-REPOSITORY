@@ -17,7 +17,7 @@ public class DTO implements Serializable {
     /**
      * Constructeur de DTO par défaut.
      *
-     *@author Leroux Dominic
+     * @author Leroux Dominic
      */
     public DTO() {
 

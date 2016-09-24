@@ -48,7 +48,7 @@ public class MembreService {
      * @param nom nom du membre qu'on veut inscrire.
      * @param telephone numéro de téléphone du membre qu'on veux inscrire.
      * @param limitePret limite de prêt du membre qu'on veux inscrire.
-     * @throws ServiceException -
+     * @throws ServiceException - Si une erreur survient.
      */
     public void inscrire(int idMembre,
         String nom,
@@ -84,7 +84,7 @@ public class MembreService {
      * Suppression d'un membre de la base de données.
      * 
      * @param idMembre id du membre qu'on veut désinscrire.
-     * @throws ServiceException -
+     * @throws ServiceException - Si une erreur survient
      */
     public void desinscrire(int idMembre) throws ServiceException {
         try {

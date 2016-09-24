@@ -1,8 +1,10 @@
+// Fichier PretService.java
+// Auteur : Dominic Leroux
+// Date de création : 2016-09-14
 
 package ca.qc.collegeahuntsic.bibliotheque.service;
 
 import java.sql.Date;
-import java.sql.SQLException;
 import ca.qc.collegeahuntsic.bibliotheque.dao.LivreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.MembreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.ReservationDAO;
@@ -59,16 +61,14 @@ public class PretService {
      * Pret d'un livre à un membre. Le livre ne doit pas être prêté. Le membre
      * ne doit pas avoir dépassé sa limite de pret.
      *
-     * @param idLivre paramtere livre a donner en utilisant la méthode.
-     * @param idMembre paramadetre idMembre qu'on doit donner en utilisant la méthode.
-     * @param datePret date dur pret qu'on recoit dans la méthode.            -
-     * @throws ServiceException -
-     * @throws SQLException -
+     * @param idLivre paramtère livre a donner en utilisant la méthode.
+     * @param idMembre paramètre idMembre qu'on doit donner en utilisant la méthode.
+     * @param datePret date dur prêt qu'on recoit dans la méthode.
+     * @throws ServiceException - Si une erreur survient
      */
     public void preter(int idLivre,
         int idMembre,
-        String datePret) throws ServiceException,
-        SQLException {
+        String datePret) throws ServiceException {
         try {
             /* Verifier si le livre est disponible */
             final LivreDTO tupleLivre = this.livre.getLivre(idLivre);
@@ -136,17 +136,12 @@ public class PretService {
      * Renouvellement d'un pret. Le livre doit être prêté. Le livre ne doit pas
      * être réservé.
      *
-     * @param idLivre
-     *            id du Livre qu'on veux renouveler
-     * @param datePret
-     *            date de pret du livre qu'on veux renouveler.            -
-     * @throws ServiceException
-     *             -            -
-     * @throws SQLException -
+     * @param idLivre id du Livre qu'on veut renouveler.
+     * @param datePret date de prêt du livre qu'on veut renouveler.            -
+     * @throws ServiceException - Si une erreur survient.
      */
     public void renouveler(int idLivre,
-        String datePret) throws ServiceException,
-        SQLException {
+        String datePret) throws ServiceException {
         try {
             /* Verifier si le livre est prêté */
             final LivreDTO tupleLivre = this.livre.getLivre(idLivre);
@@ -157,12 +152,12 @@ public class PretService {
             if(tupleLivre.getIdMembre() == 0) {
                 throw new ServiceException("Livre "
                     + idLivre
-                    + " n'est pas prete");
+                    + " n'est pas prêté");
             }
 
             /* Verifier si date renouvellement >= datePret */
             if(Date.valueOf(datePret).before(tupleLivre.getDatePret())) {
-                throw new ServiceException("Date de renouvellement inferieure � la date de pret");
+                throw new ServiceException("Date de renouvellement inférieure à la date de prêt");
             }
 
             /* Vérifie s'il existe une réservation pour le livre */
@@ -179,7 +174,7 @@ public class PretService {
                 tupleLivre.getIdMembre(),
                 datePret);
             if(nb1 == 0) {
-                throw new ServiceException("Livre supprime par une autre transaction");
+                throw new ServiceException("Livre supprimé par une autre transaction");
             }
             this.connexion.commit();
         } catch(
@@ -199,13 +194,11 @@ public class PretService {
      * Retourner un livre prêté Le livre doit être prêté.
      *
      * @param idLivre id du livre qu'on retourne
-     * @param dateRetour date du retour du livre qu'on veux retourner
-     * @throws ServiceException -
-     * @throws SQLException -
+     * @param dateRetour date du retour du livre qu'on veut retourner
+     * @throws ServiceException - Si une erreur surtvient
      */
     public void retourner(int idLivre,
-        String dateRetour) throws ServiceException,
-        SQLException {
+        String dateRetour) throws ServiceException{
         try {
             /* Verifier si le livre est prêté */
             final LivreDTO tupleLivre = this.livre.getLivre(idLivre);
@@ -221,10 +214,10 @@ public class PretService {
 
             /* Verifier si date retour >= datePret */
             if(Date.valueOf(dateRetour).before(tupleLivre.getDatePret())) {
-                throw new ServiceException("Date de retour inferieure à la date de pret");
+                throw new ServiceException("Date de retour inférieure à la date de prêt");
             }
 
-            /* Retour du pret. */
+            /* Retour du prêt. */
             final int nb1 = this.livre.retourner(idLivre);
             if(nb1 == 0) {
                 throw new ServiceException("Livre supprimé par une autre transaction");

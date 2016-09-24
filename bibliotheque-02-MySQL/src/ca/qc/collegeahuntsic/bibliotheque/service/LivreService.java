@@ -1,7 +1,9 @@
+// Fichier LivreService.java
+// Auteur : Dominic Leroux
+// Date de création : 2016-09-14
 
 package ca.qc.collegeahuntsic.bibliotheque.service;
 
-import java.sql.SQLException;
 import ca.qc.collegeahuntsic.bibliotheque.dao.LivreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.ReservationDAO;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
@@ -27,7 +29,7 @@ public class LivreService {
      * Crée le service de la table livre.
      * 
      * @param livre - livreDAO
-     * @param reservation - Gere une reservation
+     * @param reservation - Gère une reservation
      */
     public LivreService(LivreDAO livre,
         ReservationDAO reservation) {
@@ -44,12 +46,13 @@ public class LivreService {
 	 * @param titre titre du livre qu'on veux acquerir.
 	 * @param auteur auteur du livre qu'on veux acquerir.
 	 * @param dateAcquisition date d'acquisition du livre qu'on veux acquerir.
-	 * @throws ServiceException -
+	 * @throws ServiceException - Si une erreur survient
+	 * @throws ConnexionException - Si le commit a échoué
 	 */
     public void acquerir(int idLivre,
         String titre,
         String auteur,
-        String dateAcquisition) throws ServiceException {
+        String dateAcquisition) throws ServiceException,ConnexionException{
         try {
             /* Vérifie si le livre existe déjà */
             if(this.livre.existe(idLivre)) {
@@ -78,9 +81,7 @@ public class LivreService {
      * Vente d'un livre.
      * 
      * @param idLivre id du livre qu'on veux vendre.
-     * @throws SQLException -
-     * @throws ServiceException -
-     * @throws Exception -
+     * @throws ServiceException - Si une erreur survient
      */
     public void vendre(int idLivre) throws ServiceException {
         LivreDTO tupleLivre = null;

@@ -1,3 +1,6 @@
+// Fichier Bibliotheque.java
+// Auteur : Mathieu Lafond
+// Date de création : 2016-09-14
 
 package ca.qc.collegeahuntsic.bibliotheque;
 
@@ -284,12 +287,12 @@ public final class Bibliotheque {
     }
 
     /**
-      * Lit un long de la transaction.
-      *
-      * @param tokenizer - La transaction à décoder
-      * @return Le long lu
-      * @throws BibliothequeException - Si l'élément lu est manquant ou n'est pas un long
-      */
+     * Lit un long de la transaction.
+     *
+     * @param tokenizer - La transaction à décoder
+     * @return Le long lu
+     * @throws BibliothequeException - Si l'élément lu est manquant ou n'est pas un long
+     */
     static long readLong(StringTokenizer tokenizer) throws BibliothequeException {
         if(tokenizer.hasMoreElements()) {
             final String token = tokenizer.nextToken();
@@ -305,12 +308,12 @@ public final class Bibliotheque {
     }
 
     /**
-      * Lit une date au format YYYY-MM-DD de la transaction.
-      *
-      * @param tokenizer - La transaction à décoder
-      * @return La date lue
-      * @throws BibliothequeException - Si l'élément lu est manquant ou n'est pas une date correctement formatée
-      */
+     * Lit une date au format YYYY-MM-DD de la transaction.
+     *
+     * @param tokenizer - La transaction à décoder
+     * @return La date lue
+     * @throws BibliothequeException - Si l'élément lu est manquant ou n'est pas une date correctement formatée
+     */
     static String readDate(StringTokenizer tokenizer) throws BibliothequeException {
         if(tokenizer.hasMoreElements()) {
             final String token = tokenizer.nextToken();

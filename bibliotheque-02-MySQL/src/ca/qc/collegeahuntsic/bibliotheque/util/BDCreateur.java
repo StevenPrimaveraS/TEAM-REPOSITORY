@@ -1,3 +1,6 @@
+// Fichier BDCreateur.java
+// Auteur : Mathieu Lafond
+// Date de création : 2016-09-14
 
 package ca.qc.collegeahuntsic.bibliotheque.util;
 
@@ -6,14 +9,14 @@ import java.sql.Statement;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 
 /**
- *Permet de créer la BD utilisée par Biblio.java.
- *Paramètres:0- serveur SQL
- *           1- bd nom de la BD
- *           2- user id pour établir une connexion avec le serveur SQL
- *           3- mot de passe pour le user id
+ * Permet de créer la BD utilisée par Biblio.java.
+ * Paramètres:
+ *   0- serveur SQL
+ *   1- bd nom de la BD
+ *   2- user id pour établir une connexion avec le serveur SQL
+ *   3- mot de passe pour le user id
  *
- *
- * @author Mathieu
+ * @author Mathieu Lafond
  */
 final class BDCreateur {
     /**
@@ -35,9 +38,9 @@ final class BDCreateur {
 	 *  2 - Nom d'utilisateur sur le serveur SQL
 	 *  3 - Mot de passe sur le serveur SQL
 	 * 
-     * @param args -
-     * @throws Exception -
-     * @throws SQLException -
+     * @param args - arguments de main, voir plus haut
+     * @throws Exception - si une erreurSurvient
+     * @throws SQLException - si une erreur survient
      */
     public static void main(String[] args) throws Exception,
         SQLException {

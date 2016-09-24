@@ -7,7 +7,7 @@ package ca.qc.collegeahuntsic.bibliotheque.dto;
 /**
  * DTO de la table membre.
  *
- *@author Leroux Dominic
+ * @author Leroux Dominic
  */
 
 public class MembreDTO {
@@ -25,7 +25,7 @@ public class MembreDTO {
     /**
      * Constructeur de MembreDTO par défaut.
      *
-     *@author Leroux Dominic
+     * @author Leroux Dominic
      */
     public MembreDTO() {
 

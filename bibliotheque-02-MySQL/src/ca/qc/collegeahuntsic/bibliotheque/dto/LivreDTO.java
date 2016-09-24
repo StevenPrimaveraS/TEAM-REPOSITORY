@@ -9,8 +9,8 @@ import java.sql.Date;
 /**
  * DTO de la table livre.
  *
- *@author Leroux Dominic
-*/
+ * @author Leroux Dominic
+ */
 
 public class LivreDTO {
 
@@ -29,8 +29,8 @@ public class LivreDTO {
     /**
      * Constructeur de LivreDTO par défaut.
      *
-     *@author Leroux Dominic
-    */
+     * @author Leroux Dominic
+     */
 
     public LivreDTO() {
 

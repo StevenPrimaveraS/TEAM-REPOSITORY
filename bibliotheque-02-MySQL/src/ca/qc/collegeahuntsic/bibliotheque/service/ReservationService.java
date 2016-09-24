@@ -1,3 +1,6 @@
+// Fichier ReservationService.java
+// Auteur : Dominic Leroux
+// Date de création : 2016-09-14
 
 package ca.qc.collegeahuntsic.bibliotheque.service;
 
@@ -10,7 +13,6 @@ import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
-import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.ConnexionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.ServiceException;
@@ -32,14 +34,14 @@ public class ReservationService {
     private Connexion cx;
 
     /**
-     * Creation d'une instance. La connection de l'instance de livre et de
-     * membre doit être la même que cx, afin d'assurer l'intégrité des
+     * Création d'une instance. La connection de l'instance de livre et de
+     * membre doit être la même que connexion, afin d'assurer l'intégrité des
      * transactions.
      *
-     * @param livre - livre qu'on recoit en parametre dans la methode
-     * @param membre - membre qu'on recoit en parametre dans la methode
-     * @param reservation - operation qu'on recoit en parametre dans la methode
-     * @throws ServiceException -
+     * @param livre - livre qu'on recoit en paramètre dans la méthode
+     * @param membre - membre qu'on recoit en paramètre dans la méthode
+     * @param reservation - opération qu'on recoit en paramètre dans la méthode
+     * @throws ServiceException - si une erreur survient
      */
     public ReservationService(LivreDAO livre,
         MembreDAO membre,
@@ -58,14 +60,11 @@ public class ReservationService {
     /**
      * Réservation d'un livre par un membre. Le livre doit être prété.
      *
-     * @param idReservation - id de la reservation qu'on veux reserver.
-     * @param idLivre - id du livre qu'on veux reserver.
-     * @param idMembre - id du livre qu'on veux reserver
-     * @param dateReservation - date de la reservation.
-     * @throws ServiceException -
-     * @throws SQLException -
-     * @throws BibliothequeException -
-     * @throws ConnexionException -
+     * @param idReservation - id de la réservation qu'on veut réserver.
+     * @param idLivre - id du livre qu'on veut réserver.
+     * @param idMembre - id du livre qu'on veut réserver
+     * @param dateReservation - date de la réservation.
+     * @throws ServiceException - Si une erreur survient
      */
     public void reserver(int idReservation,
         int idLivre,
@@ -74,7 +73,7 @@ public class ReservationService {
         SQLException,
         ConnexionException {
         try {
-            /* Verifier que le livre est preté */
+            /* Verifier que le livre est prêté */
             final LivreDTO tupleLivre = this.livre.getLivre(idLivre);
             if(tupleLivre == null) {
                 throw new ServiceException("Livre inexistant: "
@@ -83,12 +82,12 @@ public class ReservationService {
             if(tupleLivre.getIdMembre() == 0) {
                 throw new ServiceException("Livre "
                     + idLivre
-                    + " n'est pas prete");
+                    + " n'est pas prêté");
             }
             if(tupleLivre.getIdMembre() == idMembre) {
                 throw new ServiceException("Livre "
                     + idLivre
-                    + " déjà prete a ce membre");
+                    + " déjà prêté à ce membre");
             }
 
             /* Vérifier que le membre existe */
@@ -98,16 +97,16 @@ public class ReservationService {
                     + idMembre);
             }
 
-            /* Verifier si date reservation >= datePret */
+            /* Verifier si date réservation >= datePret */
             if(Date.valueOf(dateReservation).before(tupleLivre.getDatePret())) {
-                throw new ServiceException("Date de reservation inferieure à la date de pret");
+                throw new ServiceException("Date de reservation inférieure à la date de prêt");
             }
 
             /* Vérifier que la réservation n'existe pas */
             if(this.reservation.existe(idReservation)) {
                 throw new ServiceException("Réservation "
                     + idReservation
-                    + " existe deja");
+                    + " existe déjà");
             }
 
             /* Creation de la reservation */
@@ -126,19 +125,15 @@ public class ReservationService {
 
     /**
      * Prise d'une réservation. Le livre ne doit pas être prété. Le membre ne
-     * doit pas avoir dépassé sa limite de pret. La réservation doit la tre la
+     * doit pas avoir dépassé sa limite de pret. La réservation doit la être la
      * première en liste.
      *
-     * @param idReservation - id de la reservation.
-     * @param datePret - date du pret de la reservation.
-     * @throws ServiceException  -
-     * @throws SQLException -
-     * @throws BibliothequeException -
-     * @throws Exception -
+     * @param idReservation - id de la réservation.
+     * @param datePret - date du prêt de la réservation.
+     * @throws ServiceException - Si une erreur survient
      */
     public void prendreRes(int idReservation,
-        String datePret) throws ServiceException,
-        SQLException {
+        String datePret) throws ServiceException{
         try {
             /* Vérifie s'il existe une réservation pour le livre */
             final ReservationDTO tupleReservation = this.reservation.getReservation(idReservation);
@@ -216,14 +211,10 @@ public class ReservationService {
     /**
      * Annulation d'une réservation. La réservation doit exister.
      *
-     * @param idReservation - id de la reservation qu'on veux annuler.
-     * @throws SQLException -
-     * @throws BibliothequeException -
-     * @throws Exception -
+     * @param idReservation - id de la réservation qu'on veux annuler.
+     * @throws ServiceException - Si une erreur survient.
      */
-    public void annulerRes(int idReservation) throws SQLException,
-        BibliothequeException,
-        Exception {
+    public void annulerRes(int idReservation) throws ServiceException{
         try {
 
             /* Vérifier que la réservation existe */
@@ -234,8 +225,13 @@ public class ReservationService {
             }
 
             this.cx.commit();
-        } catch(DAOException daoException) {
-            this.cx.rollback();
+        } catch(DAOException | ConnexionException daoException) {
+            try {
+				this.cx.rollback();
+			} catch (ConnexionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             throw new ServiceException(daoException);
         }
     }

@@ -44,7 +44,7 @@ public class Connexion implements AutoCloseable {
                     user,
                     pass);
             }
-            if("distant".equals(serveur)) {
+            else if("distant".equals(serveur)) {
                 d = (Driver) Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
                 DriverManager.registerDriver(d);
                 this.connexion = DriverManager.getConnection("jdbc:oracle:thin:@collegeahuntsic.info:1521:"
@@ -130,7 +130,7 @@ public class Connexion implements AutoCloseable {
      * Effectue un rollback sur la Connection JDBC.
      *
      * @throws ConnexionException
-     *             - S'il y a une erreur avec la base de données
+     *         - S'il y a une erreur avec la base de données
      */
     public void rollback() throws ConnexionException {
         try {

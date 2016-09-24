@@ -1,3 +1,6 @@
+// Fichier GestionInterrogation.java
+// Auteur : Mathieu Lafond
+// Date de création : 2016-09-14
 
 package ca.qc.collegeahuntsic.bibliotheque.util;
 
@@ -9,14 +12,12 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.ConnexionException;
 
 /**
  * Gestion des transactions d'interrogation dans une bibliothèque.
- *
  * Ce programme permet de faire diverses interrogations
  * sur l'état de la bibliothèque.
- *
- * Pré-condition
- *   la base de données de la bibliothèque doit exister.
- *   
- * Post-condition
+ * 
+ * Pré-condition : 
+ *   la base de données de la bibliothèque doit exister.   
+ * Post-condition : 
  *   le programme effectue les maj associées à chaque transaction.
  *
  * @author Mathieu Lafond
