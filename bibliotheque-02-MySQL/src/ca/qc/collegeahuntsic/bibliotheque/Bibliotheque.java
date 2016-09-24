@@ -43,8 +43,8 @@ public final class Bibliotheque {
 
     private static boolean lectureAuClavier;
 
-    /**.
-     * TODO Auto-generated class javadoc
+    /**
+     * Constructeur privé pour empêcher toute instanciation.
      *
      * @author Primavera Sequeira Steven
      */
@@ -57,7 +57,8 @@ public final class Bibliotheque {
      * Crée une connexion sur la base de données,
      * traite toutes les transactions et
      * détruit la connexion.
-     * @param argv Donner en parametre
+     * 
+     * @param argv - Les arguments du main
      * @throws Exception - Si une erreur survient.
      */
     public static void main(String[] argv) throws Exception {
@@ -94,11 +95,11 @@ public final class Bibliotheque {
     }
 
     /**
-      * Traite le fichier de transactions.
-      *
-      * @param reader - Le flux d'entrée à lire.
-      * @throws Exception - Si une erreur survient.
-      */
+     * Traite le fichier de transactions.
+     *
+     * @param reader - Le flux d'entrée à lire.
+     * @throws Exception - Si une erreur survient.
+     */
     static void traiterTransactions(BufferedReader reader) throws Exception {
         afficherAide();
         String transaction = lireTransaction(reader);
@@ -114,12 +115,12 @@ public final class Bibliotheque {
     }
 
     /**
-      * Lit une transaction.
-      *
-      * @param reader Le flux d'entrée à lire
-      * @return La transaction lue
-      * @throws IOException - Si une erreur de lecture survient
-      */
+     * Lit une transaction.
+     *
+     * @param reader Le flux d'entrée à lire
+     * @return La transaction lue
+     * @throws IOException - Si une erreur de lecture survient
+     */
     static String lireTransaction(BufferedReader reader) throws IOException {
         System.out.print("> ");
         final String transaction = reader.readLine();
@@ -131,12 +132,12 @@ public final class Bibliotheque {
     }
 
     /**
-      * Décode et traite une transaction.
-      *
-      * @param tokenizer - L'entrée à décoder
-      * @throws BibliothequeException - Si une erreur survient
-      * @throws Exception -
-      */
+     * Décode et traite une transaction.
+     *
+     * @param tokenizer - L'entrée à décoder
+     * @throws BibliothequeException - Si une erreur survient
+     * @throws Exception -
+     */
     static void executerTransaction(StringTokenizer tokenizer) throws Exception {
         try {
             final String command = tokenizer.nextToken();
@@ -244,10 +245,7 @@ public final class Bibliotheque {
         /* commande "exit" */
         final String commande = tokenizer.nextToken();
         //On peut enlever le if...
-        if("exit".equals(commande)) {
-            return true;
-        }
-        return false;
+        return "exit".equals(commande);
     }
 
     /**
@@ -277,12 +275,12 @@ public final class Bibliotheque {
             try {
                 return Integer.valueOf(token).intValue();
             } catch(NumberFormatException e) {
-                throw new BibliothequeException("Nombre attendu a la place de \""
+                throw new BibliothequeException("Nombre attendu à la place de \""
                     + token
                     + "\"");
             }
         }
-        throw new BibliothequeException("autre paramï¿½tre attendu");
+        throw new BibliothequeException("autre paramètre attendu");
     }
 
     /**
@@ -298,12 +296,12 @@ public final class Bibliotheque {
             try {
                 return Long.valueOf(token).longValue();
             } catch(NumberFormatException e) {
-                throw new BibliothequeException("Nombre attendu ï¿½ la place de \""
+                throw new BibliothequeException("Nombre attendu à la place de \""
                     + token
                     + "\"");
             }
         }
-        throw new BibliothequeException("autre paramï¿½tre attendu");
+        throw new BibliothequeException("autre paramètre attendu");
     }
 
     /**
@@ -320,11 +318,11 @@ public final class Bibliotheque {
                 FormatteurDate.convertirDate(token);
                 return token;
             } catch(ParseException e) {
-                throw new BibliothequeException("Date en format YYYY-MM-DD attendue ï¿½ la place  de \""
+                throw new BibliothequeException("Date en format YYYY-MM-DD attendue à la place  de \""
                     + token
                     + "\"");
             }
         }
-        throw new BibliothequeException("autre paramï¿½tre attendu");
+        throw new BibliothequeException("autre paramètre attendu");
     }
 } //class

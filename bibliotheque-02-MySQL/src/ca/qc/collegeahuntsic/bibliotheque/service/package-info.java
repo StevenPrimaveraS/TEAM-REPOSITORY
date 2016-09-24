@@ -2,7 +2,7 @@
 // Auteur : Primavera Sequeira Steven
 // Date de création : 2016-09-12
 /**.
- * TODO Auto-generated class javadoc
+ * Provides the Service classes used with the bibliothèque.
  *
  * @author Primavera Sequeira Steven
  */

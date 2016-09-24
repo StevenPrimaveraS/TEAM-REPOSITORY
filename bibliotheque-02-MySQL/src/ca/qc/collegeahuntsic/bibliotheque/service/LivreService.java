@@ -11,19 +11,9 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.ServiceException;
 
 /**
- * Gestion des transactions de reliées à la création et
- * suppresion de livres dans une bibliothèque.
- *
- * Ce programme permet de gérer les transaction reliées à la
- * création et suppresion de livres.
- *
- * Pré-condition
- *   la base de données de la bibliothèque doit exister
- *
- * Post-condition
- *   le programme effectue les maj associées à chaque
- *   transaction
- *   @author Primavera Sequeira Steven
+ * Service de la table livre.
+ * 
+ * @author Primavera Sequeira Steven
  */
 public class LivreService {
 
@@ -31,37 +21,39 @@ public class LivreService {
 
     private ReservationDAO reservation;
 
-    private Connexion cx;
+    private Connexion connexion;
 
-    /**.
-      * Creation d'une instance
-      * @param livre - livreDAO
-      * @param reservation - Gere une reservation
-      */
+    /**
+     * Crée le service de la table livre.
+     * 
+     * @param livre - livreDAO
+     * @param reservation - Gere une reservation
+     */
     public LivreService(LivreDAO livre,
         ReservationDAO reservation) {
-        this.cx = livre.getConnexion();
+        this.connexion = livre.getConnexion();
         this.livre = livre;
         this.reservation = reservation;
     }
 
-    /**
-      * Ajout d'un nouveau livre dans la base de données.
-      * S'il existe deja, une exception est levée.
-      * @param idLivre id du livre qu'on veux acquerir.
-      * @param titre titre du livre qu'on veux acquerir.
-      * @param auteur auteur du livre qu'on veux acquerir.
-      * @param dateAcquisition date d'acquisition du livre qu'on veux acquerir.
-      * @throws ServiceException -
-      */
+	/**
+	 * Ajout d'un nouveau livre dans la base de données.
+	 * S'il existe deja, une exception est levée.
+	 * 
+	 * @param idLivre id du livre qu'on veux acquerir.
+	 * @param titre titre du livre qu'on veux acquerir.
+	 * @param auteur auteur du livre qu'on veux acquerir.
+	 * @param dateAcquisition date d'acquisition du livre qu'on veux acquerir.
+	 * @throws ServiceException -
+	 */
     public void acquerir(int idLivre,
         String titre,
         String auteur,
         String dateAcquisition) throws ServiceException {
         try {
-            /* Vérifie si le livre existe déja */
+            /* Vérifie si le livre existe déjà */
             if(this.livre.existe(idLivre)) {
-                throw new ServiceException("Livre existe deja: "
+                throw new ServiceException("Livre existe déjà: "
                     + idLivre);
             }
 
@@ -71,7 +63,7 @@ public class LivreService {
                 auteur,
                 dateAcquisition);
             try {
-                this.cx.commit();
+                this.connexion.commit();
             } catch(ConnexionException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -83,12 +75,13 @@ public class LivreService {
     }
 
     /**
-      * Vente d'un livre.
-      * @param idLivre id du livre qu'on veux vendre.
-      * @throws SQLException -
-      * @throws ServiceException -
-      * @throws Exception -
-      */
+     * Vente d'un livre.
+     * 
+     * @param idLivre id du livre qu'on veux vendre.
+     * @throws SQLException -
+     * @throws ServiceException -
+     * @throws Exception -
+     */
     public void vendre(int idLivre) throws ServiceException {
         LivreDTO tupleLivre = null;
         try {
@@ -104,7 +97,7 @@ public class LivreService {
         if(tupleLivre.getIdMembre() != 0) {
             throw new ServiceException("Livre "
                 + idLivre
-                + " prete a "
+                + " prêté a "
                 + tupleLivre.getIdMembre());
         }
         try {
@@ -132,7 +125,7 @@ public class LivreService {
                 + " inexistant");
         }
         try {
-            this.cx.commit();
+            this.connexion.commit();
         } catch(ConnexionException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

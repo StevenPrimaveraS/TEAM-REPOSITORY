@@ -16,14 +16,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.ServiceException;
 
 /**
- * Gestion des transactions de reliées aux réservations de livres par les
- * membres dans une bibliothèque.
- *
- * Ce programme permet de gérer les transactions r�server, prendre et annuler.
- *
- * Pré-condition la base de données de la bibliothèque doit exister
- *
- * Post-condition le programme effectue les maj associées à chaque transaction
+ * Service de la table reservation.
  *
  * @author Primavera Sequeira Steven
  */
@@ -53,7 +46,7 @@ public class ReservationService {
         ReservationDAO reservation) throws ServiceException {
         if(livre.getConnexion() != membre.getConnexion()
             || reservation.getConnexion() != membre.getConnexion()) {
-            throw new ServiceException("Les instances de livre, de membre et de reservation n'utilisent pas la m�me connexion au serveur");
+            throw new ServiceException("Les instances de livre, de membre et de reservation n'utilisent pas la même connexion au serveur");
         }
         this.cx = livre.getConnexion();
         this.livre = livre;
@@ -81,7 +74,7 @@ public class ReservationService {
         SQLException,
         ConnexionException {
         try {
-            /* Verifier que le livre est pret� */
+            /* Verifier que le livre est preté */
             final LivreDTO tupleLivre = this.livre.getLivre(idLivre);
             if(tupleLivre == null) {
                 throw new ServiceException("Livre inexistant: "
@@ -95,10 +88,10 @@ public class ReservationService {
             if(tupleLivre.getIdMembre() == idMembre) {
                 throw new ServiceException("Livre "
                     + idLivre
-                    + " deja prete a ce membre");
+                    + " déjà prete a ce membre");
             }
 
-            /* V�rifier que le membre existe */
+            /* Vérifier que le membre existe */
             final MembreDTO tupleMembre = this.membre.getMembre(idMembre);
             if(tupleMembre == null) {
                 throw new ServiceException("Membre inexistant: "
@@ -107,12 +100,12 @@ public class ReservationService {
 
             /* Verifier si date reservation >= datePret */
             if(Date.valueOf(dateReservation).before(tupleLivre.getDatePret())) {
-                throw new ServiceException("Date de reservation inferieure � la date de pret");
+                throw new ServiceException("Date de reservation inferieure à la date de pret");
             }
 
-            /* V�rifier que la r�servation n'existe pas */
+            /* Vérifier que la réservation n'existe pas */
             if(this.reservation.existe(idReservation)) {
-                throw new ServiceException("R�servation "
+                throw new ServiceException("Réservation "
                     + idReservation
                     + " existe deja");
             }
@@ -182,14 +175,14 @@ public class ReservationService {
                     + tupleReservation.getIdMembre());
             }
             if(tupleMembre.getNbPret() >= tupleMembre.getLimitePret()) {
-                throw new ServiceException("Limite de pr�t du membre "
+                throw new ServiceException("Limite de prêt du membre "
                     + tupleReservation.getIdMembre()
                     + " atteinte");
             }
 
             /* Verifier si datePret >= tupleReservation.dateReservation */
             if(Date.valueOf(datePret).before(tupleReservation.getDateReservation())) {
-                throw new ServiceException("Date de prêt inférieureà� la date de réservation");
+                throw new ServiceException("Date de prêt inférieure à la date de réservation");
             }
 
             /* Enregistrement du pret. */

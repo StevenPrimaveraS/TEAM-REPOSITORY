@@ -6,21 +6,18 @@ import java.sql.Statement;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 
 /**
- *
- *
- *Permet de cr�er la BD utilis�e par Biblio.java.
- *
- *Param�tres:0- serveur SQL
+ *Permet de créer la BD utilisée par Biblio.java.
+ *Paramètres:0- serveur SQL
  *           1- bd nom de la BD
- *           2- user id pour �tablir une connexion avec le serveur SQL
+ *           2- user id pour établir une connexion avec le serveur SQL
  *           3- mot de passe pour le user id
  *
  *
  * @author Mathieu
  */
 final class BDCreateur {
-    /**.
-     * TODO Auto-generated class javadoc
+    /**
+     * Constructeur privé pour empêcher toute instanciation.
      *
      * @author Primavera Sequeira Steven
      */
@@ -30,12 +27,17 @@ final class BDCreateur {
     }
 
     /**
-     * Methode main.
+     * Crée la base de données nécessaire à l'application bibliothèque.
+     * 
+	 * Paramètres :
+	 *  0 - Type de serveur SQL de la BD
+	 *  1 - Nom du schéma de la base de données
+	 *  2 - Nom d'utilisateur sur le serveur SQL
+	 *  3 - Mot de passe sur le serveur SQL
+	 * 
      * @param args -
      * @throws Exception -
      * @throws SQLException -
-     *
-     * @author Mathieu
      */
     public static void main(String[] args) throws Exception,
         SQLException {
@@ -45,12 +47,12 @@ final class BDCreateur {
             return;
         }
 
-        final Connexion cx = new Connexion(args[0],
+        final Connexion connexion = new Connexion(args[0],
             args[1],
             args[2],
             args[3]);
 
-        final Statement stmt = cx.getConnection().createStatement();
+        final Statement stmt = connexion.getConnection().createStatement();
 
         stmt.executeUpdate("DROP TABLE membre CASCADE CONSTRAINTS");
         stmt.executeUpdate("CREATE TABLE membre ( "
@@ -90,6 +92,6 @@ final class BDCreateur {
             + ")");
 
         stmt.close();
-        cx.fermer();
+        connexion.fermer();
     }
 }

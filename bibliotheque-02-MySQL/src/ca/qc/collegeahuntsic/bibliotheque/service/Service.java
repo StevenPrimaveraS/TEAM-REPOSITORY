@@ -7,7 +7,7 @@ package ca.qc.collegeahuntsic.bibliotheque.service;
 import java.io.Serializable;
 
 /**
- * TODO Auto-generated class javadoc.
+ * Classe de base pour tous les services.
  *
  * @author Primavera Sequeira Steven
  */
@@ -15,7 +15,7 @@ public class Service implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * TODO Auto-generated class javadoc.
+     * Constructeur par défaut.
      *
      * @author Primavera Sequeira Steven
      */

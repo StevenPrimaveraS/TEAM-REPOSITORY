@@ -9,7 +9,7 @@ import java.util.Date;
  * Permet de valider le format d'une date en YYYY-MM-DD et de la convertir en un
  * objet Date.
  *
- * @author Math -
+ * @author Mathieu Lafond
  */
 public final class FormatteurDate {
     private static SimpleDateFormat formatAMJ;
@@ -18,8 +18,8 @@ public final class FormatteurDate {
         formatAMJ.setLenient(false);
     }
 
-    /**.
-     * TODO Auto-generated class javadoc
+    /**
+     * Constructeur par défaut.
      *
      * @author Primavera Sequeira Steven
      */
@@ -30,11 +30,9 @@ public final class FormatteurDate {
     /**
      * Convertit une String du format YYYY-MM-DD en un objet de la classe Date.
      *
-     * @param dateString
-     *            -
+     * @param dateString -
      * @return -
-     * @throws ParseException
-     *             -
+     * @throws ParseException -
      */
     public static Date convertirDate(String dateString) throws ParseException {
         return formatAMJ.parse(dateString);
@@ -44,8 +42,7 @@ public final class FormatteurDate {
      * Affiche la date.
      *
      * @return -
-     * @param date
-     *            -
+     * @param date -
      */
     public static String toString(Date date) {
         return formatAMJ.format(date);

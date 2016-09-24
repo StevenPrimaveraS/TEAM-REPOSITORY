@@ -15,15 +15,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.ServiceException;
 
 /**
- * Gestion des transactions de reliées aux prêts de livres aux membres dans une
- * bibliothèque.
- *
- * Ce programme permet de gérer les transactions prêter, renouveler et
- * retourner.
- *
- * Pré-condition la base de données de la bibliothèque doit exister
- *
- * Post-condition le programme effectue les maj associées à chaque transaction
+ * Service de la table pret.
  *
  * @author Primavera Sequeira Steven
  */
@@ -36,11 +28,11 @@ public class PretService {
 
     private ReservationDAO reservation;
 
-    private Connexion cx;
+    private Connexion connexion;
 
     /**
      * Creation d'une instance. La connection de l'instance de livre et de
-     * membre doit être la même que cx, afin d'assurer l'intégrité des
+     * membre doit être la même que connexion, afin d'assurer l'intégrité des
      * transactions.
      *
      * @param livre parametre a utiliser de la classe LivreDAO
@@ -55,9 +47,9 @@ public class PretService {
 
         if(livre.getConnexion() != membre.getConnexion()
             || reservation.getConnexion() != membre.getConnexion()) {
-            throw new ServiceException("Les instances de livre, de membre et de reservation n'utilisent pas la m�me connexion au serveur");
+            throw new ServiceException("Les instances de livre, de membre et de reservation n'utilisent pas la même connexion au serveur");
         }
-        this.cx = livre.getConnexion();
+        this.connexion = livre.getConnexion();
         this.livre = livre;
         this.membre = membre;
         this.reservation = reservation;
@@ -87,7 +79,7 @@ public class PretService {
             if(tupleLivre.getIdMembre() != 0) {
                 throw new ServiceException("Livre "
                     + idLivre
-                    + " deja prete a "
+                    + " deja prêté a "
                     + tupleLivre.getIdMembre());
             }
 
@@ -106,7 +98,7 @@ public class PretService {
             /* Vérifie s'il existe une réservation pour le livre */
             final ReservationDTO tupleReservation = this.reservation.getReservationLivre(idLivre);
             if(tupleReservation != null) {
-                throw new ServiceException("Livre r�serv� par : "
+                throw new ServiceException("Livre réservé par : "
                     + tupleReservation.getIdMembre()
                     + " idReservation : "
                     + tupleReservation.getIdReservation());
@@ -117,21 +109,21 @@ public class PretService {
                 idMembre,
                 datePret);
             if(nb1 == 0) {
-                throw new ServiceException("Livre supprim� par une autre transaction");
+                throw new ServiceException("Livre supprimé par une autre transaction");
             }
             final int nb2 = this.membre.preter(idMembre);
             if(nb2 == 0) {
-                throw new ServiceException("Membre supprim� par une autre transaction");
+                throw new ServiceException("Membre supprimé par une autre transaction");
             }
             try {
-                this.cx.commit();
+                this.connexion.commit();
             } catch(ConnexionException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         } catch(DAOException daoException) {
             try {
-                this.cx.rollback();
+                this.connexion.rollback();
             } catch(ConnexionException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -176,7 +168,7 @@ public class PretService {
             /* Vérifie s'il existe une réservation pour le livre */
             final ReservationDTO tupleReservation = this.reservation.getReservationLivre(idLivre);
             if(tupleReservation != null) {
-                throw new ServiceException("Livre r�serv� par : "
+                throw new ServiceException("Livre réservé par : "
                     + tupleReservation.getIdMembre()
                     + " idReservation : "
                     + tupleReservation.getIdReservation());
@@ -189,12 +181,12 @@ public class PretService {
             if(nb1 == 0) {
                 throw new ServiceException("Livre supprime par une autre transaction");
             }
-            this.cx.commit();
+            this.connexion.commit();
         } catch(
             DAOException
             | ConnexionException daoException) {
             try {
-                this.cx.rollback();
+                this.connexion.rollback();
             } catch(ConnexionException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -224,30 +216,30 @@ public class PretService {
             if(tupleLivre.getIdMembre() == 0) {
                 throw new ServiceException("Livre "
                     + idLivre
-                    + " n'est pas pr�t� ");
+                    + " n'est pas prêté ");
             }
 
             /* Verifier si date retour >= datePret */
             if(Date.valueOf(dateRetour).before(tupleLivre.getDatePret())) {
-                throw new ServiceException("Date de retour inferieure � la date de pret");
+                throw new ServiceException("Date de retour inferieure à la date de pret");
             }
 
             /* Retour du pret. */
             final int nb1 = this.livre.retourner(idLivre);
             if(nb1 == 0) {
-                throw new ServiceException("Livre supprim� par une autre transaction");
+                throw new ServiceException("Livre supprimé par une autre transaction");
             }
 
             final int nb2 = this.membre.retourner(tupleLivre.getIdMembre());
             if(nb2 == 0) {
-                throw new ServiceException("Livre supprim� par une autre transaction");
+                throw new ServiceException("Livre supprimé par une autre transaction");
             }
-            this.cx.commit();
+            this.connexion.commit();
         } catch(
             DAOException
             | ConnexionException daoException) {
             try {
-                this.cx.rollback();
+                this.connexion.rollback();
             } catch(ConnexionException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

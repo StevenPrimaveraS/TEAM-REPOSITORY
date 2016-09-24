@@ -13,59 +13,51 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.ServiceException;
 
 /**
- * Gestion des transactions de reliées à la création et
- * suppression de membres dans une bibliothèque.
- *
- * Ce programme permet de gérer les transaction reliées à la
- * création et suppression de membres.
- *
- * Pré-condition
- *   la base de données de la bibliothèque doit exister
- *
- * Post-condition
- *   le programme effectue les maj associées à chaque
- *   transaction
- *  @author Primavera Sequeira Steven
+ * Service de la table membre.
+ *  
+ * @author Primavera Sequeira Steven
  */
 
 public class MembreService {
 
-    private Connexion cx;
+    private Connexion connexion;
 
     private MembreDAO membre;
 
     private ReservationDAO reservation;
 
     /**
-      * Création d'une instance.
-      * @param membre MembreDao qu'on reçoit en paramètre.
-      * @param reservation ReservationDAO qu'on reçoit en paramètre.
-      */
+     * Création d'une instance.
+     * 
+     * @param membre MembreDao qu'on reçoit en paramètre.
+     * @param reservation ReservationDAO qu'on reçoit en paramètre.
+     */
     public MembreService(MembreDAO membre,
         ReservationDAO reservation) {
 
-        this.cx = membre.getConnexion();
+        this.connexion = membre.getConnexion();
         this.membre = membre;
         this.reservation = reservation;
     }
 
     /**
-      * Ajout d'un nouveau membre dans la base de donnée.
-      * S'il existe déja, une exception est levée.
-      * @param idMembre id du membre qu'on veux inscrire.
-      * @param nom nom du membre qu'on veut inscrire.
-      * @param telephone numéro de téléphone du membre qu'on veux inscrire.
-      * @param limitePret limite de prêt du membre qu'on veux inscrire.
-      * @throws ServiceException -
-      */
+     * Ajout d'un nouveau membre dans la base de donnée.
+     * S'il existe déja, une exception est levée.
+     * 
+     * @param idMembre id du membre qu'on veux inscrire.
+     * @param nom nom du membre qu'on veut inscrire.
+     * @param telephone numéro de téléphone du membre qu'on veux inscrire.
+     * @param limitePret limite de prêt du membre qu'on veux inscrire.
+     * @throws ServiceException -
+     */
     public void inscrire(int idMembre,
         String nom,
         long telephone,
         int limitePret) throws ServiceException {
         try {
-            /* Vérifie si le membre existe déja */
+            /* Vérifie si le membre existe déjà */
             if(this.membre.existe(idMembre)) {
-                throw new ServiceException("Membre existe déja: "
+                throw new ServiceException("Membre existe déjà: "
                     + idMembre);
             }
 
@@ -74,10 +66,10 @@ public class MembreService {
                 nom,
                 telephone,
                 limitePret);
-            this.cx.commit();
+            this.connexion.commit();
         } catch(DAOException daoException) {
             try {
-                this.cx.rollback();
+                this.connexion.rollback();
             } catch(ConnexionException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -89,10 +81,11 @@ public class MembreService {
     }
 
     /**
-      * Suppression d'un membre de la base de données.
-      * @param idMembre id du membre qu'on veux désinscrire.
-      * @throws ServiceException -
-      */
+     * Suppression d'un membre de la base de données.
+     * 
+     * @param idMembre id du membre qu'on veut désinscrire.
+     * @throws ServiceException -
+     */
     public void desinscrire(int idMembre) throws ServiceException {
         try {
             /* Vérifie si le membre existe et son nombre de prêt en cours */
@@ -119,10 +112,10 @@ public class MembreService {
                     + idMembre
                     + " inexistant");
             }
-            this.cx.commit();
+            this.connexion.commit();
         } catch(DAOException daoException) {
             try {
-                this.cx.rollback();
+                this.connexion.rollback();
             } catch(ConnexionException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
