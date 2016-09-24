@@ -52,13 +52,13 @@ public class MembreDAO extends DAO {
     }
 
     /**
-      * Verifie si un membre existe.
-      * 
-      * @param idMembre identifiant du membre
-      * @return boolean si le livre existe ou pas
-      * @throws SQLException si une erreur survient
-      * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
-      */
+     * Verifie si un membre existe.
+     * 
+     * @param idMembre identifiant du membre
+     * @return boolean si le livre existe ou pas
+     * @throws SQLException si une erreur survient
+     * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
+     */
     public boolean existe(int idMembre) throws DAOException {
         try {
             this.stmtExiste.setInt(1,
@@ -73,13 +73,13 @@ public class MembreDAO extends DAO {
     }
 
     /**
-      * Lecture d'un membre.
-      * 
-      * @param idMembre identifiant du membre.
-      * @throws SQLException si une erreur survient.
-      * @return MembreDTO.
-      * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
-      */
+     * Lecture d'un membre.
+     * 
+     * @param idMembre identifiant du membre.
+     * @throws SQLException si une erreur survient.
+     * @return MembreDTO.
+     * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
+     */
     public MembreDTO getMembre(int idMembre) throws DAOException {
         try {
             this.stmtExiste.setInt(1,
@@ -103,15 +103,15 @@ public class MembreDAO extends DAO {
     }
 
     /**
-      * Ajout d'un nouveau membre.
-      * 
-      * @param idMembre identificateur du membre
-      * @param nom nom du membre
-      * @param telephone numero de telephone du membre
-      * @param limitePret limite de pret du membre
-      * @throws SQLException si une erreur survient
-      * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
-      */
+     * Ajout d'un nouveau membre.
+     * 
+     * @param idMembre identificateur du membre
+     * @param nom nom du membre
+     * @param telephone numero de telephone du membre
+     * @param limitePret limite de pret du membre
+     * @throws SQLException si une erreur survient
+     * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
+     */
     public void inscrire(int idMembre,
         String nom,
         long telephone,
@@ -133,13 +133,13 @@ public class MembreDAO extends DAO {
     }
 
     /**
-      * Incrementer le nb de pret d'un membre.
-      * 
-      * @param idMembre identifiant du membre
-      * @throws SQLException si une erreur survient
-      * @return int resultat de la commande de pret
-      * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
-      */
+     * Incrementer le nb de pret d'un membre.
+     * 
+     * @param idMembre identifiant du membre
+     * @throws SQLException si une erreur survient
+     * @return int resultat de la commande de pret
+     * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
+     */
     public int preter(int idMembre) throws DAOException {
         try {
             this.stmtUpdateIncrNbPret.setInt(1,
@@ -151,13 +151,13 @@ public class MembreDAO extends DAO {
     }
 
     /**
-      * Decrementer le nb de pret d'un membre.
-      * 
-      * @param idMembre identifiant du membre
-      * @throws SQLException si une erreur survient
-      * @return int resultat de la commande de retour
-      * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
-      */
+     * Decrementer le nb de pret d'un membre.
+     * 
+     * @param idMembre identifiant du membre
+     * @throws SQLException si une erreur survient
+     * @return int resultat de la commande de retour
+     * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
+     */
     public int retourner(int idMembre) throws DAOException {
         try {
             this.stmtUpdateDecNbPret.setInt(1,
@@ -169,13 +169,13 @@ public class MembreDAO extends DAO {
     }
 
     /**
-      * Suppression d'un membre.
-      * 
-      * @param idMembre identifiant du membre
-      * @throws SQLException si une erreur survient
-      * @return int resultat de la suppression
-      * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
-      */
+     * Suppression d'un membre.
+     * 
+     * @param idMembre identifiant du membre
+     * @throws SQLException si une erreur survient
+     * @return int resultat de la suppression
+     * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
+     */
     public int desinscrire(int idMembre) throws DAOException {
         try {
             this.stmtDelete.setInt(1,

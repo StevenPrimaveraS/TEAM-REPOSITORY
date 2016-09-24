@@ -53,13 +53,13 @@ public class LivreDAO extends DAO {
     }
 
     /**
-      * Verifie si un livre existe.
-      * 
-      * @param idLivre identifiant du livre
-      * @throws SQLException si une erreur survient
-      * @return boolean si le livre existe ou pas
-      * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
-      */
+     * Verifie si un livre existe.
+     * 
+     * @param idLivre identifiant du livre
+     * @throws SQLException si une erreur survient
+     * @return boolean si le livre existe ou pas
+     * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
+     */
     public boolean existe(int idLivre) throws DAOException {
         try {
             this.stmtExiste.setInt(1,
@@ -74,13 +74,13 @@ public class LivreDAO extends DAO {
     }
 
     /**
-      * Lecture d'un livre.
-      * 
-      * @param idLivre identifiant du livre
-      * @throws SQLException si une erreur survient
-      * @return LivreDTO retourne un DTO de livre
-      * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
-      */
+     * Lecture d'un livre.
+     * 
+     * @param idLivre identifiant du livre
+     * @throws SQLException si une erreur survient
+     * @return LivreDTO retourne un DTO de livre
+     * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
+     */
     public LivreDTO getLivre(int idLivre) throws DAOException {
         try {
             this.stmtExiste.setInt(1,
@@ -105,15 +105,15 @@ public class LivreDAO extends DAO {
     }
 
     /**
-      * Ajout d'un nouveau livre dans la base de donnees.
-      * 
-      * @param idLivre identifiant du livre
-      * @param titre titre du livre
-      * @param auteur auteur du livre
-      * @param dateAcquisition date d'acquisition
-      * @throws SQLException si une erreur survient
-      * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
-      */
+     * Ajout d'un nouveau livre dans la base de donnees.
+     * 
+     * @param idLivre identifiant du livre
+     * @param titre titre du livre
+     * @param auteur auteur du livre
+     * @param dateAcquisition date d'acquisition
+     * @throws SQLException si une erreur survient
+     * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
+     */
     public void acquerir(int idLivre,
         String titre,
         String auteur,
@@ -135,15 +135,15 @@ public class LivreDAO extends DAO {
     }
 
     /**
-      * Enregistrement de l'emprunteur d'un livre.
-      * 
-      * @param idLivre identifiant du livre
-      * @param idMembre identifiant du membre
-      * @param datePret date du Pret
-      * @throws SQLException si une erreur survient
-      * @return int resultat de la commande de pret
-      * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
-      */
+     * Enregistrement de l'emprunteur d'un livre.
+     * 
+     * @param idLivre identifiant du livre
+     * @param idMembre identifiant du membre
+     * @param datePret date du Pret
+     * @throws SQLException si une erreur survient
+     * @return int resultat de la commande de pret
+     * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
+     */
     public int preter(int idLivre,
         int idMembre,
         String datePret) throws DAOException {
@@ -162,13 +162,13 @@ public class LivreDAO extends DAO {
     }
 
     /**
-      * Rendre le livre disponible (non-prete).
-      * 
-      * @param idLivre identifiant du livre
-      * @throws SQLException si une erreur survient
-      * @return int resultat de la commande de pret
-      * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
-      */
+     * Rendre le livre disponible (non-prete).
+     * 
+     * @param idLivre identifiant du livre
+     * @throws SQLException si une erreur survient
+     * @return int resultat de la commande de pret
+     * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
+     */
     public int retourner(int idLivre) throws DAOException {
         try {
             /* Enregistrement du pret. */
@@ -185,13 +185,13 @@ public class LivreDAO extends DAO {
     }
 
     /**
-      * Suppression d'un livre.
-      * 
-      * @param idLivre identifiant du livre
-      * @throws SQLException si une erreur survient
-      * @return int resultat de la commande de pret
-      * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
-      */
+     * Suppression d'un livre.
+     * 
+     * @param idLivre identifiant du livre
+     * @throws SQLException si une erreur survient
+     * @return int resultat de la commande de pret
+     * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
+     */
     public int vendre(int idLivre) throws DAOException {
         try {
             /* Suppression du livre. */

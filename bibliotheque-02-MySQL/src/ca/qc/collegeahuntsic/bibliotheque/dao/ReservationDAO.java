@@ -31,11 +31,11 @@ public class ReservationDAO extends DAO {
     private PreparedStatement stmtDelete;
 
     /**
-      * Crée un DAO à partir d'une connexion à la base de données.
-      *
-      * @param connexion - La connexion à utiliser
-      * @throws DAOException si une erreur survient
-      */
+     * Crée un DAO à partir d'une connexion à la base de données.
+     *
+     * @param connexion - La connexion à utiliser
+     * @throws DAOException si une erreur survient
+     */
     public ReservationDAO(Connexion connexion) throws DAOException {
         super(connexion);
         try {
@@ -55,12 +55,12 @@ public class ReservationDAO extends DAO {
     }
 
     /**
-      * Verifie si une reservation existe.
-      *
-      * @param idReservation identifiant de la reservation
-      * @return boolean si le livre existe ou pas
-      * @throws DAOException si une erreur survient
-      */
+     * Verifie si une reservation existe.
+     *
+     * @param idReservation identifiant de la reservation
+     * @return boolean si le livre existe ou pas
+     * @throws DAOException si une erreur survient
+     */
     public boolean existe(int idReservation) throws DAOException {
         try {
             this.stmtExiste.setInt(1,
@@ -75,12 +75,12 @@ public class ReservationDAO extends DAO {
     }
 
     /**
-      * Lecture d'une reservation.
-      *
-      * @param idReservation identifiant de la reservation.
-      * @throws DAOException si une erreur survient
-      * @return ReservationDTO retourne un DTO de reservation
-      */
+     * Lecture d'une reservation.
+     *
+     * @param idReservation identifiant de la reservation.
+     * @throws DAOException si une erreur survient
+     * @return ReservationDTO retourne un DTO de reservation
+     */
     public ReservationDTO getReservation(int idReservation) throws DAOException {
         try {
             this.stmtExiste.setInt(1,
@@ -103,12 +103,12 @@ public class ReservationDAO extends DAO {
     }
 
     /**
-      * Lecture de la premiere reservation d'un livre.
-      *
-      * @param idLivre identifiant du livre.
-      * @throws DAOException si une erreur survient
-      * @return ReservationDTO retourne un DTO de reservation
-      */
+     * Lecture de la premiere reservation d'un livre.
+     *
+     * @param idLivre identifiant du livre.
+     * @throws DAOException si une erreur survient
+     * @return ReservationDTO retourne un DTO de reservation
+     */
     public ReservationDTO getReservationLivre(int idLivre) throws DAOException {
         try {
             this.stmtExisteLivre.setInt(1,
@@ -131,12 +131,12 @@ public class ReservationDAO extends DAO {
     }
 
     /**
-      * Lecture de la premiere reservation d'un livre.
-      *
-      * @param idMembre identifiant de la reservation.
-      * @throws DAOException si une erreur survient
-      * @return ReservationDTO retourne un DTO de reservation
-      */
+     * Lecture de la premiere reservation d'un livre.
+     *
+     * @param idMembre identifiant de la reservation.
+     * @throws DAOException si une erreur survient
+     * @return ReservationDTO retourne un DTO de reservation
+     */
     public ReservationDTO getReservationMembre(int idMembre) throws DAOException {
         try {
             this.stmtExisteMembre.setInt(1,
@@ -159,14 +159,14 @@ public class ReservationDAO extends DAO {
     }
 
     /**
-      * Reservation d'un livre.
-      *
-      * @param idReservation identifiant de la reservation.
-      * @param idLivre identifiant du livre
-      * @param idMembre identifiant du membre
-      * @param dateReservation date de la reservation
-      * @throws DAOException si une erreur survient
-      */
+     * Reservation d'un livre.
+     *
+     * @param idReservation identifiant de la reservation.
+     * @param idLivre identifiant du livre
+     * @param idMembre identifiant du membre
+     * @param dateReservation date de la reservation
+     * @throws DAOException si une erreur survient
+     */
     public void reserver(int idReservation,
         int idLivre,
         int idMembre,
@@ -187,12 +187,12 @@ public class ReservationDAO extends DAO {
     }
 
     /**
-      * Suppression d'une reservation.
-      *
-      * @param idReservation identifiant de la reservation.
-      * @throws DAOException si une erreur survient
-      * @return ReservationDTO retourne un DTO de reservation
-      */
+     * Suppression d'une reservation.
+     *
+     * @param idReservation identifiant de la reservation.
+     * @throws DAOException si une erreur survient
+     * @return ReservationDTO retourne un DTO de reservation
+     */
     public int annulerRes(int idReservation) throws DAOException {
         try {
             this.stmtDelete.setInt(1,
