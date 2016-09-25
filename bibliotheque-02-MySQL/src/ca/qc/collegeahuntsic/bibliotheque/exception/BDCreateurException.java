@@ -10,11 +10,6 @@ package ca.qc.collegeahuntsic.bibliotheque.exception;
  * @author Anthony Chan
  */
 public class BDCreateurException extends Exception {
-    /**
-     * TODO Auto-generated class javadoc.
-     *
-     * @author Anthony Chan
-     */
     private static final long serialVersionUID = 1L;
 
     /**

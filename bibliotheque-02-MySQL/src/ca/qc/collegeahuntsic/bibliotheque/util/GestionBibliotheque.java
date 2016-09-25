@@ -74,13 +74,7 @@ public class GestionBibliotheque {
                 bd,
                 user,
                 password);
-        } catch(ConnexionException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-        try {
             this.livre = new LivreDAO(this.connexion);
-
             this.membre = new MembreDAO(this.connexion);
             this.reservation = new ReservationDAO(this.connexion);
             this.gestionLivre = new LivreService(this.livre,
@@ -94,11 +88,14 @@ public class GestionBibliotheque {
                 this.membre,
                 this.reservation);
             this.gestionInterrogation = new GestionInterrogation(this.connexion);
-        } catch(DAOException | ServiceException | SQLException exception) {
-        	//La SQLException est dans gestionInterrogation qui ne sera probablement
-        	//pas maintenu
+        } catch (DAOException daoException) {
+        	throw new BibliothequeException(daoException);
+		} catch(ServiceException | SQLException exception) {
+        	//La SQLException est dans gestionInterrogation
             throw new BibliothequeException(exception);
-        }
+        } catch (ConnexionException connexionException) {
+        	throw new BibliothequeException(connexionException);
+		}
     }
 
     /**
