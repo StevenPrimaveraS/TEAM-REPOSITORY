@@ -192,8 +192,8 @@ public class ReservationService {
         } catch(DAOException | ConnexionException exception) {
             try {
                 this.connexion.rollback();
-            } catch(ConnexionException e) {
-            	
+            } catch(ConnexionException connexionException) {
+            	throw new ServiceException(connexionException);
             }
             throw new ServiceException(exception);
         }

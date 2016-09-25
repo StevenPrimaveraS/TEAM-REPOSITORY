@@ -9,10 +9,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.StringTokenizer;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.ServiceException;
 import ca.qc.collegeahuntsic.bibliotheque.util.FormatteurDate;
 import ca.qc.collegeahuntsic.bibliotheque.util.GestionBibliotheque;
 
@@ -141,7 +143,7 @@ public final class Bibliotheque {
      * @throws BibliothequeException - Si une erreur survient
      * @throws Exception - Si une erreur 
      */
-    static void executerTransaction(StringTokenizer tokenizer) throws Exception {
+    static void executerTransaction(StringTokenizer tokenizer) throws BibliothequeException {
         try {
             final String command = tokenizer.nextToken();
 
@@ -191,10 +193,13 @@ public final class Bibliotheque {
             } else {
                 System.out.println("  Transactions non reconnue.  Essayer \"aide\"");
             }
-        } catch(BibliothequeException e) {
+        } catch(BibliothequeException bibliothequeException) {
             System.out.println("** "
-                + e.toString());
-        }
+                + bibliothequeException.toString());
+        } catch (ServiceException | SQLException exception) {
+        	//SQLException dans GestionInterrogation
+			throw new BibliothequeException(exception);
+		}
     }
 
     /**
