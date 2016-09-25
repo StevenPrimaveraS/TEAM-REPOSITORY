@@ -1,4 +1,4 @@
-// Fichier BDCreateurException.java
+// Fichier BibliothequeException.java
 // Auteur : Anthony Chan
 // Date de création : 2016-09-14
 
