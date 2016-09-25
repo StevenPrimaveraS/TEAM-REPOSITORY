@@ -33,14 +33,12 @@ public class PretService {
     private Connexion connexion;
 
     /**
-     * Creation d'une instance. La connection de l'instance de livre et de
-     * membre doit être la même que connexion, afin d'assurer l'intégrité des
-     * transactions.
+     * Crée le service de la table pret.
      *
-     * @param livre parametre a utiliser de la classe LivreDAO
-     * @param membre paramatere membreDAO a utiliser
-     * @param reservation parametre reservationDAO à utiliser
-     * @throws ServiceException type d'exception à utiliser
+     * @param livre paramètre a utiliser de la classe LivreDAO
+     * @param membre paramètre membreDAO a utiliser
+     * @param reservation paramètre reservationDAO à utiliser
+     * @throws ServiceException - s'il y a une erreur
      */
 
     public PretService(LivreDAO livre,
@@ -82,7 +80,7 @@ public class PretService {
                     + " deja prêté a "
                     + tupleLivre.getIdMembre());
             }
-
+            
             /* Vérifie si le membre existe et sa limite de pret */
             final MembreDTO tupleMembre = this.membre.getMembre(idMembre);
             if(tupleMembre == null) {
@@ -115,25 +113,19 @@ public class PretService {
             if(nb2 == 0) {
                 throw new ServiceException("Membre supprimé par une autre transaction");
             }
-            try {
-                this.connexion.commit();
-            } catch(ConnexionException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        } catch(DAOException daoException) {
+            this.connexion.commit();
+        } catch(DAOException | ConnexionException exception) {
             try {
                 this.connexion.rollback();
-            } catch(ConnexionException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+            } catch(ConnexionException connexionException) {
+            	throw new ServiceException(connexionException);
             }
-            throw new ServiceException(daoException);
+            throw new ServiceException(exception);
         }
     }
 
     /**
-     * Renouvellement d'un pret. Le livre doit être prêté. Le livre ne doit pas
+     * Renouvellement d'un prêt. Le livre doit être prêté. Le livre ne doit pas
      * être réservé.
      *
      * @param idLivre id du Livre qu'on veut renouveler.
@@ -177,16 +169,13 @@ public class PretService {
                 throw new ServiceException("Livre supprimé par une autre transaction");
             }
             this.connexion.commit();
-        } catch(
-            DAOException
-            | ConnexionException daoException) {
+        } catch(DAOException | ConnexionException exception) {
             try {
                 this.connexion.rollback();
-            } catch(ConnexionException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+            } catch(ConnexionException connexionException) {
+            	throw new ServiceException(connexionException);
             }
-            throw new ServiceException(daoException);
+            throw new ServiceException(exception);
         }
     }
 
@@ -228,16 +217,13 @@ public class PretService {
                 throw new ServiceException("Livre supprimé par une autre transaction");
             }
             this.connexion.commit();
-        } catch(
-            DAOException
-            | ConnexionException daoException) {
+        } catch(DAOException | ConnexionException exception) {
             try {
                 this.connexion.rollback();
-            } catch(ConnexionException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+            } catch(ConnexionException connexionException) {
+            	throw new ServiceException(connexionException);
             }
-            throw new ServiceException(daoException);
+            throw new ServiceException(exception);
         }
     }
 }

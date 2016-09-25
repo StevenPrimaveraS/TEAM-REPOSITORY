@@ -44,10 +44,10 @@ public class MembreService {
      * Ajout d'un nouveau membre dans la base de donnée.
      * S'il existe déja, une exception est levée.
      * 
-     * @param idMembre id du membre qu'on veux inscrire.
+     * @param idMembre id du membre qu'on veut inscrire.
      * @param nom nom du membre qu'on veut inscrire.
-     * @param telephone numéro de téléphone du membre qu'on veux inscrire.
-     * @param limitePret limite de prêt du membre qu'on veux inscrire.
+     * @param telephone numéro de téléphone du membre qu'on veut inscrire.
+     * @param limitePret limite de prêt du membre qu'on veut inscrire.
      * @throws ServiceException - Si une erreur survient.
      */
     public void inscrire(int idMembre,
@@ -70,9 +70,8 @@ public class MembreService {
         } catch(DAOException daoException) {
             try {
                 this.connexion.rollback();
-            } catch(ConnexionException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+            } catch(ConnexionException connexionException) {
+            	throw new ServiceException(connexionException);
             }
             throw new ServiceException(daoException);
         } catch(ConnexionException connexionException) {
@@ -116,9 +115,8 @@ public class MembreService {
         } catch(DAOException daoException) {
             try {
                 this.connexion.rollback();
-            } catch(ConnexionException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+            } catch(ConnexionException connexionException) {
+                throw new ServiceException(connexionException);
             }
             throw new ServiceException(daoException);
         } catch(ConnexionException connexionException) {
