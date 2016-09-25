@@ -95,6 +95,6 @@ final class BDCreateur {
             + ")");
 
         stmt.close();
-        connexion.fermer();
+        connexion.close();
     }
 }

@@ -33,19 +33,19 @@ public final class FormatteurDate {
     /**
      * Convertit une String du format YYYY-MM-DD en un objet de la classe Date.
      *
-     * @param dateString -
-     * @return -
-     * @throws ParseException -
+     * @param dateString - la string à convertir en date
+     * @return - retourne le resultat de la conversion de la string en date
+     * @throws ParseException - Si une erreur survient
      */
     public static Date convertirDate(String dateString) throws ParseException {
         return formatAMJ.parse(dateString);
     }
 
     /**
-     * Affiche la date.
+     * Affiche la date en string.
      *
-     * @return -
-     * @param date -
+     * @param date - une date passée en paramètre
+     * @return - retourne la date passée en string 
      */
     public static String toString(Date date) {
         return formatAMJ.format(date);

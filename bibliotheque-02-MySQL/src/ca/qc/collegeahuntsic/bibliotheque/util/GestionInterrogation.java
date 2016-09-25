@@ -81,9 +81,8 @@ public class GestionInterrogation {
         }
         try {
             this.connexion.commit();
-        } catch(ConnexionException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        } catch(ConnexionException connexionException) {
+        	connexionException.printStackTrace();
         }
         rset.close();
     }
@@ -116,9 +115,8 @@ public class GestionInterrogation {
         }
         try {
             this.connexion.commit();
-        } catch(ConnexionException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        } catch(ConnexionException connexionException) {
+            connexionException.printStackTrace();
         }
         rset.close();
     }

@@ -9,6 +9,7 @@ import ca.qc.collegeahuntsic.bibliotheque.dao.LivreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.MembreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.ReservationDAO;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
+import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.ConnexionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.ServiceException;
@@ -35,7 +36,7 @@ import ca.qc.collegeahuntsic.bibliotheque.service.ReservationService;
  * @author Mathieu Lafond
  */
 public class GestionBibliotheque {
-    private Connexion cx;
+    private Connexion connexion;
 
     private LivreDAO livre;
 
@@ -66,10 +67,10 @@ public class GestionBibliotheque {
     public GestionBibliotheque(String serveur,
         String bd,
         String user,
-        String password) throws SQLException {
+        String password) throws BibliothequeException {
         // allocation des objets pour le traitement des transactions
         try {
-            this.cx = new Connexion(serveur,
+            this.connexion = new Connexion(serveur,
                 bd,
                 user,
                 password);
@@ -78,10 +79,10 @@ public class GestionBibliotheque {
             e1.printStackTrace();
         }
         try {
-            this.livre = new LivreDAO(this.cx);
+            this.livre = new LivreDAO(this.connexion);
 
-            this.membre = new MembreDAO(this.cx);
-            this.reservation = new ReservationDAO(this.cx);
+            this.membre = new MembreDAO(this.connexion);
+            this.reservation = new ReservationDAO(this.connexion);
             this.gestionLivre = new LivreService(this.livre,
                 this.reservation);
             this.gestionMembre = new MembreService(this.membre,
@@ -92,31 +93,30 @@ public class GestionBibliotheque {
             this.gestionReservation = new ReservationService(this.livre,
                 this.membre,
                 this.reservation);
-            this.gestionInterrogation = new GestionInterrogation(this.cx);
-        } catch(
-            DAOException
-            | ServiceException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            this.gestionInterrogation = new GestionInterrogation(this.connexion);
+        } catch(DAOException | ServiceException | SQLException exception) {
+        	//La SQLException est dans gestionInterrogation qui ne sera probablement
+        	//pas maintenu
+            throw new BibliothequeException(exception);
         }
     }
 
     /**
-     * Getter de la variable d'instance <code>this.cx</code>.
+     * Getter de la variable d'instance <code>this.connexion</code>.
      *
-     * @return La variable d'instance <code>this.cx</code>
+     * @return La variable d'instance <code>this.connexion</code>
      */
-    public Connexion getCx() {
-        return this.cx;
+    public Connexion getConnexion() {
+        return this.connexion;
     }
 
     /**
-     * Setter de la variable d'instance <code>this.cx</code>.
+     * Setter de la variable d'instance <code>this.connexion</code>.
      *
-     * @param cx La valeur à utiliser pour la variable d'instance <code>this.cx</code>
+     * @param connexion La valeur à utiliser pour la variable d'instance <code>this.connexion</code>
      */
-    public void setCx(Connexion cx) {
-        this.cx = cx;
+    public void setConnexion(Connexion connexion) {
+        this.connexion = connexion;
     }
 
     /**
@@ -266,15 +266,14 @@ public class GestionBibliotheque {
     /**
      * Fermeture de la connexion.
      * 
-     * @throws SQLException - si une erreur survient
+     * @throws BibliothequeException - si une erreur survient
      */
-    public void fermer() {
+    public void fermer() throws BibliothequeException {
         // fermeture de la connexion
         try {
-            this.cx.fermer();
-        } catch(ConnexionException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            this.connexion.fermer();
+        } catch(ConnexionException connexionException) {
+            throw new BibliothequeException(connexionException);
         }
     }
 }
