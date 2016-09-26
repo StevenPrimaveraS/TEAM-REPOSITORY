@@ -62,7 +62,7 @@ public final class Bibliotheque {
      * Crée une connexion sur la base de données,
      * traite toutes les transactions et
      * détruit la connexion.
-     * 
+     *
      * @param argv - Les arguments du main
      * @throws Exception - Si une erreur survient.
      */
@@ -141,7 +141,7 @@ public final class Bibliotheque {
      *
      * @param tokenizer - L'entrée à décoder
      * @throws BibliothequeException - Si une erreur survient
-     * @throws Exception - Si une erreur 
+     * @throws Exception - Si une erreur
      */
     static void executerTransaction(StringTokenizer tokenizer) throws BibliothequeException {
         try {
@@ -196,10 +196,12 @@ public final class Bibliotheque {
         } catch(BibliothequeException bibliothequeException) {
             System.out.println("** "
                 + bibliothequeException.toString());
-        } catch (ServiceException | SQLException exception) {
-        	//SQLException dans GestionInterrogation
-			throw new BibliothequeException(exception);
-		}
+        } catch(
+            ServiceException
+            | SQLException exception) {
+            //SQLException dans GestionInterrogation
+            throw new BibliothequeException(exception);
+        }
     }
 
     /**

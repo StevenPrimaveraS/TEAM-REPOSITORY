@@ -14,7 +14,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.ServiceException;
 
 /**
  * Service de la table membre.
- *  
+ *
  * @author Primavera Sequeira Steven
  */
 
@@ -28,7 +28,7 @@ public class MembreService {
 
     /**
      * Création d'une instance.
-     * 
+     *
      * @param membre MembreDao qu'on reçoit en paramètre.
      * @param reservation ReservationDAO qu'on reçoit en paramètre.
      */
@@ -43,7 +43,7 @@ public class MembreService {
     /**
      * Ajout d'un nouveau membre dans la base de donnée.
      * S'il existe déja, une exception est levée.
-     * 
+     *
      * @param idMembre id du membre qu'on veut inscrire.
      * @param nom nom du membre qu'on veut inscrire.
      * @param telephone numéro de téléphone du membre qu'on veut inscrire.
@@ -71,7 +71,7 @@ public class MembreService {
             try {
                 this.connexion.rollback();
             } catch(ConnexionException connexionException) {
-            	throw new ServiceException(connexionException);
+                throw new ServiceException(connexionException);
             }
             throw new ServiceException(daoException);
         } catch(ConnexionException connexionException) {
@@ -81,7 +81,7 @@ public class MembreService {
 
     /**
      * Suppression d'un membre de la base de données.
-     * 
+     *
      * @param idMembre id du membre qu'on veut désinscrire.
      * @throws ServiceException - Si une erreur survient
      */

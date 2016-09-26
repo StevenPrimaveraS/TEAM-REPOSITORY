@@ -66,7 +66,7 @@ public class ReservationService {
     public void reserver(int idReservation,
         int idLivre,
         int idMembre,
-        String dateReservation) throws ServiceException{
+        String dateReservation) throws ServiceException {
         try {
             /* Verifier que le livre est prêté */
             final LivreDTO tupleLivre = this.livre.getLivre(idLivre);
@@ -110,12 +110,14 @@ public class ReservationService {
                 idMembre,
                 dateReservation);
             this.connexion.commit();
-        } catch(DAOException | ConnexionException exception) {
+        } catch(
+            DAOException
+            | ConnexionException exception) {
             try {
-				this.connexion.rollback();
-			} catch (ConnexionException connexionException) {
-				throw new ServiceException(connexionException);
-			}
+                this.connexion.rollback();
+            } catch(ConnexionException connexionException) {
+                throw new ServiceException(connexionException);
+            }
             throw new ServiceException(exception);
         }
     }
@@ -130,7 +132,7 @@ public class ReservationService {
      * @throws ServiceException - Si une erreur survient
      */
     public void prendreRes(int idReservation,
-        String datePret) throws ServiceException{
+        String datePret) throws ServiceException {
         try {
             /* Vérifie s'il existe une réservation pour le livre */
             final ReservationDTO tupleReservation = this.reservation.getReservation(idReservation);
@@ -189,11 +191,13 @@ public class ReservationService {
             /* Eliminer la réservation */
             this.reservation.annulerRes(idReservation);
             this.connexion.commit();
-        } catch(DAOException | ConnexionException exception) {
+        } catch(
+            DAOException
+            | ConnexionException exception) {
             try {
                 this.connexion.rollback();
             } catch(ConnexionException connexionException) {
-            	throw new ServiceException(connexionException);
+                throw new ServiceException(connexionException);
             }
             throw new ServiceException(exception);
         }
@@ -205,7 +209,7 @@ public class ReservationService {
      * @param idReservation - id de la réservation qu'on veux annuler.
      * @throws ServiceException - Si une erreur survient.
      */
-    public void annulerRes(int idReservation) throws ServiceException{
+    public void annulerRes(int idReservation) throws ServiceException {
         try {
 
             /* Vérifier que la réservation existe */
@@ -216,12 +220,14 @@ public class ReservationService {
             }
 
             this.connexion.commit();
-        } catch(DAOException | ConnexionException exception) {
+        } catch(
+            DAOException
+            | ConnexionException exception) {
             try {
-				this.connexion.rollback();
-			} catch (ConnexionException connexionException) {
-				throw new ServiceException(connexionException);
-			}
+                this.connexion.rollback();
+            } catch(ConnexionException connexionException) {
+                throw new ServiceException(connexionException);
+            }
             throw new ServiceException(exception);
         }
     }

@@ -32,7 +32,7 @@ import ca.qc.collegeahuntsic.bibliotheque.service.ReservationService;
  * Post-condition
  *   le programme effectue les maj associées à chaque
  *   transaction
- *   
+ *
  * @author Mathieu Lafond
  */
 public class GestionBibliotheque {
@@ -57,12 +57,13 @@ public class GestionBibliotheque {
     /**
      * Ouvre une connexion avec la BD relationnelle et alloue les gestionnaires
      * de transactions et de tables.
-     * 
+     *
      * @param serveur SQL
      * @param bd nom de la bade de données
      * @param user user id pour établir une connexion avec le serveur SQL
      * @param password mot de passe pour le user id
      * @throws SQLException - si une erreur survient
+     * @throws BibliothequeException - si une erreur par rapport à la bibliothèque survient
      */
     public GestionBibliotheque(String serveur,
         String bd,
@@ -88,14 +89,16 @@ public class GestionBibliotheque {
                 this.membre,
                 this.reservation);
             this.gestionInterrogation = new GestionInterrogation(this.connexion);
-        } catch (DAOException daoException) {
-        	throw new BibliothequeException(daoException);
-		} catch(ServiceException | SQLException exception) {
-        	//La SQLException est dans gestionInterrogation
+        } catch(DAOException daoException) {
+            throw new BibliothequeException(daoException);
+        } catch(
+            ServiceException
+            | SQLException exception) {
+            //La SQLException est dans gestionInterrogation
             throw new BibliothequeException(exception);
-        } catch (ConnexionException connexionException) {
-        	throw new BibliothequeException(connexionException);
-		}
+        } catch(ConnexionException connexionException) {
+            throw new BibliothequeException(connexionException);
+        }
     }
 
     /**
@@ -262,7 +265,7 @@ public class GestionBibliotheque {
 
     /**
      * Fermeture de la connexion.
-     * 
+     *
      * @throws BibliothequeException - si une erreur survient
      */
     public void fermer() throws BibliothequeException {

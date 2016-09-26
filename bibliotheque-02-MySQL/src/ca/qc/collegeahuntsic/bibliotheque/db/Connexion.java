@@ -26,7 +26,7 @@ public class Connexion implements AutoCloseable {
 
     /**
      * Crée une connexion en mode autocommit false.
-     * 
+     *
      * @param serveur - serveur qu'on veut connecter
      * @param bd - base de donnée utilisée par l'utlisateur
      * @param user - identifiant de l'utilisateur
@@ -46,8 +46,7 @@ public class Connexion implements AutoCloseable {
                     + bd,
                     user,
                     pass);
-            }
-            else if("distant".equals(serveur)) {
+            } else if("distant".equals(serveur)) {
                 d = (Driver) Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
                 DriverManager.registerDriver(d);
                 this.connexion = DriverManager.getConnection("jdbc:oracle:thin:@collegeahuntsic.info:1521:"
@@ -100,7 +99,7 @@ public class Connexion implements AutoCloseable {
 
     /**
      * fermeture d'une connexion.
-     * 
+     *
      * @throws ConnexionException - si la connexion n'arrive pas à se fermer
      */
     public void fermer() throws ConnexionException {
@@ -167,7 +166,7 @@ public class Connexion implements AutoCloseable {
     }
 
     /**
-     * Retourne la liste des serveurs supportés par ce gestionnaire de connexion : 
+     * Retourne la liste des serveurs supportés par ce gestionnaire de connexion :
      * . local : MySQL installé localement distant : Oracle installé au
      * Département d'Informatique du Collège Ahuntsic postgres : Postgres
      * installé localement access : Microsoft Access installé localement et

@@ -31,13 +31,13 @@ final class BDCreateur {
 
     /**
      * Crée la base de données nécessaire à l'application bibliothèque.
-     * 
-	 * Paramètres :
-	 *  0 - Type de serveur SQL de la BD
-	 *  1 - Nom du schéma de la base de données
-	 *  2 - Nom d'utilisateur sur le serveur SQL
-	 *  3 - Mot de passe sur le serveur SQL
-	 * 
+     *
+     * Paramètres :
+     *  0 - Type de serveur SQL de la BD
+     *  1 - Nom du schéma de la base de données
+     *  2 - Nom d'utilisateur sur le serveur SQL
+     *  3 - Mot de passe sur le serveur SQL
+     *
      * @param args - arguments de main, voir plus haut
      * @throws Exception - si une erreurSurvient
      * @throws SQLException - si une erreur survient
@@ -55,10 +55,10 @@ final class BDCreateur {
             args[2],
             args[3]);
 
-        final Statement stmt = connexion.getConnection().createStatement();
+        final Statement statement = connexion.getConnection().createStatement();
 
-        stmt.executeUpdate("DROP TABLE membre CASCADE CONSTRAINTS");
-        stmt.executeUpdate("CREATE TABLE membre ( "
+        statement.executeUpdate("DROP TABLE membre CASCADE CONSTRAINTS");
+        statement.executeUpdate("CREATE TABLE membre ( "
             + "idMembre        number(3) check(idMembre > 0), "
             + "nom             varchar(10) NOT NULL, "
             + "telephone       number(10) , "
@@ -68,8 +68,8 @@ final class BDCreateur {
             + "CONSTRAINT limiteNbPret check(nbpret <= limitePret) "
             + ")");
 
-        stmt.executeUpdate("DROP TABLE livre CASCADE CONSTRAINTS");
-        stmt.executeUpdate("CREATE TABLE livre ( "
+        statement.executeUpdate("DROP TABLE livre CASCADE CONSTRAINTS");
+        statement.executeUpdate("CREATE TABLE livre ( "
             + "idLivre         number(3) check(idLivre > 0) , "
             + "titre           varchar(10) NOT NULL, "
             + "auteur          varchar(10) NOT NULL, "
@@ -80,8 +80,8 @@ final class BDCreateur {
             + "CONSTRAINT refPretMembre FOREIGN KEY (idMembre) REFERENCES membre "
             + ")");
 
-        stmt.executeUpdate("DROP TABLE reservation CASCADE CONSTRAINTS");
-        stmt.executeUpdate("CREATE TABLE reservation ( "
+        statement.executeUpdate("DROP TABLE reservation CASCADE CONSTRAINTS");
+        statement.executeUpdate("CREATE TABLE reservation ( "
             + "idReservation   number(3) , "
             + "idMembre        number(3) , "
             + "idLivre         number(3) , "
@@ -94,7 +94,7 @@ final class BDCreateur {
             + "  ON DELETE CASCADE "
             + ")");
 
-        stmt.close();
+        statement.close();
         connexion.close();
     }
 }

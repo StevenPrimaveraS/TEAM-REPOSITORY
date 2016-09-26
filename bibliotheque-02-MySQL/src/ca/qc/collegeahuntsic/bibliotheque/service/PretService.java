@@ -80,7 +80,7 @@ public class PretService {
                     + " deja prêté a "
                     + tupleLivre.getIdMembre());
             }
-            
+
             /* Vérifie si le membre existe et sa limite de pret */
             final MembreDTO tupleMembre = this.membre.getMembre(idMembre);
             if(tupleMembre == null) {
@@ -114,11 +114,13 @@ public class PretService {
                 throw new ServiceException("Membre supprimé par une autre transaction");
             }
             this.connexion.commit();
-        } catch(DAOException | ConnexionException exception) {
+        } catch(
+            DAOException
+            | ConnexionException exception) {
             try {
                 this.connexion.rollback();
             } catch(ConnexionException connexionException) {
-            	throw new ServiceException(connexionException);
+                throw new ServiceException(connexionException);
             }
             throw new ServiceException(exception);
         }
@@ -169,11 +171,13 @@ public class PretService {
                 throw new ServiceException("Livre supprimé par une autre transaction");
             }
             this.connexion.commit();
-        } catch(DAOException | ConnexionException exception) {
+        } catch(
+            DAOException
+            | ConnexionException exception) {
             try {
                 this.connexion.rollback();
             } catch(ConnexionException connexionException) {
-            	throw new ServiceException(connexionException);
+                throw new ServiceException(connexionException);
             }
             throw new ServiceException(exception);
         }
@@ -187,7 +191,7 @@ public class PretService {
      * @throws ServiceException - Si une erreur surtvient
      */
     public void retourner(int idLivre,
-        String dateRetour) throws ServiceException{
+        String dateRetour) throws ServiceException {
         try {
             /* Verifier si le livre est prêté */
             final LivreDTO tupleLivre = this.livre.getLivre(idLivre);
@@ -217,11 +221,13 @@ public class PretService {
                 throw new ServiceException("Livre supprimé par une autre transaction");
             }
             this.connexion.commit();
-        } catch(DAOException | ConnexionException exception) {
+        } catch(
+            DAOException
+            | ConnexionException exception) {
             try {
                 this.connexion.rollback();
             } catch(ConnexionException connexionException) {
-            	throw new ServiceException(connexionException);
+                throw new ServiceException(connexionException);
             }
             throw new ServiceException(exception);
         }
