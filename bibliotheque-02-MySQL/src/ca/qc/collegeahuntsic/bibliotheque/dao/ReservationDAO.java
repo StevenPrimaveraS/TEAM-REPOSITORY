@@ -20,6 +20,25 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 public class ReservationDAO extends DAO {
     private static final long serialVersionUID = 1L;
 
+    /*
+    private static final String ADD_REQUEST = "INSERT INTO reservation(idReservation, idlivre, idMembre, dateReservation)"
+     + "values (?,?,?,to_date(?,'YYYY-MM-DD'))";
+
+    private static final String READ_REQUEST = "SELECT idReservation, idLivre, idMembre, dateReservation"
+     + "FROM reservation"
+     + "WHERE idReservation = ?";
+
+    private static final String UPDATE_REQUEST = "UPDATE reservation"
+     + "SET idLivre = ?, idMembre = ?, dateReservation = ?"
+     + "WHERE idReservation = ?";
+
+    private static final String DELETE_REQUEST = "DELETE from reservation"
+     + "WHERE idReservation = ?";
+
+    private static final String GET_ALL_REQUEST = "SELECT idReservation, idLivre, idMembre, dateReservation"
+    + "FROM reservation";
+    */
+
     private PreparedStatement statementExiste;
 
     private PreparedStatement statementExisteLivre;

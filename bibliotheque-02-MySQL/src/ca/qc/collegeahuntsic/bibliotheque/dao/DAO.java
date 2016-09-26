@@ -15,22 +15,6 @@ import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 public class DAO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    /* private static final String ADD_REQUEST = "INSERT INTO livre(idLivre, titre, auteur, dateAcquisition, idMembre, datePret)"
-     *  + "VALUES (?, ?, ?, ?, NULL, NULL)";
-     *
-     *  private static final String READ_REQUEST = "SELECT idLivre, titre, auteur, dateAcquisition, idMembre, pretDate"
-     *  + "FROM livre"
-     *  + "WHERE idLivre = "?"";
-     *
-     * private static final String UPDATE_REQUEST = "UPDATE livre"
-     *  + "SET titre = ?, auteur = ?, dateAcquisition = ?, idMembre = ?, datePret = ?"
-     *  + "WHERE idLivre = ?";
-     *
-     * private static final String DELETE_REQUEST = "DELETE from livre"
-     * + "WHERE idLivre = ?";
-     *
-     * private static final String GET_ALL_REQUEST = "SELECT idLivre, titre, auteur, dateAcquisition, idMembre, pretDate";
-     */
     /**
      * Crée un DAO à partir d'une connexion à la base de données.
      *

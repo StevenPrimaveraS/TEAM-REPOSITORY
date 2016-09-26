@@ -19,6 +19,28 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 
 public class MembreDAO extends DAO {
     private static final long serialVersionUID = 1L;
+    /*
+    private static final String ADD_REQUEST = "INSERT INTO membre(idmembre, nom, telephone, limitepret, nbpret)"
+     + "VALUES (?, ?, ?, ?, ?, 0)";
+    
+    private static final String READ_REQUEST = "idMembre, nom, telephone, limitePret, nbpret"
+     + "FROM membre"
+     + "WHERE idMembre= ?";
+    
+    private static final String UPDATE_REQUEST_INCR_NB_PRET = "UPDATE membre "
+     + "set nbpret = nbPret + 1 where idMembre = ?"
+     + "WHERE idMembre = ?";
+    
+     private static final String UPDATE_REQUEST_DEC_NB_PRET = "UPDATE membre "
+     + "set nbpret = nbPret - 1 where idMembre = ?"
+     + "WHERE idMembre = ?";
+    
+    private static final String DELETE_REQUEST = "DELETE from membre"
+     + "WHERE idMembre = ?";
+    
+    private static final String GET_ALL_REQUEST = "select idMembre, nom, telephone, limitePret, nbpret"
+    +"FROM membre";
+    */
 
     private PreparedStatement statementExiste;
 
