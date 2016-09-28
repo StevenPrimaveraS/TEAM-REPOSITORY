@@ -20,35 +20,32 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 public class ReservationDAO extends DAO {
     private static final long serialVersionUID = 1L;
 
-    /*
+    
     private static final String ADD_REQUEST = "INSERT INTO reservation(idReservation, idlivre, idMembre, dateReservation)"
      + "values (?,?,?,to_date(?,'YYYY-MM-DD'))";
 
     private static final String READ_REQUEST = "SELECT idReservation, idLivre, idMembre, dateReservation"
      + "FROM reservation"
      + "WHERE idReservation = ?";
-
+    
+    private static final String READ_REQUEST_LIVRE = "SELECT idReservation, idLivre, idMembre, dateReservation "
+     + "FROM reservation where idLivre = ? "
+     + "ORDER BY dateReservation";
+    
+    private static final String READ_REQUEST_MEMBRE = "SELECT idReservation, idLivre, idMembre, dateReservation "
+     + "FROM reservation "
+     + "WHERE idMembre = ? ";
+/*
     private static final String UPDATE_REQUEST = "UPDATE reservation"
      + "SET idLivre = ?, idMembre = ?, dateReservation = ?"
      + "WHERE idReservation = ?";
-
+*/
     private static final String DELETE_REQUEST = "DELETE from reservation"
      + "WHERE idReservation = ?";
-
+/*
     private static final String GET_ALL_REQUEST = "SELECT idReservation, idLivre, idMembre, dateReservation"
     + "FROM reservation";
-    */
-
-    private PreparedStatement statementExiste;
-
-    private PreparedStatement statementExisteLivre;
-
-    private PreparedStatement statementExisteMembre;
-
-    private PreparedStatement statementInsert;
-
-    private PreparedStatement statementDelete;
-
+*/
     /**
      * Crée un DAO à partir d'une connexion à la base de données.
      *
@@ -57,20 +54,6 @@ public class ReservationDAO extends DAO {
      */
     public ReservationDAO(Connexion connexion) throws DAOException {
         super(connexion);
-        try {
-            this.statementExiste = connexion.getConnection().prepareStatement("select idReservation, idLivre, idMembre, dateReservation "
-                + "from reservation where idReservation = ?");
-            this.statementExisteLivre = connexion.getConnection().prepareStatement("select idReservation, idLivre, idMembre, dateReservation "
-                + "from reservation where idLivre = ? "
-                + "order by dateReservation");
-            this.statementExisteMembre = connexion.getConnection().prepareStatement("select idReservation, idLivre, idMembre, dateReservation "
-                + "from reservation where idMembre = ? ");
-            this.statementInsert = connexion.getConnection().prepareStatement("insert into reservation (idReservation, idlivre, idMembre, dateReservation) "
-                + "values (?,?,?,to_date(?,'YYYY-MM-DD'))");
-            this.statementDelete = connexion.getConnection().prepareStatement("delete from reservation where idReservation = ?");
-        } catch(SQLException sqlException) {
-            throw new DAOException(sqlException);
-        }
     }
 
     /**
@@ -81,10 +64,10 @@ public class ReservationDAO extends DAO {
      * @throws DAOException si une erreur survient
      */
     public boolean existe(int idReservation) throws DAOException {
-        try {
-            this.statementExiste.setInt(1,
+        try (PreparedStatement statementExiste = this.getConnexion().getConnection().prepareStatement(ReservationDAO.READ_REQUEST)) {
+            statementExiste.setInt(1,
                 idReservation);
-            final ResultSet resultset = this.statementExiste.executeQuery();
+            final ResultSet resultset = statementExiste.executeQuery();
             final boolean reservationExiste = resultset.next();
             resultset.close();
             return reservationExiste;
@@ -101,10 +84,10 @@ public class ReservationDAO extends DAO {
      * @return ReservationDTO retourne un DTO de reservation
      */
     public ReservationDTO getReservation(int idReservation) throws DAOException {
-        try {
-            this.statementExiste.setInt(1,
+        try (PreparedStatement statementExiste = this.getConnexion().getConnection().prepareStatement(ReservationDAO.READ_REQUEST)) {
+            statementExiste.setInt(1,
                 idReservation);
-            final ResultSet resultset = this.statementExiste.executeQuery();
+            final ResultSet resultset = statementExiste.executeQuery();
             if(resultset.next()) {
                 final ReservationDTO tupleReservation = new ReservationDTO();
                 tupleReservation.setIdReservation(resultset.getInt(1));
@@ -129,10 +112,10 @@ public class ReservationDAO extends DAO {
      * @return ReservationDTO retourne un DTO de reservation
      */
     public ReservationDTO getReservationLivre(int idLivre) throws DAOException {
-        try {
-            this.statementExisteLivre.setInt(1,
+        try (PreparedStatement statementExisteLivre = this.getConnexion().getConnection().prepareStatement(ReservationDAO.READ_REQUEST_LIVRE)) {
+            statementExisteLivre.setInt(1,
                 idLivre);
-            final ResultSet resultset = this.statementExisteLivre.executeQuery();
+            final ResultSet resultset = statementExisteLivre.executeQuery();
             if(resultset.next()) {
                 final ReservationDTO tupleReservation = new ReservationDTO();
                 tupleReservation.setIdReservation(resultset.getInt(1));
@@ -157,10 +140,10 @@ public class ReservationDAO extends DAO {
      * @return ReservationDTO retourne un DTO de reservation
      */
     public ReservationDTO getReservationMembre(int idMembre) throws DAOException {
-        try {
-            this.statementExisteMembre.setInt(1,
+        try (PreparedStatement statementExisteMembre = this.getConnexion().getConnection().prepareStatement(ReservationDAO.READ_REQUEST_MEMBRE)) {
+            statementExisteMembre.setInt(1,
                 idMembre);
-            final ResultSet resultset = this.statementExisteMembre.executeQuery();
+            final ResultSet resultset = statementExisteMembre.executeQuery();
             if(resultset.next()) {
                 final ReservationDTO tupleReservation = new ReservationDTO();
                 tupleReservation.setIdReservation(resultset.getInt(1));
@@ -190,16 +173,16 @@ public class ReservationDAO extends DAO {
         int idLivre,
         int idMembre,
         String dateReservation) throws DAOException {
-        try {
-            this.statementInsert.setInt(1,
+        try (PreparedStatement statementInsert = this.getConnexion().getConnection().prepareStatement(ReservationDAO.ADD_REQUEST)) {
+            statementInsert.setInt(1,
                 idReservation);
-            this.statementInsert.setInt(2,
+            statementInsert.setInt(2,
                 idLivre);
-            this.statementInsert.setInt(3,
+            statementInsert.setInt(3,
                 idMembre);
-            this.statementInsert.setString(4,
+            statementInsert.setString(4,
                 dateReservation);
-            this.statementInsert.executeUpdate();
+            statementInsert.executeUpdate();
         } catch(SQLException sqlException) {
             throw new DAOException(sqlException);
         }
@@ -213,10 +196,10 @@ public class ReservationDAO extends DAO {
      * @return ReservationDTO retourne un DTO de reservation
      */
     public int annulerRes(int idReservation) throws DAOException {
-        try {
-            this.statementDelete.setInt(1,
+        try (PreparedStatement statementDelete = this.getConnexion().getConnection().prepareStatement(ReservationDAO.DELETE_REQUEST)) {
+            statementDelete.setInt(1,
                 idReservation);
-            return this.statementDelete.executeUpdate();
+            return statementDelete.executeUpdate();
         } catch(SQLException sqlException) {
             throw new DAOException(sqlException);
         }
