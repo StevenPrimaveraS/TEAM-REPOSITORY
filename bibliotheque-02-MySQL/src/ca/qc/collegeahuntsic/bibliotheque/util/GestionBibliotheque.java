@@ -37,19 +37,19 @@ import ca.qc.collegeahuntsic.bibliotheque.service.ReservationService;
 public class GestionBibliotheque {
     private Connexion connexion;
 
-    private LivreDAO livre;
+    private LivreDAO livreDAO;
 
-    private MembreDAO membre;
+    private MembreDAO membreDAO;
 
-    private ReservationDAO reservation;
+    private ReservationDAO reservationDAO;
 
-    private LivreService gestionLivre;
+    private LivreService livreService;
 
-    private MembreService gestionMembre;
+    private MembreService membreService;
 
-    private PretService gestionPret;
+    private PretService pretService;
 
-    private ReservationService gestionReservation;
+    private ReservationService reservationService;
 
     private GestionInterrogation gestionInterrogation;
 
@@ -61,7 +61,6 @@ public class GestionBibliotheque {
      * @param bd nom de la bade de données
      * @param user user id pour établir une connexion avec le serveur SQL
      * @param password mot de passe pour le user id
-     * @throws SQLException - si une erreur survient
      * @throws BibliothequeException - si une erreur par rapport à la bibliothèque survient
      */
     public GestionBibliotheque(String serveur,
@@ -74,19 +73,19 @@ public class GestionBibliotheque {
                 bd,
                 user,
                 password);
-            this.livre = new LivreDAO(this.connexion);
-            this.membre = new MembreDAO(this.connexion);
-            this.reservation = new ReservationDAO(this.connexion);
-            this.gestionLivre = new LivreService(this.livre,
-                this.reservation);
-            this.gestionMembre = new MembreService(this.membre,
-                this.reservation);
-            this.gestionPret = new PretService(this.livre,
-                this.membre,
-                this.reservation);
-            this.gestionReservation = new ReservationService(this.livre,
-                this.membre,
-                this.reservation);
+            this.livreDAO = new LivreDAO(this.connexion);
+            this.membreDAO = new MembreDAO(this.connexion);
+            this.reservationDAO = new ReservationDAO(this.connexion);
+            this.livreService = new LivreService(this.livreDAO,
+                this.reservationDAO);
+            this.membreService = new MembreService(this.membreDAO,
+                this.reservationDAO);
+            this.pretService = new PretService(this.livreDAO,
+                this.membreDAO,
+                this.reservationDAO);
+            this.reservationService = new ReservationService(this.livreDAO,
+                this.membreDAO,
+                this.reservationDAO);
             this.gestionInterrogation = new GestionInterrogation(this.connexion);
         } catch(
             ServiceException
@@ -122,7 +121,7 @@ public class GestionBibliotheque {
      * @return La variable d'instance <code>this.livre</code>
      */
     public LivreDAO getLivre() {
-        return this.livre;
+        return this.livreDAO;
     }
 
     /**
@@ -131,7 +130,7 @@ public class GestionBibliotheque {
      * @param livre La valeur à utiliser pour la variable d'instance <code>this.livre</code>
      */
     public void setLivre(LivreDAO livre) {
-        this.livre = livre;
+        this.livreDAO = livre;
     }
 
     /**
@@ -140,7 +139,7 @@ public class GestionBibliotheque {
      * @return La variable d'instance <code>this.membre</code>
      */
     public MembreDAO getMembre() {
-        return this.membre;
+        return this.membreDAO;
     }
 
     /**
@@ -149,7 +148,7 @@ public class GestionBibliotheque {
      * @param membre La valeur à utiliser pour la variable d'instance <code>this.membre</code>
      */
     public void setMembre(MembreDAO membre) {
-        this.membre = membre;
+        this.membreDAO = membre;
     }
 
     /**
@@ -158,7 +157,7 @@ public class GestionBibliotheque {
      * @return La variable d'instance <code>this.reservation</code>
      */
     public ReservationDAO getReservation() {
-        return this.reservation;
+        return this.reservationDAO;
     }
 
     /**
@@ -167,7 +166,7 @@ public class GestionBibliotheque {
      * @param reservation La valeur à utiliser pour la variable d'instance <code>this.reservation</code>
      */
     public void setReservation(ReservationDAO reservation) {
-        this.reservation = reservation;
+        this.reservationDAO = reservation;
     }
 
     /**
@@ -176,7 +175,7 @@ public class GestionBibliotheque {
      * @return La variable d'instance <code>this.gestionLivre</code>
      */
     public LivreService getGestionLivre() {
-        return this.gestionLivre;
+        return this.livreService;
     }
 
     /**
@@ -185,7 +184,7 @@ public class GestionBibliotheque {
      * @param gestionLivre La valeur à utiliser pour la variable d'instance <code>this.gestionLivre</code>
      */
     public void setGestionLivre(LivreService gestionLivre) {
-        this.gestionLivre = gestionLivre;
+        this.livreService = gestionLivre;
     }
 
     /**
@@ -194,7 +193,7 @@ public class GestionBibliotheque {
      * @return La variable d'instance <code>this.gestionMembre</code>
      */
     public MembreService getGestionMembre() {
-        return this.gestionMembre;
+        return this.membreService;
     }
 
     /**
@@ -203,7 +202,7 @@ public class GestionBibliotheque {
      * @param gestionMembre La valeur à utiliser pour la variable d'instance <code>this.gestionMembre</code>
      */
     public void setGestionMembre(MembreService gestionMembre) {
-        this.gestionMembre = gestionMembre;
+        this.membreService = gestionMembre;
     }
 
     /**
@@ -212,7 +211,7 @@ public class GestionBibliotheque {
      * @return La variable d'instance <code>this.gestionPret</code>
      */
     public PretService getGestionPret() {
-        return this.gestionPret;
+        return this.pretService;
     }
 
     /**
@@ -221,7 +220,7 @@ public class GestionBibliotheque {
      * @param gestionPret La valeur à utiliser pour la variable d'instance <code>this.gestionPret</code>
      */
     public void setGestionPret(PretService gestionPret) {
-        this.gestionPret = gestionPret;
+        this.pretService = gestionPret;
     }
 
     /**
@@ -230,7 +229,7 @@ public class GestionBibliotheque {
      * @return La variable d'instance <code>this.gestionReservation</code>
      */
     public ReservationService getGestionReservation() {
-        return this.gestionReservation;
+        return this.reservationService;
     }
 
     /**
@@ -239,7 +238,7 @@ public class GestionBibliotheque {
      * @param gestionReservation La valeur à utiliser pour la variable d'instance <code>this.gestionReservation</code>
      */
     public void setGestionReservation(ReservationService gestionReservation) {
-        this.gestionReservation = gestionReservation;
+        this.reservationService = gestionReservation;
     }
 
     /**
