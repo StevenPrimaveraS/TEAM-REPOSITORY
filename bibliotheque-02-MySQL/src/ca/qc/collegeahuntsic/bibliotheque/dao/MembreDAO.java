@@ -55,7 +55,6 @@ public class MembreDAO extends DAO {
      *
      * @param idMembre identifiant du membre
      * @return boolean si le livre existe ou pas
-     * @throws SQLException si une erreur survient
      * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
      */
     public boolean existe(int idMembre) throws DAOException {
@@ -75,8 +74,7 @@ public class MembreDAO extends DAO {
      * Lecture d'un membre.
      *
      * @param idMembre identifiant du membre.
-     * @throws SQLException si une erreur survient.
-     * @return MembreDTO.
+     * @return MembreDTO retourne un DTO de membre
      * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
      */
     public MembreDTO getMembre(int idMembre) throws DAOException {
@@ -85,14 +83,14 @@ public class MembreDAO extends DAO {
                 idMembre);
             final ResultSet resultset = statementExiste.executeQuery();
             if(resultset.next()) {
-                final MembreDTO tupleMembre = new MembreDTO();
-                tupleMembre.setIdMembre(idMembre);
-                tupleMembre.setNom(resultset.getString(2));
-                tupleMembre.setTelephone(resultset.getLong(3));
-                tupleMembre.setLimitePret(resultset.getInt(4));
-                tupleMembre.setNbPret(resultset.getInt(5));
+                final MembreDTO membreDTO = new MembreDTO();
+                membreDTO.setIdMembre(idMembre);
+                membreDTO.setNom(resultset.getString(2));
+                membreDTO.setTelephone(resultset.getLong(3));
+                membreDTO.setLimitePret(resultset.getInt(4));
+                membreDTO.setNbPret(resultset.getInt(5));
                 resultset.close();
-                return tupleMembre;
+                return membreDTO;
             }
             resultset.close();
             return null;
@@ -108,7 +106,6 @@ public class MembreDAO extends DAO {
      * @param nom nom du membre
      * @param telephone numero de telephone du membre
      * @param limitePret limite de pret du membre
-     * @throws SQLException si une erreur survient
      * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
      */
     public void inscrire(int idMembre,
@@ -135,7 +132,6 @@ public class MembreDAO extends DAO {
      * Incrementer le nb de pret d'un membre.
      *
      * @param idMembre identifiant du membre
-     * @throws SQLException si une erreur survient
      * @return int resultat de la commande de pret
      * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
      */
@@ -153,7 +149,6 @@ public class MembreDAO extends DAO {
      * Decrementer le nb de pret d'un membre.
      *
      * @param idMembre identifiant du membre
-     * @throws SQLException si une erreur survient
      * @return int resultat de la commande de retour
      * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
      */
@@ -171,7 +166,6 @@ public class MembreDAO extends DAO {
      * Suppression d'un membre.
      *
      * @param idMembre identifiant du membre
-     * @throws SQLException si une erreur survient
      * @return int resultat de la suppression
      * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
      */

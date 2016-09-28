@@ -88,13 +88,13 @@ public class ReservationDAO extends DAO {
                 idReservation);
             final ResultSet resultset = statementExiste.executeQuery();
             if(resultset.next()) {
-                final ReservationDTO tupleReservation = new ReservationDTO();
-                tupleReservation.setIdReservation(resultset.getInt(1));
-                tupleReservation.setIdLivre(resultset.getInt(2));
-                tupleReservation.setIdMembre(resultset.getInt(3));
-                tupleReservation.setDateReservation(resultset.getDate(4));
+                final ReservationDTO reservationDTO = new ReservationDTO();
+                reservationDTO.setIdReservation(resultset.getInt(1));
+                reservationDTO.setIdLivre(resultset.getInt(2));
+                reservationDTO.setIdMembre(resultset.getInt(3));
+                reservationDTO.setDateReservation(resultset.getDate(4));
                 resultset.close();
-                return tupleReservation;
+                return reservationDTO;
             }
             resultset.close();
             return null;
