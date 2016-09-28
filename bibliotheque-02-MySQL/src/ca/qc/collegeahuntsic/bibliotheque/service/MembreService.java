@@ -22,9 +22,9 @@ public class MembreService {
 
     private Connexion connexion;
 
-    private MembreDAO membre;
+    private MembreDAO membreDAO;
 
-    private ReservationDAO reservation;
+    private ReservationDAO reservationDAO;
 
     /**
      * Création d'une instance.
@@ -36,8 +36,8 @@ public class MembreService {
         ReservationDAO reservation) {
 
         this.connexion = membre.getConnexion();
-        this.membre = membre;
-        this.reservation = reservation;
+        this.membreDAO = membre;
+        this.reservationDAO = reservation;
     }
 
     /**
@@ -56,13 +56,13 @@ public class MembreService {
         int limitePret) throws ServiceException {
         try {
             /* Vérifie si le membre existe déjà */
-            if(this.membre.existe(idMembre)) {
+            if(this.membreDAO.existe(idMembre)) {
                 throw new ServiceException("Membre existe déjà: "
                     + idMembre);
             }
 
             /* Ajout du membre. */
-            this.membre.inscrire(idMembre,
+            this.membreDAO.inscrire(idMembre,
                 nom,
                 telephone,
                 limitePret);
@@ -88,7 +88,7 @@ public class MembreService {
     public void desinscrire(int idMembre) throws ServiceException {
         try {
             /* Vérifie si le membre existe et son nombre de prêt en cours */
-            final MembreDTO tupleMembre = this.membre.getMembre(idMembre);
+            final MembreDTO tupleMembre = this.membreDAO.getMembre(idMembre);
             if(tupleMembre == null) {
                 throw new ServiceException("Membre inexistant: "
                     + idMembre);
@@ -98,14 +98,14 @@ public class MembreService {
                     + idMembre
                     + " a encore des prêts.");
             }
-            if(this.reservation.getReservationMembre(idMembre) != null) {
+            if(this.reservationDAO.getReservationMembre(idMembre) != null) {
                 throw new ServiceException("Membre "
                     + idMembre
                     + " a des réservations");
             }
 
             /* Suppression du membre */
-            final int nb = this.membre.desinscrire(idMembre);
+            final int nb = this.membreDAO.desinscrire(idMembre);
             if(nb == 0) {
                 throw new ServiceException("Membre "
                     + idMembre
