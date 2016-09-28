@@ -45,10 +45,8 @@ public class MembreDAO extends DAO {
      * Crée un DAO à partir d'une connexion à la base de données.
      *
      * @param connexion - La connexion à utiliser
-     * @throws SQLException si une erreur survient
-     * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
      */
-    public MembreDAO(Connexion connexion) throws DAOException {
+    public MembreDAO(Connexion connexion) {
         super(connexion);
     }
 

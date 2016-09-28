@@ -11,7 +11,6 @@ import ca.qc.collegeahuntsic.bibliotheque.dao.ReservationDAO;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.ConnexionException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.ServiceException;
 import ca.qc.collegeahuntsic.bibliotheque.service.LivreService;
 import ca.qc.collegeahuntsic.bibliotheque.service.MembreService;
@@ -89,8 +88,6 @@ public class GestionBibliotheque {
                 this.membre,
                 this.reservation);
             this.gestionInterrogation = new GestionInterrogation(this.connexion);
-        } catch(DAOException daoException) {
-            throw new BibliothequeException(daoException);
         } catch(
             ServiceException
             | SQLException exception) {

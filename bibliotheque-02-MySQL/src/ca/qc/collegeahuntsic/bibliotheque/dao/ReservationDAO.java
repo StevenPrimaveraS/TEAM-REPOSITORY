@@ -50,9 +50,8 @@ public class ReservationDAO extends DAO {
      * Crée un DAO à partir d'une connexion à la base de données.
      *
      * @param connexion - La connexion à utiliser
-     * @throws DAOException si une erreur survient
      */
-    public ReservationDAO(Connexion connexion) throws DAOException {
+    public ReservationDAO(Connexion connexion) {
         super(connexion);
     }
 

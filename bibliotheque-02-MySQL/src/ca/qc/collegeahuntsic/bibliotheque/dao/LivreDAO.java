@@ -44,10 +44,8 @@ public class LivreDAO extends DAO {
      * Crée un DAO à partir d'une connexion à la base de données.
      *
      * @param connexion - La connexion à utiliser.
-     * @throws SQLException si une erreur survient.
-     * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
      */
-    public LivreDAO(Connexion connexion) throws DAOException {
+    public LivreDAO(Connexion connexion) {
         super(connexion);
     }
 
