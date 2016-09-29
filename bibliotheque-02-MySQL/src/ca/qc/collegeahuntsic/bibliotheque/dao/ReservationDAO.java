@@ -149,13 +149,13 @@ public class ReservationDAO extends DAO {
                 idMembre);
             final ResultSet resultset = statementExisteMembre.executeQuery();
             if(resultset.next()) {
-                final ReservationDTO tupleReservation = new ReservationDTO();
-                tupleReservation.setIdReservation(resultset.getInt(1));
-                tupleReservation.setIdLivre(resultset.getInt(2));
-                tupleReservation.setIdMembre(resultset.getInt(3));
-                tupleReservation.setDateReservation(resultset.getDate(4));
+                final ReservationDTO reservationDTO = new ReservationDTO();
+                reservationDTO.setIdReservation(resultset.getInt(1));
+                reservationDTO.setIdLivre(resultset.getInt(2));
+                reservationDTO.setIdMembre(resultset.getInt(3));
+                reservationDTO.setDateReservation(resultset.getDate(4));
                 resultset.close();
-                return tupleReservation;
+                return reservationDTO;
             }
             resultset.close();
             return null;
@@ -211,44 +211,58 @@ public class ReservationDAO extends DAO {
         }
     }
     // Source > Toggle Comment | À implementer plus tard en cours
-    //  /**
-    //   * Ajoute une nouvelle reservation.
-    //   *
-    //   * @param reservationDTO - La reservation à ajouter
-    //   * @throws DAOException - S'il y a une erreur avec la base de données
-    //   */
-    //  public void add(ReservationDTO reservationDTO) throws DAOException {
-    //
-    //  }
-    //
-    //  /**
-    //   * Lit une reservation.
-    //   *
-    //   * @param idReservation - L'ID de la reservation à lire
-    //   * @return La reservation
-    //   * @throws DAOException - S'il y a une erreur avec la base de données
-    //   */
-    //  public ReservationDTO read(int idReservation) throws DAOException {
-    //    return null;
-    //  }
-    //
-    //  /**
-    //   * Met à jour une reservation.
-    //   *
-    //   * @param reservationDTO - La reservation à mettre à jour
-    //   * @throws DAOException - S'il y a une erreur avec la base de données
-    //   */
-    //  public void update(ReservationDTO reservationDTO) throws DAOException {
-    //
-    //  }
-    //
-    //  /**
-    //   * Supprime un reservation.
-    //   *
-    //   * @param reservationDTO - La reservation à supprimer
-    //   * @throws DAOException - S'il y a une erreur avec la base de données
-    //   */
-    //  public void delete(ReservationDTO reservationDTO) throws DAOException {
-    //
-    //  }
+    //      /**
+    //       * Ajoute une nouvelle reservation.
+    //       *
+    //       * @param reservationDTO - La reservation à ajouter
+    //       * @throws DAOException - S'il y a une erreur avec la base de données
+    //       */
+    //      public void add(ReservationDTO reservationDTO) throws DAOException {
+    //          try(
+    //              PreparedStatement statementInsert = this.getConnexion().getConnection().prepareStatement(ReservationDAO.ADD_REQUEST)) {
+    //              /* Ajout du reservation. */
+    //              statementInsert.setInt(1,
+    //                  reservationDTO.getIdReservation());
+    //              statementInsert.setInt(2,
+    //                  reservationDTO.getIdLivre());
+    //              statementInsert.setInt(3,
+    //                  reservationDTO.getIdMembre());
+    //              statementInsert.setDate(4,
+    //                  reservationDTO.getDateReservation());
+    //              statementInsert.executeUpdate();
+    //          } catch(SQLException sqlException) {
+    //              throw new DAOException(sqlException);
+    //          }
+    //      }
+    //    
+    //      /**
+    //       * Lit une reservation.
+    //       *
+    //       * @param idReservation - L'ID de la reservation à lire
+    //       * @return La reservation
+    //       * @throws DAOException - S'il y a une erreur avec la base de données
+    //       */
+    //      public ReservationDTO read(int idReservation) throws DAOException {
+    //        return null;
+    //      }
+    //    
+    //      /**
+    //       * Met à jour une reservation.
+    //       *
+    //       * @param reservationDTO - La reservation à mettre à jour
+    //       * @throws DAOException - S'il y a une erreur avec la base de données
+    //       */
+    //      public void update(ReservationDTO reservationDTO) throws DAOException {
+    //          
+    //      }
+    //    
+    //      /**
+    //       * Supprime un reservation.
+    //       *
+    //       * @param reservationDTO - La reservation à supprimer
+    //       * @throws DAOException - S'il y a une erreur avec la base de données
+    //       */
+    //      public void delete(ReservationDTO reservationDTO) throws DAOException {
+    //    
+    //      }
 }
