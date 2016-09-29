@@ -19,28 +19,29 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 
 public class MembreDAO extends DAO {
     private static final long serialVersionUID = 1L;
-    
-    private static final String ADD_REQUEST = "INSERT INTO membre(idmembre, nom, telephone, limitepret, nbpret)"
-     + "VALUES (?, ?, ?, ?, ?, 0)";
-    
+
+    private static final String ADD_REQUEST = "INSERT INTO membre"
+        + "VALUES (?, ?, ?, ?, ?, 0)";
+
     private static final String READ_REQUEST = "idMembre, nom, telephone, limitePret, nbpret"
-     + "FROM membre"
-     + "WHERE idMembre= ?";
-    
+        + "FROM membre"
+        + "WHERE idMembre= ?";
+
     private static final String UPDATE_REQUEST_INCREMENT_NB_PRET = "UPDATE membre "
-     + "set nbpret = nbPret + 1 where idMembre = ?"
-     + "WHERE idMembre = ?";
-    
-     private static final String UPDATE_REQUEST_DECREMENT_NB_PRET = "UPDATE membre "
-     + "set nbpret = nbPret - 1 where idMembre = ?"
-     + "WHERE idMembre = ?";
-    
+        + "set nbpret = nbPret + 1 where idMembre = ?"
+        + "WHERE idMembre = ?";
+
+    private static final String UPDATE_REQUEST_DECREMENT_NB_PRET = "UPDATE membre "
+        + "set nbpret = nbPret - 1 where idMembre = ?"
+        + "WHERE idMembre = ?";
+
     private static final String DELETE_REQUEST = "DELETE from membre"
-     + "WHERE idMembre = ?";
-/*
+        + "WHERE idMembre = ?";
+
+    /*
     private static final String GET_ALL_REQUEST = "select idMembre, nom, telephone, limitePret, nbpret"
     +"FROM membre";
-*/
+    */
     /**
      * Crée un DAO à partir d'une connexion à la base de données.
      *
@@ -58,7 +59,8 @@ public class MembreDAO extends DAO {
      * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
      */
     public boolean existe(int idMembre) throws DAOException {
-        try (PreparedStatement statementExiste = this.getConnexion().getConnection().prepareStatement(MembreDAO.READ_REQUEST)) {
+        try(
+            PreparedStatement statementExiste = this.getConnexion().getConnection().prepareStatement(MembreDAO.READ_REQUEST)) {
             statementExiste.setInt(1,
                 idMembre);
             final ResultSet resultset = statementExiste.executeQuery();
@@ -78,7 +80,8 @@ public class MembreDAO extends DAO {
      * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
      */
     public MembreDTO getMembre(int idMembre) throws DAOException {
-        try (PreparedStatement statementExiste = this.getConnexion().getConnection().prepareStatement(MembreDAO.READ_REQUEST)) {
+        try(
+            PreparedStatement statementExiste = this.getConnexion().getConnection().prepareStatement(MembreDAO.READ_REQUEST)) {
             statementExiste.setInt(1,
                 idMembre);
             final ResultSet resultset = statementExiste.executeQuery();
@@ -112,7 +115,8 @@ public class MembreDAO extends DAO {
         String nom,
         long telephone,
         int limitePret) throws DAOException {
-        try (PreparedStatement statementInsert = this.getConnexion().getConnection().prepareStatement(MembreDAO.ADD_REQUEST)) {
+        try(
+            PreparedStatement statementInsert = this.getConnexion().getConnection().prepareStatement(MembreDAO.ADD_REQUEST)) {
             /* Ajout du membre. */
             statementInsert.setInt(1,
                 idMembre);
@@ -136,7 +140,9 @@ public class MembreDAO extends DAO {
      * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
      */
     public int preter(int idMembre) throws DAOException {
-        try (PreparedStatement statementUpdateIncrementNbPret = this.getConnexion().getConnection().prepareStatement(MembreDAO.UPDATE_REQUEST_INCREMENT_NB_PRET)) {
+        try(
+            PreparedStatement statementUpdateIncrementNbPret = this.getConnexion().getConnection()
+                .prepareStatement(MembreDAO.UPDATE_REQUEST_INCREMENT_NB_PRET)) {
             statementUpdateIncrementNbPret.setInt(1,
                 idMembre);
             return statementUpdateIncrementNbPret.executeUpdate();
@@ -153,7 +159,9 @@ public class MembreDAO extends DAO {
      * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
      */
     public int retourner(int idMembre) throws DAOException {
-        try (PreparedStatement statementUpdateDecrementNbPret = this.getConnexion().getConnection().prepareStatement(MembreDAO.UPDATE_REQUEST_DECREMENT_NB_PRET)) {
+        try(
+            PreparedStatement statementUpdateDecrementNbPret = this.getConnexion().getConnection()
+                .prepareStatement(MembreDAO.UPDATE_REQUEST_DECREMENT_NB_PRET)) {
             statementUpdateDecrementNbPret.setInt(1,
                 idMembre);
             return statementUpdateDecrementNbPret.executeUpdate();
@@ -170,7 +178,8 @@ public class MembreDAO extends DAO {
      * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
      */
     public int desinscrire(int idMembre) throws DAOException {
-        try (PreparedStatement statementDelete = this.getConnexion().getConnection().prepareStatement(MembreDAO.DELETE_REQUEST)) {
+        try(
+            PreparedStatement statementDelete = this.getConnexion().getConnection().prepareStatement(MembreDAO.DELETE_REQUEST)) {
             statementDelete.setInt(1,
                 idMembre);
             return statementDelete.executeUpdate();
@@ -178,45 +187,45 @@ public class MembreDAO extends DAO {
             throw new DAOException(sqlException);
         }
     }
-// Source > Toggle Comment | À implementer plus tard en cours
-//  /**
-//   * Ajoute un nouveau membre.
-//   * 
-//   * @param membreDTO - Le membre à ajouter
-//   * @throws DAOException - S'il y a une erreur avec la base de données
-//   */
-//  public void add(MembreDTO membreDTO) throws DAOException {
-//  	
-//  }
-//  
-//  /**
-//   * Lit un membre.
-//   * 
-//   * @param idMembre - L'ID du membre à lire
-//   * @return Le membre
-//   * @throws DAOException - S'il y a une erreur avec la base de données
-//   */
-//  public MembreDTO read(int idMembre) throws DAOException {
-//  	return null;
-//  }
-//  
-//  /**
-//   * Met à jour un membre.
-//   * 
-//   * @param membreDTO - Le membre à mettre à jour
-//   * @throws DAOException - S'il y a une erreur avec la base de données
-//   */
-//  public void update(MembreDTO membreDTO) throws DAOException {
-//  	
-//  }
-//  
-//  /**
-//   * Supprime un membre.
-//   * 
-//   * @param membreDTO - Le membre à supprimer
-//   * @throws DAOException - S'il y a une erreur avec la base de données
-//   */
-//  public void delete(MembreDTO membreDTO) throws DAOException {
-//  	
-//  }
+    // Source > Toggle Comment | À implementer plus tard en cours
+    //  /**
+    //   * Ajoute un nouveau membre.
+    //   *
+    //   * @param membreDTO - Le membre à ajouter
+    //   * @throws DAOException - S'il y a une erreur avec la base de données
+    //   */
+    //  public void add(MembreDTO membreDTO) throws DAOException {
+    //
+    //  }
+    //
+    //  /**
+    //   * Lit un membre.
+    //   *
+    //   * @param idMembre - L'ID du membre à lire
+    //   * @return Le membre
+    //   * @throws DAOException - S'il y a une erreur avec la base de données
+    //   */
+    //  public MembreDTO read(int idMembre) throws DAOException {
+    //     return null;
+    //  }
+    //
+    //  /**
+    //   * Met à jour un membre.
+    //   *
+    //   * @param membreDTO - Le membre à mettre à jour
+    //   * @throws DAOException - S'il y a une erreur avec la base de données
+    //   */
+    //  public void update(MembreDTO membreDTO) throws DAOException {
+    //
+    //  }
+    //
+    //  /**
+    //   * Supprime un membre.
+    //   *
+    //   * @param membreDTO - Le membre à supprimer
+    //   * @throws DAOException - S'il y a une erreur avec la base de données
+    //   */
+    //  public void delete(MembreDTO membreDTO) throws DAOException {
+    //
+    //  }
 }
