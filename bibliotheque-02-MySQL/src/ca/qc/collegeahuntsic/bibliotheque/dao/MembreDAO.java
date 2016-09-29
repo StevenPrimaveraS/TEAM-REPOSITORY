@@ -27,12 +27,16 @@ public class MembreDAO extends DAO {
         + "FROM membre"
         + "WHERE idMembre= ?";
 
+    private static final String UPDATE_REQUEST = "UPDATE membre "
+        + "SET nom = ?, telephone = ?, limitePret = ?, nbPret = ? "
+        + "WHERE idMembre = ?";
+
     private static final String UPDATE_REQUEST_INCREMENT_NB_PRET = "UPDATE membre "
-        + "set nbpret = nbPret + 1 where idMembre = ?"
+        + "SET nbpret = nbPret + 1 "
         + "WHERE idMembre = ?";
 
     private static final String UPDATE_REQUEST_DECREMENT_NB_PRET = "UPDATE membre "
-        + "set nbpret = nbPret - 1 where idMembre = ?"
+        + "SET nbpret = nbPret - 1 "
         + "WHERE idMembre = ?";
 
     private static final String DELETE_REQUEST = "DELETE from membre"
@@ -187,45 +191,101 @@ public class MembreDAO extends DAO {
             throw new DAOException(sqlException);
         }
     }
-    // Source > Toggle Comment | À implementer plus tard en cours
-    //  /**
-    //   * Ajoute un nouveau membre.
-    //   *
-    //   * @param membreDTO - Le membre à ajouter
-    //   * @throws DAOException - S'il y a une erreur avec la base de données
-    //   */
-    //  public void add(MembreDTO membreDTO) throws DAOException {
-    //
-    //  }
-    //
-    //  /**
-    //   * Lit un membre.
-    //   *
-    //   * @param idMembre - L'ID du membre à lire
-    //   * @return Le membre
-    //   * @throws DAOException - S'il y a une erreur avec la base de données
-    //   */
-    //  public MembreDTO read(int idMembre) throws DAOException {
-    //     return null;
-    //  }
-    //
-    //  /**
-    //   * Met à jour un membre.
-    //   *
-    //   * @param membreDTO - Le membre à mettre à jour
-    //   * @throws DAOException - S'il y a une erreur avec la base de données
-    //   */
-    //  public void update(MembreDTO membreDTO) throws DAOException {
-    //
-    //  }
-    //
-    //  /**
-    //   * Supprime un membre.
-    //   *
-    //   * @param membreDTO - Le membre à supprimer
-    //   * @throws DAOException - S'il y a une erreur avec la base de données
-    //   */
-    //  public void delete(MembreDTO membreDTO) throws DAOException {
-    //
-    //  }
+
+    //Source > Toggle Comment | À implementer plus tard en cours
+    /**
+     * Ajoute un nouveau membre.
+     *
+     * @param membreDTO - Le membre à ajouter
+     * @throws DAOException - S'il y a une erreur avec la base de données
+     */
+    public void add(MembreDTO membreDTO) throws DAOException {
+        try(
+            PreparedStatement statementInsert = this.getConnexion().getConnection().prepareStatement(MembreDAO.ADD_REQUEST)) {
+            /* Ajout du membre. */
+            statementInsert.setInt(1,
+                membreDTO.getIdMembre());
+            statementInsert.setString(2,
+                membreDTO.getNom());
+            statementInsert.setLong(3,
+                membreDTO.getTelephone());
+            statementInsert.setInt(4,
+                membreDTO.getLimitePret());
+            statementInsert.executeUpdate();
+        } catch(SQLException sqlException) {
+            throw new DAOException(sqlException);
+        }
+    }
+
+    /**
+     * Lit un membre.
+     *
+     * @param idMembre - L'ID du membre à lire
+     * @return Le membre
+     * @throws DAOException - S'il y a une erreur avec la base de données
+     */
+    public MembreDTO read(int idMembre) throws DAOException {
+        MembreDTO membreDTO = null;
+        try(
+            PreparedStatement statementExiste = this.getConnexion().getConnection().prepareStatement(MembreDAO.READ_REQUEST)) {
+            statementExiste.setInt(1,
+                idMembre);
+            try(
+                ResultSet resultset = statementExiste.executeQuery()) {
+                if(resultset.next()) {
+                    membreDTO = new MembreDTO();
+                    membreDTO.setIdMembre(idMembre);
+                    membreDTO.setNom(resultset.getString(2));
+                    membreDTO.setTelephone(resultset.getLong(3));
+                    membreDTO.setLimitePret(resultset.getInt(4));
+                    membreDTO.setNbPret(resultset.getInt(5));
+                }
+            }
+        } catch(SQLException sqlException) {
+            throw new DAOException(sqlException);
+        }
+        return membreDTO;
+    }
+
+    /**
+     * Met à jour un membre.
+     *
+     * @param membreDTO - Le membre à mettre à jour
+     * @throws DAOException - S'il y a une erreur avec la base de données
+     */
+    public void update(MembreDTO membreDTO) throws DAOException {
+        try(
+            PreparedStatement statementUpdate = this.getConnexion().getConnection().prepareStatement(MembreDAO.UPDATE_REQUEST)) {
+            /* Ajout du membre. */
+            statementUpdate.setString(1,
+                membreDTO.getNom());
+            statementUpdate.setLong(2,
+                membreDTO.getTelephone());
+            statementUpdate.setInt(3,
+                membreDTO.getLimitePret());
+            statementUpdate.setInt(4,
+                membreDTO.getNbPret());
+            statementUpdate.setInt(5,
+                membreDTO.getIdMembre());
+            statementUpdate.executeUpdate();
+        } catch(SQLException sqlException) {
+            throw new DAOException(sqlException);
+        }
+    }
+
+    /**
+     * Supprime un membre.
+     *
+     * @param membreDTO - Le membre à supprimer
+     * @throws DAOException - S'il y a une erreur avec la base de données
+     */
+    public void delete(MembreDTO membreDTO) throws DAOException {
+        try(
+            PreparedStatement statementDelete = this.getConnexion().getConnection().prepareStatement(MembreDAO.DELETE_REQUEST)) {
+            statementDelete.setInt(1,
+                membreDTO.getIdMembre());
+        } catch(SQLException sqlException) {
+            throw new DAOException(sqlException);
+        }
+    }
 }
