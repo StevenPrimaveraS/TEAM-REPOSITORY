@@ -7,6 +7,9 @@ package ca.qc.collegeahuntsic.bibliotheque.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
@@ -41,6 +44,13 @@ public class MembreDAO extends DAO {
 
     private static final String DELETE_REQUEST = "DELETE from membre"
         + "WHERE idMembre = ?";
+
+    private static final String GET_ALL_REQUEST = "SELECT idMembre, "
+        + "                                               nom, "
+        + "                                               telephone, "
+        + "                                               limitePret, "
+        + "                                               nbPret, "
+        + "                                        FROM   membre";
 
     /*
     private static final String GET_ALL_REQUEST = "select idMembre, nom, telephone, limitePret, nbpret"
@@ -286,5 +296,37 @@ public class MembreDAO extends DAO {
         } catch(SQLException sqlException) {
             throw new DAOException(sqlException);
         }
+    }
+
+    /**
+     * Trouve tous les membres.
+     *
+     * @return La liste des membres ; une liste vide sinon.
+     * @throws DAOException S'il y a une erreur avec la base de données
+     */
+    public List<MembreDTO> getAll() throws DAOException {
+        List<MembreDTO> membres = Collections.EMPTY_LIST;
+        try(
+            PreparedStatement getAllPreparedStatement = getConnection().prepareStatement(MembreDAO.GET_ALL_REQUEST)) {
+            try(
+                ResultSet resultSet = getAllPreparedStatement.executeQuery()) {
+                MembreDTO membreDTO = null;
+                if(resultSet.next()) {
+                    membres = new ArrayList<>();
+                    do {
+                        membreDTO = new MembreDTO();
+                        membreDTO.setIdMembre(resultSet.getInt(1));
+                        membreDTO.setNom(resultSet.getString(2));
+                        membreDTO.setTelephone(resultSet.getLong(3));
+                        membreDTO.setLimitePret(resultSet.getInt(4));
+                        membreDTO.setNbPret(resultSet.getInt(5));
+                        membres.add(membreDTO);
+                    } while(resultSet.next());
+                }
+            }
+        } catch(SQLException sqlException) {
+            throw new DAOException(sqlException);
+        }
+        return membres;
     }
 }
