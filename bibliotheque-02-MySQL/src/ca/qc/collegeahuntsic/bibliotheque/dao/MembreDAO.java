@@ -64,7 +64,7 @@ public class MembreDAO extends DAO {
      */
     public boolean existe(int idMembre) throws DAOException {
         try(
-            PreparedStatement statementExiste = this.getConnexion().getConnection().prepareStatement(MembreDAO.READ_REQUEST)) {
+            PreparedStatement statementExiste = getConnection().prepareStatement(MembreDAO.READ_REQUEST)) {
             statementExiste.setInt(1,
                 idMembre);
             final ResultSet resultset = statementExiste.executeQuery();
@@ -85,7 +85,7 @@ public class MembreDAO extends DAO {
      */
     public MembreDTO getMembre(int idMembre) throws DAOException {
         try(
-            PreparedStatement statementExiste = this.getConnexion().getConnection().prepareStatement(MembreDAO.READ_REQUEST)) {
+            PreparedStatement statementExiste = getConnection().prepareStatement(MembreDAO.READ_REQUEST)) {
             statementExiste.setInt(1,
                 idMembre);
             final ResultSet resultset = statementExiste.executeQuery();
@@ -120,7 +120,7 @@ public class MembreDAO extends DAO {
         long telephone,
         int limitePret) throws DAOException {
         try(
-            PreparedStatement statementInsert = this.getConnexion().getConnection().prepareStatement(MembreDAO.ADD_REQUEST)) {
+            PreparedStatement statementInsert = getConnection().prepareStatement(MembreDAO.ADD_REQUEST)) {
             /* Ajout du membre. */
             statementInsert.setInt(1,
                 idMembre);
@@ -145,8 +145,7 @@ public class MembreDAO extends DAO {
      */
     public int preter(int idMembre) throws DAOException {
         try(
-            PreparedStatement statementUpdateIncrementNbPret = this.getConnexion().getConnection()
-                .prepareStatement(MembreDAO.UPDATE_REQUEST_INCREMENT_NB_PRET)) {
+            PreparedStatement statementUpdateIncrementNbPret = getConnection().prepareStatement(MembreDAO.UPDATE_REQUEST_INCREMENT_NB_PRET)) {
             statementUpdateIncrementNbPret.setInt(1,
                 idMembre);
             return statementUpdateIncrementNbPret.executeUpdate();
@@ -164,8 +163,7 @@ public class MembreDAO extends DAO {
      */
     public int retourner(int idMembre) throws DAOException {
         try(
-            PreparedStatement statementUpdateDecrementNbPret = this.getConnexion().getConnection()
-                .prepareStatement(MembreDAO.UPDATE_REQUEST_DECREMENT_NB_PRET)) {
+            PreparedStatement statementUpdateDecrementNbPret = getConnection().prepareStatement(MembreDAO.UPDATE_REQUEST_DECREMENT_NB_PRET)) {
             statementUpdateDecrementNbPret.setInt(1,
                 idMembre);
             return statementUpdateDecrementNbPret.executeUpdate();
@@ -183,7 +181,7 @@ public class MembreDAO extends DAO {
      */
     public int desinscrire(int idMembre) throws DAOException {
         try(
-            PreparedStatement statementDelete = this.getConnexion().getConnection().prepareStatement(MembreDAO.DELETE_REQUEST)) {
+            PreparedStatement statementDelete = getConnection().prepareStatement(MembreDAO.DELETE_REQUEST)) {
             statementDelete.setInt(1,
                 idMembre);
             return statementDelete.executeUpdate();
@@ -201,7 +199,7 @@ public class MembreDAO extends DAO {
      */
     public void add(MembreDTO membreDTO) throws DAOException {
         try(
-            PreparedStatement statementInsert = this.getConnexion().getConnection().prepareStatement(MembreDAO.ADD_REQUEST)) {
+            PreparedStatement statementInsert = getConnection().prepareStatement(MembreDAO.ADD_REQUEST)) {
             /* Ajout du membre. */
             statementInsert.setInt(1,
                 membreDTO.getIdMembre());
@@ -227,7 +225,7 @@ public class MembreDAO extends DAO {
     public MembreDTO read(int idMembre) throws DAOException {
         MembreDTO membreDTO = null;
         try(
-            PreparedStatement statementExiste = this.getConnexion().getConnection().prepareStatement(MembreDAO.READ_REQUEST)) {
+            PreparedStatement statementExiste = getConnection().prepareStatement(MembreDAO.READ_REQUEST)) {
             statementExiste.setInt(1,
                 idMembre);
             try(
@@ -255,7 +253,7 @@ public class MembreDAO extends DAO {
      */
     public void update(MembreDTO membreDTO) throws DAOException {
         try(
-            PreparedStatement statementUpdate = this.getConnexion().getConnection().prepareStatement(MembreDAO.UPDATE_REQUEST)) {
+            PreparedStatement statementUpdate = getConnection().prepareStatement(MembreDAO.UPDATE_REQUEST)) {
             /* Ajout du membre. */
             statementUpdate.setString(1,
                 membreDTO.getNom());
@@ -281,7 +279,7 @@ public class MembreDAO extends DAO {
      */
     public void delete(MembreDTO membreDTO) throws DAOException {
         try(
-            PreparedStatement statementDelete = this.getConnexion().getConnection().prepareStatement(MembreDAO.DELETE_REQUEST)) {
+            PreparedStatement statementDelete = getConnection().prepareStatement(MembreDAO.DELETE_REQUEST)) {
             statementDelete.setInt(1,
                 membreDTO.getIdMembre());
             statementDelete.executeUpdate();
