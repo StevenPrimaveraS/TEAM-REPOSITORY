@@ -178,4 +178,45 @@ public class MembreDAO extends DAO {
             throw new DAOException(sqlException);
         }
     }
+// Source > Toggle Comment | À implementer plus tard en cours
+//  /**
+//   * Ajoute un nouveau membre.
+//   * 
+//   * @param membreDTO - Le membre à ajouter
+//   * @throws DAOException - S'il y a une erreur avec la base de données
+//   */
+//  public void add(MembreDTO membreDTO) throws DAOException {
+//  	
+//  }
+//  
+//  /**
+//   * Lit un membre.
+//   * 
+//   * @param idMembre - L'ID du membre à lire
+//   * @return Le membre
+//   * @throws DAOException - S'il y a une erreur avec la base de données
+//   */
+//  public MembreDTO read(int idMembre) throws DAOException {
+//  	return null;
+//  }
+//  
+//  /**
+//   * Met à jour un membre.
+//   * 
+//   * @param membreDTO - Le membre à mettre à jour
+//   * @throws DAOException - S'il y a une erreur avec la base de données
+//   */
+//  public void update(MembreDTO membreDTO) throws DAOException {
+//  	
+//  }
+//  
+//  /**
+//   * Supprime un membre.
+//   * 
+//   * @param membreDTO - Le membre à supprimer
+//   * @throws DAOException - S'il y a une erreur avec la base de données
+//   */
+//  public void delete(MembreDTO membreDTO) throws DAOException {
+//  	
+//  }
 }

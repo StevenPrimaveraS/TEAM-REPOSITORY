@@ -193,4 +193,45 @@ public class LivreDAO extends DAO {
             throw new DAOException(sqlException);
         }
     }
+// Source > Toggle Comment | À implementer plus tard en cours
+//    /**
+//     * Ajoute un nouveau livre.
+//     * 
+//     * @param livreDTO - Le livre à ajouter
+//     * @throws DAOException - S'il y a une erreur avec la base de données
+//     */
+//    public void add(LivreDTO livreDTO) throws DAOException {
+//    	
+//    }
+//    
+//    /**
+//     * Lit un livre.
+//     * 
+//     * @param idLivre - L'ID du livre à lire
+//     * @return Le livre
+//     * @throws DAOException - S'il y a une erreur avec la base de données
+//     */
+//    public LivreDTO read(int idLivre) throws DAOException {
+//    	return null;
+//    }
+//    
+//    /**
+//     * Met à jour un livre.
+//     * 
+//     * @param livreDTO - Le livre à mettre à jour
+//     * @throws DAOException - S'il y a une erreur avec la base de données
+//     */
+//    public void update(LivreDTO livreDTO) throws DAOException {
+//    	
+//    }
+//    
+//    /**
+//     * Supprime un livre.
+//     * 
+//     * @param livreDTO - Le livre à supprimer
+//     * @throws DAOException - S'il y a une erreur avec la base de données
+//     */
+//    public void delete(LivreDTO livreDTO) throws DAOException {
+//    	
+//    }
 }

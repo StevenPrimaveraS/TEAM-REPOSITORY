@@ -203,4 +203,45 @@ public class ReservationDAO extends DAO {
             throw new DAOException(sqlException);
         }
     }
+// Source > Toggle Comment | À implementer plus tard en cours
+//  /**
+//   * Ajoute une nouvelle reservation.
+//   * 
+//   * @param reservationDTO - La reservation à ajouter
+//   * @throws DAOException - S'il y a une erreur avec la base de données
+//   */
+//  public void add(ReservationDTO reservationDTO) throws DAOException {
+//  	
+//  }
+//  
+//  /**
+//   * Lit un reservation.
+//   * 
+//   * @param idReservation - L'ID de la reservation à lire
+//   * @return La reservation
+//   * @throws DAOException - S'il y a une erreur avec la base de données
+//   */
+//  public ReservationDTO read(int idReservation) throws DAOException {
+//  	return null;
+//  }
+//  
+//  /**
+//   * Met à jour une reservation.
+//   * 
+//   * @param reservationDTO - La reservation à mettre à jour
+//   * @throws DAOException - S'il y a une erreur avec la base de données
+//   */
+//  public void update(ReservationDTO reservationDTO) throws DAOException {
+//  	
+//  }
+//  
+//  /**
+//   * Supprime un reservation.
+//   * 
+//   * @param reservationDTO - La reservation à supprimer
+//   * @throws DAOException - S'il y a une erreur avec la base de données
+//   */
+//  public void delete(ReservationDTO reservationDTO) throws DAOException {
+//  	
+//  }
 }
