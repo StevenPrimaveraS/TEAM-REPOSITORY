@@ -185,17 +185,15 @@ public class LivreDAO extends DAO {
     /**
      * Suppression d'un livre.
      *
-     * @param idLivre identifiant du livre
-     * @return int resultat de la commande de pret
+     * @param livreDTO identifiant du livre
      * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
      */
-    public int vendre(int idLivre) throws DAOException {
+    public void delete(LivreDTO livreDTO) throws DAOException {
         try(
             PreparedStatement statementDelete = this.getConnexion().getConnection().prepareStatement(LivreDAO.DELETE_REQUEST)) {
-            /* Suppression du livre. */
             statementDelete.setInt(1,
-                idLivre);
-            return statementDelete.executeUpdate();
+                livreDTO.getIdLivre());
+            statementDelete.executeUpdate();
         } catch(SQLException sqlException) {
             throw new DAOException(sqlException);
         }
