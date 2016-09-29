@@ -102,5 +102,4 @@ public class ReservationDTO {
     public void setDateReservation(Timestamp dateReservation) {
         this.dateReservation = dateReservation;
     }
-
 }
