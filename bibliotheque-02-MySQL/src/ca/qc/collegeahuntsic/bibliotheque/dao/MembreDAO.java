@@ -284,6 +284,7 @@ public class MembreDAO extends DAO {
             PreparedStatement statementDelete = this.getConnexion().getConnection().prepareStatement(MembreDAO.DELETE_REQUEST)) {
             statementDelete.setInt(1,
                 membreDTO.getIdMembre());
+            statementDelete.executeUpdate();
         } catch(SQLException sqlException) {
             throw new DAOException(sqlException);
         }
