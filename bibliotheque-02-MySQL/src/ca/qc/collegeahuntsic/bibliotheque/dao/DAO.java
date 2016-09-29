@@ -1,6 +1,6 @@
 // Fichier DAO.java
-// Auteur : Primavera Sequeira Steven
-// Date de création : 2016-09-14
+// Auteur : Gilles Bénichou
+// Date de création : 2016-05-18
 
 package ca.qc.collegeahuntsic.bibliotheque.dao;
 
@@ -11,46 +11,50 @@ import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 /**
  * Classe de base pour tous les DAOs.
  *
- * @author Mathieu Lafond
+ * @author Gilles Benichou
  */
 public class DAO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    /**
-     * Crée un DAO à partir d'une connexion à la base de données.
-     *
-     * @param connexion - La connexion à utiliser
-     */
     private Connexion connexion;
 
     /**
-     * Constructeur de DAO de base.
+     * Crée un DAO à partir d'une connexion à la base de données.
      *
-     * @param connexion connexion à utiliser
+     * @param connexion La connexion à utiliser
      */
     public DAO(Connexion connexion) {
         super();
-        this.connexion = connexion;
+        setConnexion(connexion);
     }
 
+    // Region Getters and Setters
     /**
-     * Getter de la variable d'instance this.connexion.
+     * Getter de la variable d'instance <code>this.connexion</code>.
      *
-     * @return Connexion retourne la variable d'instance connexion
+     * @return La variable d'instance <code>this.connexion</code>
      */
-    public Connexion getConnexion() {
-
+    private Connexion getConnexion() {
         return this.connexion;
     }
 
     /**
-     * Retourne la connection de this.connexion.
+     * Setter de la variable d'instance <code>this.connexion</code>.
      *
-     * @return Connection retourne la variable d'instance connexion
+     * @param connexion La valeur à utiliser pour la variable d'instance <code>this.connexion</code>
      */
-    public Connection getConnection() {
-
-        return getConnexion().getConnection();
+    private void setConnexion(Connexion connexion) {
+        this.connexion = connexion;
     }
 
+    // EndRegion Getters and Setters
+
+    /**
+     * Retourne la {@link java.sql.Connection} JDBC.
+     *
+     * @return La {@link java.sql.Connection} JDBC
+     */
+    protected Connection getConnection() {
+        return getConnexion().getConnection();
+    }
 }
