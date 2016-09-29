@@ -8,8 +8,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
+import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 
 /**
@@ -35,6 +39,10 @@ public class LivreDAO extends DAO {
 
     private static final String DELETE_REQUEST = "DELETE from livre"
         + "WHERE idLivre = ?";
+
+    private static final String FIND_BY_MEMBRE = "SELECT idLivre, titre, auteur, dateAcquisition, idMembre"
+        + "FROM Livre"
+        + "WHERE idMembre = ?";
 
     /*
       private static final String GET_ALL_REQUEST = "SELECT idLivre, titre, auteur, dateAcquisition, idMembre, pretDate"
@@ -186,6 +194,42 @@ public class LivreDAO extends DAO {
         } catch(SQLException sqlException) {
             throw new DAOException(sqlException);
         }
+    }
+
+    /**
+     * Recherche des livres d'un membre.
+     *
+     * @param membreDTO - Le membre à vérifier
+     * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
+     * @return Retourne liste de livres
+     */
+    public List<LivreDTO> findByMembre(MembreDTO membreDTO) throws DAOException {
+        List<LivreDTO> livres = Collections.EMPTY_LIST;
+        try(
+            PreparedStatement findByMembrePreparedStatement = this.getConnexion().getConnection().prepareStatement(LivreDAO.FIND_BY_MEMBRE)) {
+            findByMembrePreparedStatement.setInt(1,
+                membreDTO.getIdMembre());
+            try(
+                ResultSet resultSet = findByMembrePreparedStatement.executeQuery()) {
+                LivreDTO livreDTO = null;
+                if(resultSet.next()) {
+                    livres = new ArrayList<>();
+                    do {
+                        livreDTO = new LivreDTO();
+                        livreDTO.setIdLivre(resultSet.getInt(1));
+                        livreDTO.setTitre(resultSet.getString(2));
+                        livreDTO.setAuteur(resultSet.getString(3));
+                        livreDTO.setDateAcquisition(resultSet.getDate(4));
+                        livreDTO.setIdMembre(resultSet.getInt(5));
+                        livres.add(livreDTO);
+                    } while(resultSet.next());
+                }
+            }
+
+        } catch(SQLException sqlException) {
+            throw new DAOException(sqlException);
+        }
+        return livres;
     }
     // Source > Toggle Comment | À implementer plus tard en cours
     //    /**
