@@ -22,7 +22,8 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.ServiceException;
  * @author Primavera Sequeira Steven
  */
 
-public class ReservationService {
+public class ReservationService extends Service{
+    private static final long serialVersionUID = 1L;
 
     private LivreDAO livreDAO;
 
