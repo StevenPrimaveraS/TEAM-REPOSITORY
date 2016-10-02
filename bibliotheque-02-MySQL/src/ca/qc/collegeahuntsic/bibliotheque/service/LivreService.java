@@ -236,7 +236,7 @@ public class LivreService extends Service {
      *
      * @return La variable d'instance <code>this.livreDAO</code>
      */
-	public LivreDAO getLivreDAO() {
+	private LivreDAO getLivreDAO() {
 		return livreDAO;
 	}
 
@@ -246,7 +246,7 @@ public class LivreService extends Service {
      *
      * @param livreDAO La valeur à utiliser pour la variable d'instance <code>this.livreDAO</code>
      */
-	public void setLivreDAO(LivreDAO livreDAO) {
+	private void setLivreDAO(LivreDAO livreDAO) {
 		this.livreDAO = livreDAO;
 	}
 
@@ -256,7 +256,7 @@ public class LivreService extends Service {
      *
      * @return La variable d'instance <code>this.membreDAO</code>
      */
-	public MembreDAO getMembreDAO() {
+	private MembreDAO getMembreDAO() {
 		return membreDAO;
 	}
 
@@ -266,7 +266,7 @@ public class LivreService extends Service {
      *
      * @param membreDAO La valeur à utiliser pour la variable d'instance <code>this.membreDAO</code>
      */
-	public void setMembreDAO(MembreDAO membreDAO) {
+	private void setMembreDAO(MembreDAO membreDAO) {
 		this.membreDAO = membreDAO;
 	}
 
@@ -276,7 +276,7 @@ public class LivreService extends Service {
      *
      * @return La variable d'instance <code>this.reservationDAO</code>
      */
-	public ReservationDAO getReservationDAO() {
+	private ReservationDAO getReservationDAO() {
 		return reservationDAO;
 	}
 
@@ -286,7 +286,7 @@ public class LivreService extends Service {
      *
      * @param reservationDAO La valeur à utiliser pour la variable d'instance <code>this.reservationDAO</code>
      */
-	public void setReservationDAO(ReservationDAO reservationDAO) {
+	private void setReservationDAO(ReservationDAO reservationDAO) {
 		this.reservationDAO = reservationDAO;
 	}
     
