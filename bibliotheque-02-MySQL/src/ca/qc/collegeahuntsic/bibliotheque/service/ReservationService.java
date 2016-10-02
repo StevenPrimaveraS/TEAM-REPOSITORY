@@ -5,6 +5,8 @@
 package ca.qc.collegeahuntsic.bibliotheque.service;
 
 import java.sql.Date;
+import java.util.List;
+
 import ca.qc.collegeahuntsic.bibliotheque.dao.LivreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.MembreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.ReservationDAO;
@@ -24,37 +26,100 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.ServiceException;
 
 public class ReservationService extends Service{
     private static final long serialVersionUID = 1L;
+    
+    private ReservationDAO reservationDAO;
 
     private LivreDAO livreDAO;
 
     private MembreDAO membreDAO;
 
-    private ReservationDAO reservationDAO;
-
-    private Connexion connexion;
 
     /**
-     * Crée le service de la table reservation.
+     * Crée le service de la table <code>reservation</code>.
      *
-     * @param livre - livre qu'on recoit en paramètre dans la méthode
-     * @param membre - membre qu'on recoit en paramètre dans la méthode
-     * @param reservation - reservation qu'on reçoit en paramètre dans la méthode
-     * @throws ServiceException - si une erreur survient
+     * @param reservationDAO - reservation qu'on reçoit en paramètre dans la méthode
+     * @param livreDAO - livre qu'on recoit en paramètre dans la méthode
+     * @param membreDAO - membre qu'on recoit en paramètre dans la méthode
      */
-    public ReservationService(LivreDAO livre,
-        MembreDAO membre,
-        ReservationDAO reservation) throws ServiceException {
-        if(livre.getConnexion() != membre.getConnexion()
-            || reservation.getConnexion() != membre.getConnexion()) {
-            throw new ServiceException("Les instances de livre, de membre et de reservation n'utilisent pas la même connexion au serveur");
-        }
-        this.connexion = livre.getConnexion();
-        this.livreDAO = livre;
-        this.membreDAO = membre;
-        this.reservationDAO = reservation;
-
+    public ReservationService(ReservationDAO reservationDAO,
+    	LivreDAO livreDAO,
+        MembreDAO membreDAO) {
+    	setReservationDAO(reservationDAO);
+        setLivreDAO(livreDAO);
+        setMembreDAO(membreDAO);
     }
 
+    /**
+     * Ajoute une nouvelle reservation.
+     *
+     * @param reservationDTO La reservation à ajouter
+     * @throws ServiceException S'il y a une erreur avec la base de données
+     */
+    public void add(ReservationDTO reservationDTO) throws ServiceException {
+        try {
+            getReservationDAO().add(reservationDTO);
+        } catch(DAOException daoException) {
+            throw new ServiceException(daoException);
+        }
+    }
+
+    /**
+     * Lit une reservation. Si aucune reservation n'est trouvée, <code>null</code> est retourné.
+     *
+     * @param idReservation L'ID du reservation à lire
+     * @return La reservation lue ; <code>null</code> sinon
+     * @throws ServiceException S'il y a une erreur avec la base de données
+     */
+    public ReservationDTO read(int idReservation) throws ServiceException {
+        try {
+            return getReservationDAO().read(idReservation);
+        } catch(DAOException daoException) {
+            throw new ServiceException(daoException);
+        }
+    }
+
+    /**
+     * Met à jour une reservation.
+     *
+     * @param reservationDTO La reservation à mettre à jour
+     * @throws ServiceException S'il y a une erreur avec la base de données
+     */
+    public void update(ReservationDTO reservationDTO) throws ServiceException {
+        try {
+            getReservationDAO().update(reservationDTO);
+        } catch(DAOException daoException) {
+            throw new ServiceException(daoException);
+        }
+    }
+
+    /**
+     * Supprime une reservation.
+     *
+     * @param reservationDTO La reservation à supprimer
+     * @throws ServiceException S'il y a une erreur avec la base de données
+     */
+    public void delete(ReservationDTO reservationDTO) throws ServiceException {
+        try {
+            getReservationDAO().delete(reservationDTO);
+        } catch(DAOException daoException) {
+            throw new ServiceException(daoException);
+        }
+    }
+
+    /**
+     * Trouve toutes les reservations.
+     *
+     * @return La liste des reservations ; une liste vide sinon
+     * @throws ServiceException S'il y a une erreur avec la base de données
+     */
+    public List<ReservationDTO> getAll() throws ServiceException {
+        try {
+            return getReservationDAO().getAll();
+        } catch(DAOException daoException) {
+            throw new ServiceException(daoException);
+        }
+    }
+    //TODO Service
     /**
      * Réservation d'un livre par un membre. Le livre doit être prété.
      *
@@ -232,4 +297,63 @@ public class ReservationService extends Service{
             throw new ServiceException(exception);
         }
     }
+    //TODO Service End
+    /**
+     * Getter de la variable d'instance <code>this.livreDAO</code>.
+     *
+     * @return La variable d'instance <code>this.livreDAO</code>
+     */
+	private LivreDAO getLivreDAO() {
+		return livreDAO;
+	}
+
+
+	/**
+     * Setter de la variable d'instance <code>this.livreDAO</code>.
+     *
+     * @param livreDAO La valeur à utiliser pour la variable d'instance <code>this.livreDAO</code>
+     */
+	private void setLivreDAO(LivreDAO livreDAO) {
+		this.livreDAO = livreDAO;
+	}
+
+
+    /**
+     * Getter de la variable d'instance <code>this.membreDAO</code>.
+     *
+     * @return La variable d'instance <code>this.membreDAO</code>
+     */
+	private MembreDAO getMembreDAO() {
+		return membreDAO;
+	}
+
+
+	/**
+     * Setter de la variable d'instance <code>this.membreDAO</code>.
+     *
+     * @param membreDAO La valeur à utiliser pour la variable d'instance <code>this.membreDAO</code>
+     */
+	private void setMembreDAO(MembreDAO membreDAO) {
+		this.membreDAO = membreDAO;
+	}
+
+
+    /**
+     * Getter de la variable d'instance <code>this.reservationDAO</code>.
+     *
+     * @return La variable d'instance <code>this.reservationDAO</code>
+     */
+	private ReservationDAO getReservationDAO() {
+		return reservationDAO;
+	}
+
+
+	/**
+     * Setter de la variable d'instance <code>this.reservationDAO</code>.
+     *
+     * @param reservationDAO La valeur à utiliser pour la variable d'instance <code>this.reservationDAO</code>
+     */
+	private void setReservationDAO(ReservationDAO reservationDAO) {
+		this.reservationDAO = reservationDAO;
+	}
 }
