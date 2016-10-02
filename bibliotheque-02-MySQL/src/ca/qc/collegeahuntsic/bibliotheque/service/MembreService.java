@@ -30,10 +30,11 @@ public class MembreService extends Service{
     private ReservationDAO reservationDAO;
 
     /**
-     * Création d'une instance.
+     * Crée le service de la table <code>membre</code>.
      *
-     * @param membre MembreDao qu'on reçoit en paramètre.
-     * @param reservation ReservationDAO qu'on reçoit en paramètre.
+     * @param membreDAO MembreDAO qu'on reçoit en paramètre.
+     * @param livreDAO LivreDAO qu'on reçoit en paramètre.
+     * @param reservationDAO ReservationDAO qu'on reçoit en paramètre.
      */
     public MembreService(MembreDAO membreDAO,
     	LivreDAO livreDAO,
