@@ -132,10 +132,13 @@ public class MembreService extends Service {
     }
 
     /**
-     * Suppression d'un membre de la base de données.
+     * Désincrit un membre.
      *
-     * @param idMembre id du membre qu'on veut désinscrire.
-     * @throws ServiceException - Si une erreur survient
+     * @param membreDTO - Le membre à désinscrire
+     * @throws ServiceException - Si le membre n'existe pas,
+     *         si le membre a encore des prêts,
+     *         s'il a des réservations ou
+     *         s'il y a une erreur avec la base de données
      */
     public void desinscrire(MembreDTO membreDTO) throws ServiceException {
         try {
@@ -165,19 +168,19 @@ public class MembreService extends Service {
 
     /**
      * Emprunte un livre.
-     * 
+     *
      * @param membreDTO - Le membre qui emprunte
      * @param livreDTO - Le livre à emprunter
-     * @throws ServiceException - Si le membre n'existe pas, 
-     *         si le livre n'existe pas, si le livre a été prêté, 
+     * @throws ServiceException - Si le membre n'existe pas,
+     *         si le livre n'existe pas, si le livre a été prêté,
      *         si le livre a été réservé, si le membre a atteint sa limite de prêt
      *         ou s'il y a une erreur avec la base de données
      */
     public void emprunter(MembreDTO membreDTO,
         LivreDTO livreDTO) throws ServiceException {
         try {
-            MembreDTO unMembreDTO = read(membreDTO.getIdMembre());
-            LivreDTO unLivreDTO = getLivreDAO().read(livreDTO.getIdLivre());
+            final MembreDTO unMembreDTO = read(membreDTO.getIdMembre());
+            final LivreDTO unLivreDTO = getLivreDAO().read(livreDTO.getIdLivre());
             if(unMembreDTO == null) {
                 throw new ServiceException("Le membre "
                     + membreDTO.getIdMembre()
@@ -214,20 +217,20 @@ public class MembreService extends Service {
 
     /**
      * Renouvelle le prêt d"un livre.
-     * 
+     *
      * @param membreDTO - Le membre qui renouvelle
      * @param livreDTO - Le livre à renouveler
      * @throws ServiceException - Si le membre n'existe pas,
-     *         si le livre n'existe pas, si le livre n'a pas encore été prêté, 
-     *         si le livre a été prêté à quelqu'un d'autre, 
-     *         si le livre a été réservé ou 
+     *         si le livre n'existe pas, si le livre n'a pas encore été prêté,
+     *         si le livre a été prêté à quelqu'un d'autre,
+     *         si le livre a été réservé ou
      *         s'il y a une erreur avec la base de données
      */
     public void renouveler(MembreDTO membreDTO,
         LivreDTO livreDTO) throws ServiceException {
         try {
-            MembreDTO unMembreDTO = read(membreDTO.getIdMembre());
-            LivreDTO unLivreDTO = getLivreDAO().read(livreDTO.getIdLivre());
+            final MembreDTO unMembreDTO = read(membreDTO.getIdMembre());
+            final LivreDTO unLivreDTO = getLivreDAO().read(livreDTO.getIdLivre());
             if(unMembreDTO == null) {
                 throw new ServiceException("Le membre "
                     + membreDTO.getIdMembre()
@@ -264,20 +267,20 @@ public class MembreService extends Service {
 
     /**
      * Retourne un livre.
-     * 
+     *
      * @param membreDTO - Le membre qui retourne
      * @param livreDTO - Le livre à retourner
-     * @throws ServiceException - Si le membre n'existe pas, 
-     *         si le livre n'existe pas, 
-     *         si le livre n'a pas encore été prêté, 
-     *         si le livre a été prêté à quelqu'un d'autre ou 
+     * @throws ServiceException - Si le membre n'existe pas,
+     *         si le livre n'existe pas,
+     *         si le livre n'a pas encore été prêté,
+     *         si le livre a été prêté à quelqu'un d'autre ou
      *         s'il y a une erreur avec la base de données
      */
     public void retourner(MembreDTO membreDTO,
         LivreDTO livreDTO) throws ServiceException {
         try {
-            MembreDTO unMembreDTO = read(membreDTO.getIdMembre());
-            LivreDTO unLivreDTO = getLivreDAO().read(livreDTO.getIdLivre());
+            final MembreDTO unMembreDTO = read(membreDTO.getIdMembre());
+            final LivreDTO unLivreDTO = getLivreDAO().read(livreDTO.getIdLivre());
             if(unMembreDTO == null) {
                 throw new ServiceException("Le membre "
                     + membreDTO.getIdMembre()
@@ -312,7 +315,7 @@ public class MembreService extends Service {
      * @return La variable d'instance <code>this.livreDAO</code>
      */
     private LivreDAO getLivreDAO() {
-        return livreDAO;
+        return this.livreDAO;
     }
 
     /**
@@ -330,7 +333,7 @@ public class MembreService extends Service {
      * @return La variable d'instance <code>this.membreDAO</code>
      */
     private MembreDAO getMembreDAO() {
-        return membreDAO;
+        return this.membreDAO;
     }
 
     /**
@@ -348,7 +351,7 @@ public class MembreService extends Service {
      * @return La variable d'instance <code>this.reservationDAO</code>
      */
     private ReservationDAO getReservationDAO() {
-        return reservationDAO;
+        return this.reservationDAO;
     }
 
     /**
