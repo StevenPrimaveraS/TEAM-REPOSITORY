@@ -184,7 +184,7 @@ public final class Bibliotheque {
             } else if("desinscrire".equals(command)) {
                 final MembreDTO membreDTO = new MembreDTO();
                 membreDTO.setIdMembre(Bibliotheque.readInt(tokenizer));
-                Bibliotheque.gestionnaireBibliotheque.getMembreService().desincrire(membreDTO);
+                Bibliotheque.gestionnaireBibliotheque.getMembreService().desinscrire(membreDTO);
                 Bibliotheque.gestionnaireBibliotheque.commit();
             } else if("reserver".equals(command)) {
                 // Juste pour éviter deux dates de réservation strictement identiques
