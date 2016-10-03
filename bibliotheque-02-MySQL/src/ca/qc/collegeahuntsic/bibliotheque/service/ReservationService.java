@@ -118,15 +118,14 @@ public class ReservationService extends Service {
     /**
      * Réservation d'un livre par un membre. Le livre doit être prété.
      *
-     * @param idReservation - id de la réservation qu'on veut réserver.
-     * @param idLivre - id du livre qu'on veut réserver.
-     * @param idMembre - id du livre qu'on veut réserver
-     * @param dateReservation - date de la réservation.
+     * @param reservationDTO - La réservation à créer
+     * @param membreDTO - Le membre qui réserve
+     * @param livreDTO - Le livre à réserver
      * @throws ServiceException - Si la réservation existe déjà,
-     *         si le membre n'existe pas, si le livre n'existe pas, 
-     *         si le livre n'a pas encore été prêté, 
-     *         si le livre est déjà prêté au membre, 
-     *         si le membre a déjà réservé ce livre ou 
+     *         si le membre n'existe pas, si le livre n'existe pas,
+     *         si le livre n'a pas encore été prêté,
+     *         si le livre est déjà prêté au membre,
+     *         si le membre a déjà réservé ce livre ou
      *         s'il y a une erreur avec la base de données
      */
     public void reserver(ReservationDTO reservationDTO,
@@ -185,13 +184,14 @@ public class ReservationService extends Service {
      * doit pas avoir dépassé sa limite de pret. La réservation doit la être la
      * première en liste.
      *
-     * @param idReservation - id de la réservation.
-     * @param datePret - date du prêt de la réservation.
-     * @throws ServiceException -  Si la réservation n'existe pas, 
-     *         si le membre n'existe pas, si le livre n'existe pas, 
-     *         si la réservation n'est pas la première de la liste, 
-     *         si le livre est déjà prété, 
-     *         si le membre a atteint sa limite de prêt ou 
+     * @param reservationDTO - La réservation à utiliser
+     * @param membreDTO - Le membre qui utilise la réservation
+     * @param livreDTO - Le livre à emprunter
+     * @throws ServiceException -  Si la réservation n'existe pas,
+     *         si le membre n'existe pas, si le livre n'existe pas,
+     *         si la réservation n'est pas la première de la liste,
+     *         si le livre est déjà prété,
+     *         si le membre a atteint sa limite de prêt ou
      *         s'il y a une erreur avec la base de données
      */
     public void utiliser(ReservationDTO reservationDTO,
@@ -243,8 +243,8 @@ public class ReservationService extends Service {
     /**
      * Annulation d'une réservation. La réservation doit exister.
      *
-     * @param idReservation - id de la réservation qu'on veux annuler.
-     * @throws ServiceException - Si la réservation n'existe pas ou 
+     * @param reservationDTO - Le reservation à annuler
+     * @throws ServiceException - Si la réservation n'existe pas ou
      *         s'il y a une erreur avec la base de données
      */
     public void annuler(ReservationDTO reservationDTO) throws ServiceException {
@@ -263,7 +263,7 @@ public class ReservationService extends Service {
      * @return La variable d'instance <code>this.livreDAO</code>
      */
     private LivreDAO getLivreDAO() {
-        return livreDAO;
+        return this.livreDAO;
     }
 
     /**
@@ -281,7 +281,7 @@ public class ReservationService extends Service {
      * @return La variable d'instance <code>this.membreDAO</code>
      */
     private MembreDAO getMembreDAO() {
-        return membreDAO;
+        return this.membreDAO;
     }
 
     /**
@@ -299,7 +299,7 @@ public class ReservationService extends Service {
      * @return La variable d'instance <code>this.reservationDAO</code>
      */
     private ReservationDAO getReservationDAO() {
-        return reservationDAO;
+        return this.reservationDAO;
     }
 
     /**
