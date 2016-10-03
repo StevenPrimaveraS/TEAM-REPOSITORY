@@ -182,7 +182,7 @@ public final class Bibliotheque {
                     readInt(tokenizer) /* idMembre */,
                     readDate(tokenizer) /* dateReservation */);
             } else if("prendreRes".startsWith(command)) {
-                gestionBiblio.getGestionReservation().prendreRes(readInt(tokenizer) /* idReservation */,
+                gestionBiblio.getGestionReservation().utiliser(readInt(tokenizer) /* idReservation */,
                     readDate(tokenizer) /* dateReservation */);
             } else if("annulerRes".startsWith(command)) {
                 gestionBiblio.getGestionReservation().annulerRes(readInt(tokenizer) /* idReservation */);
