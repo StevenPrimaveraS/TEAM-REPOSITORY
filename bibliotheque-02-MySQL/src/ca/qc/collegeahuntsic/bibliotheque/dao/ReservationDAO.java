@@ -382,10 +382,8 @@ public class ReservationDAO extends DAO {
     /**
      * Lecture de la premiere reservation d'un livre.
      *
-     * @param idLivre
-     *            identifiant du livre.
-     * @throws DAOException
-     *             si une erreur survient
+     * @param livreDTO - Le livre à utiliser
+     * @throws DAOException - S'il y a une erreur avec la base de données
      * @return ReservationDTO retourne un DTO de reservation
      */
     public List<ReservationDTO> findByLivre(LivreDTO livreDTO) throws DAOException {
@@ -418,10 +416,8 @@ public class ReservationDAO extends DAO {
     /**
      * Lecture de la premiere reservation d'un livre.
      *
-     * @param idMembre
-     *            identifiant de la reservation.
-     * @throws DAOException
-     *             si une erreur survient
+     * @param membreDTO - Le membre à utiliser
+     * @throws DAOException - S'il y a une erreur avec la base de données
      * @return ReservationDTO retourne un DTO de reservation
      */
     public List<ReservationDTO> findByMembre(MembreDTO membreDTO) throws DAOException {

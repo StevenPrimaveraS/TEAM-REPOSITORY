@@ -333,7 +333,7 @@ public class MembreDAO extends DAO {
     /**
     * Emprunte un livre.
     *
-    * @param idMembre identifiant du membre
+    * @param membreDTO - Le membre à mettre à jour
     * @return int resultat de la commande de pret
     * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
     */
@@ -351,7 +351,7 @@ public class MembreDAO extends DAO {
     /**
      * Retourne un livre.
      *
-     * @param idMembre identifiant du membre
+     * @param membreDTO - Le membre à mettre à jour
      * @return int resultat de la commande de retour
      * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
      */
