@@ -13,10 +13,11 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.StringTokenizer;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
+import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.ServiceException;
+import ca.qc.collegeahuntsic.bibliotheque.util.BibliothequeCreateur;
 import ca.qc.collegeahuntsic.bibliotheque.util.FormatteurDate;
-import ca.qc.collegeahuntsic.bibliotheque.util.GestionBibliotheque;
 
 /**
  * Interface du système de gestion d'une bibliothèque.
@@ -44,7 +45,7 @@ import ca.qc.collegeahuntsic.bibliotheque.util.GestionBibliotheque;
  */
 public final class Bibliotheque {
 
-    private static GestionBibliotheque gestionBiblio;
+    private static BibliothequeCreateur gestionBiblio;
 
     private static boolean lectureAuClavier;
 
@@ -63,13 +64,13 @@ public final class Bibliotheque {
      * traite toutes les transactions et
      * détruit la connexion.
      *
-     * @param argv - Les arguments du main
+     * @param arguments - Les arguments du main
      * @throws Exception - Si une erreur survient.
      */
-    public static void main(String[] argv) throws Exception {
+    public static void main(String[] arguments) throws Exception {
         // validation du nombre de paramètres
-        if(argv.length < 4) {
-            System.out.println("Usage: java Biblio <serveur> <bd> <user> <password> [<fichier-transactions>]");
+        if(arguments.length < 5) {
+            System.out.println("Usage: java Biblio <serveur> <bd> <user> <password> <fichier-transactions>");
             System.out.println(Connexion.serveursSupportes());
             return;
         }
@@ -77,45 +78,61 @@ public final class Bibliotheque {
         try {
             // ouverture du fichier de transactions
             // s'il est spécifié comme argument
-            lectureAuClavier = true;
-            InputStream sourceTransaction = System.in;
-            if(argv.length > 4) {
-                sourceTransaction = new FileInputStream(argv[4]);
-                lectureAuClavier = false;
-            }
-            final BufferedReader reader = new BufferedReader(new InputStreamReader(sourceTransaction));
+            final InputStream sourceTransaction = Bibliotheque.class.getResourceAsStream("/"
+                + arguments[4]);
+            try(
+                BufferedReader reader = new BufferedReader(new InputStreamReader(sourceTransaction)) {
+                Bibliotheque.gestionBiblio = new BibliothequeCreateur(arguments[0],
+                arguments[1],
+                arguments[2],
+                arguments[3]);
+                Bibliotheque.traiterTransactions(reader);
+                }
+               } catch(Exception e) {
+                    e.printStackTrace(System.out);
+               } finally {
+                   Bibliotheque.gestionBiblio.close();
 
-            gestionBiblio = new GestionBibliotheque(argv[0],
-                argv[1],
-                argv[2],
-                argv[3]);
-            traiterTransactions(reader);
-            reader.close();
-        } catch(Exception e) {
-            e.printStackTrace(System.out);
-        } finally {
-            gestionBiblio.fermer();
+                }
 
-        }
+    /*if(arguments.length > 4) {
+        sourceTransaction = new FileInputStream(arguments[4]);
+        lectureAuClavier = false;
     }
+    final BufferedReader reader = new BufferedReader(new InputStreamReader(sourceTransaction));
 
+    gestionBiblio = new BibliothequeCreateur(arguments[0],
+        arguments[1],
+        arguments[2],
+        arguments[3]);
+    traiterTransactions(reader);
+    reader.close();
+    } catch(Exception e) {
+    e.printStackTrace(System.out);
+    } finally {
+    gestionBiblio.close();
+
+    }
+    }
+    */
     /**
      * Traite le fichier de transactions.
      *
      * @param reader - Le flux d'entrée à lire.
      * @throws Exception - Si une erreur survient.
      */
-    static void traiterTransactions(BufferedReader reader) throws Exception {
-        afficherAide();
-        String transaction = lireTransaction(reader);
-        while(!finTransaction(transaction)) {
+    private static void traiterTransactions(BufferedReader reader) throws Exception {
+        Bibliotheque.afficherAide();
+        System.out.println("\n\n\n");
+        String transaction = Bibliotheque.lireTransaction(reader);
+        while(!Bibliotheque.finTransaction(transaction)) {
             /* découpage de la transaction en mots*/
             final StringTokenizer tokenizer = new StringTokenizer(transaction,
                 " ");
             if(tokenizer.hasMoreTokens()) {
-                executerTransaction(tokenizer);
+                Bibliotheque.executerTransaction(tokenizer);
             }
-            transaction = lireTransaction(reader);
+            transaction = Bibliotheque.lireTransaction(reader);
         }
     }
 
@@ -126,11 +143,11 @@ public final class Bibliotheque {
      * @return La transaction lue
      * @throws IOException - Si une erreur de lecture survient
      */
-    static String lireTransaction(BufferedReader reader) throws IOException {
+    private static String lireTransaction(BufferedReader reader) throws IOException {
         System.out.print("> ");
         final String transaction = reader.readLine();
         /* echo si lecture dans un fichier */
-        if(!lectureAuClavier) {
+        if(transaction != null) {
             System.out.println(transaction);
         }
         return transaction;
@@ -151,12 +168,15 @@ public final class Bibliotheque {
             /*         HELP        */
             /* ******************* */
             if("aide".startsWith(command)) {
-                afficherAide();
-            } else if("acquerir".startsWith(command)) {
-                gestionBiblio.getGestionLivre().acquerir(readInt(tokenizer) /* idLivre */,
-                    readString(tokenizer) /* titre */,
-                    readString(tokenizer) /* auteur */,
-                    readDate(tokenizer) /* dateAcquisition */);
+                Bibliotheque.afficherAide();
+            } else if("acquerir".equals(command)) {
+                final LivreDTO livreDTO = new LivreDTO();
+                livreDTO.setIdLivre(Bibliotheque.readInt(tokenizer));
+                livreDTO.setTitre(Bibliotheque.readString(tokenizer));
+                livreDTO.setAuteur(Bibliotheque.readString(tokenizer));
+                livreDTO.setDateAcquisition(Bibliotheque.readDate(tokenizer));
+                Bibliotheque.gestionBiblio.getLivreService().acquerir(livreDTO);
+                Bibliotheque.gestionBiblio.commit();
             } else if("vendre".startsWith(command)) {
                 gestionBiblio.getGestionLivre().vendre(readInt(tokenizer) /* idLivre */);
             } else if("preter".startsWith(command)) {
