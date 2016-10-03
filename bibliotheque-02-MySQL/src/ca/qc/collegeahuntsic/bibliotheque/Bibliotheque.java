@@ -14,6 +14,7 @@ import java.text.ParseException;
 import java.util.StringTokenizer;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
+import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.ServiceException;
 import ca.qc.collegeahuntsic.bibliotheque.util.BibliothequeCreateur;
@@ -183,9 +184,13 @@ public final class Bibliotheque {
                 Bibliotheque.gestionnaireBibliotheque.getLivreService().vendre(livreDTO);
                 Bibliotheque.gestionnaireBibliotheque.commit();
             } else if("preter".startsWith(command)) {
-                gestionnaireBibliotheque.getGestionPret().preter(readInt(tokenizer) /* idLivre */,
-                    readInt(tokenizer) /* idMembre */,
-                    readDate(tokenizer) /* dateEmprunt */);
+                final MembreDTO membreDTO = new MembreDTO();
+                membreDTO.setIdMembre(Bibliotheque.readInt(tokenizer));
+                final LivreDTO livreDTO = new LivreDTO();
+                livreDTO.setIdLivre(Bibliotheque.readInt(tokenizer));
+                Bibliotheque.gestionnaireBibliotheque.getMembreService().emprunter(membreDTO,
+                    livreDTO);
+                Bibliotheque.gestionnaireBibliotheque.commit();
             } else if("renouveler".startsWith(command)) {
                 gestionnaireBibliotheque.getGestionPret().renouveler(readInt(tokenizer) /* idLivre */,
                     readDate(tokenizer) /* dateRenouvellement */);
