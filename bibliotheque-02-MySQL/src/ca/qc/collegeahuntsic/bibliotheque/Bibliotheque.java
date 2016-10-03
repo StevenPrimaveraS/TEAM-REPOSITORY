@@ -45,7 +45,7 @@ import ca.qc.collegeahuntsic.bibliotheque.util.FormatteurDate;
  */
 public final class Bibliotheque {
 
-    private static BibliothequeCreateur gestionBiblio;
+    private static BibliothequeCreateur gestionnaireBibliotheque;
 
     private static boolean lectureAuClavier;
 
@@ -82,7 +82,7 @@ public final class Bibliotheque {
                 + arguments[4]);
             try(
                 BufferedReader reader = new BufferedReader(new InputStreamReader(sourceTransaction)) {
-                Bibliotheque.gestionBiblio = new BibliothequeCreateur(arguments[0],
+                Bibliotheque.gestionnaireBibliotheque = new BibliothequeCreateur(arguments[0],
                 arguments[1],
                 arguments[2],
                 arguments[3]);
@@ -91,7 +91,7 @@ public final class Bibliotheque {
                } catch(Exception e) {
                     e.printStackTrace(System.out);
                } finally {
-                   Bibliotheque.gestionBiblio.close();
+                   Bibliotheque.gestionnaireBibliotheque.close();
 
                 }
 
@@ -101,7 +101,7 @@ public final class Bibliotheque {
     }
     final BufferedReader reader = new BufferedReader(new InputStreamReader(sourceTransaction));
 
-    gestionBiblio = new BibliothequeCreateur(arguments[0],
+    gestionnaireBibliotheque = new BibliothequeCreateur(arguments[0],
         arguments[1],
         arguments[2],
         arguments[3]);
@@ -110,7 +110,7 @@ public final class Bibliotheque {
     } catch(Exception e) {
     e.printStackTrace(System.out);
     } finally {
-    gestionBiblio.close();
+    gestionnaireBibliotheque.close();
 
     }
     }
@@ -174,42 +174,45 @@ public final class Bibliotheque {
                 livreDTO.setIdLivre(Bibliotheque.readInt(tokenizer));
                 livreDTO.setTitre(Bibliotheque.readString(tokenizer));
                 livreDTO.setAuteur(Bibliotheque.readString(tokenizer));
-                livreDTO.setDateAcquisition(Bibliotheque.readDate(tokenizer));
-                Bibliotheque.gestionBiblio.getLivreService().acquerir(livreDTO);
-                Bibliotheque.gestionBiblio.commit();
-            } else if("vendre".startsWith(command)) {
-                gestionBiblio.getGestionLivre().vendre(readInt(tokenizer) /* idLivre */);
+                livreDTO.setDateAcquisition(Bibliotheque.readString(tokenizer));
+                Bibliotheque.gestionnaireBibliotheque.getLivreService().acquerir(livreDTO);
+                Bibliotheque.gestionnaireBibliotheque.commit();
+            } else if("vendre".equals(command)) {
+                final LivreDTO livreDTO = new LivreDTO();
+                livreDTO.setIdLivre(Bibliotheque.readInt(tokenizer));
+                Bibliotheque.gestionnaireBibliotheque.getLivreService().vendre(livreDTO);
+                Bibliotheque.gestionnaireBibliotheque.commit();
             } else if("preter".startsWith(command)) {
-                gestionBiblio.getGestionPret().preter(readInt(tokenizer) /* idLivre */,
+                gestionnaireBibliotheque.getGestionPret().preter(readInt(tokenizer) /* idLivre */,
                     readInt(tokenizer) /* idMembre */,
                     readDate(tokenizer) /* dateEmprunt */);
             } else if("renouveler".startsWith(command)) {
-                gestionBiblio.getGestionPret().renouveler(readInt(tokenizer) /* idLivre */,
+                gestionnaireBibliotheque.getGestionPret().renouveler(readInt(tokenizer) /* idLivre */,
                     readDate(tokenizer) /* dateRenouvellement */);
             } else if("retourner".startsWith(command)) {
-                gestionBiblio.getGestionPret().retourner(readInt(tokenizer) /* idLivre */,
+                gestionnaireBibliotheque.getGestionPret().retourner(readInt(tokenizer) /* idLivre */,
                     readDate(tokenizer) /* dateRetour */);
             } else if("inscrire".startsWith(command)) {
-                gestionBiblio.getGestionMembre().inscrire(readInt(tokenizer) /* idMembre */,
+                gestionnaireBibliotheque.getGestionMembre().inscrire(readInt(tokenizer) /* idMembre */,
                     readString(tokenizer) /* nom */,
                     readLong(tokenizer) /* tel */,
                     readInt(tokenizer) /* limitePret */);
             } else if("desinscrire".startsWith(command)) {
-                gestionBiblio.getGestionMembre().desinscrire(readInt(tokenizer) /* idMembre */);
+                gestionnaireBibliotheque.getGestionMembre().desinscrire(readInt(tokenizer) /* idMembre */);
             } else if("reserver".startsWith(command)) {
-                gestionBiblio.getGestionReservation().reserver(readInt(tokenizer) /* idReservation */,
+                gestionnaireBibliotheque.getGestionReservation().reserver(readInt(tokenizer) /* idReservation */,
                     readInt(tokenizer) /* idLivre */,
                     readInt(tokenizer) /* idMembre */,
                     readDate(tokenizer) /* dateReservation */);
             } else if("prendreRes".startsWith(command)) {
-                gestionBiblio.getGestionReservation().utiliser(readInt(tokenizer) /* idReservation */,
+                gestionnaireBibliotheque.getGestionReservation().utiliser(readInt(tokenizer) /* idReservation */,
                     readDate(tokenizer) /* dateReservation */);
             } else if("annulerRes".startsWith(command)) {
-                gestionBiblio.getGestionReservation().annuler(readInt(tokenizer) /* idReservation */);
+                gestionnaireBibliotheque.getGestionReservation().annuler(readInt(tokenizer) /* idReservation */);
             } else if("listerLivres".startsWith(command)) {
-                gestionBiblio.getGestionInterrogation().listerLivres();
+                gestionnaireBibliotheque.getGestionInterrogation().listerLivres();
             } else if("listerLivresTitre".startsWith(command)) {
-                gestionBiblio.getGestionInterrogation().listerLivresTitre(readString(tokenizer) /* mot */);
+                gestionnaireBibliotheque.getGestionInterrogation().listerLivresTitre(readString(tokenizer) /* mot */);
             } else {
                 System.out.println("  Transactions non reconnue.  Essayer \"aide\"");
             }
