@@ -185,7 +185,7 @@ public final class Bibliotheque {
                 gestionBiblio.getGestionReservation().utiliser(readInt(tokenizer) /* idReservation */,
                     readDate(tokenizer) /* dateReservation */);
             } else if("annulerRes".startsWith(command)) {
-                gestionBiblio.getGestionReservation().annulerRes(readInt(tokenizer) /* idReservation */);
+                gestionBiblio.getGestionReservation().annuler(readInt(tokenizer) /* idReservation */);
             } else if("listerLivres".startsWith(command)) {
                 gestionBiblio.getGestionInterrogation().listerLivres();
             } else if("listerLivresTitre".startsWith(command)) {
