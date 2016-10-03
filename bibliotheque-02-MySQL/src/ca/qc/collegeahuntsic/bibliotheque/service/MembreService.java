@@ -188,7 +188,7 @@ public class MembreService extends Service{
             			+ livreDTO.getIdLivre()
             			+ " n'existe pas");
             }
-            if(unLivreDTO.getIdMembre() != new Integer(null)) {
+            if(unLivreDTO.getIdMembre() != 0) {
             	throw new ServiceException("Le livre "
             			+ livreDTO.getIdLivre()
             			+ " a déjà été emprunté");
@@ -237,7 +237,7 @@ public class MembreService extends Service{
             			+ livreDTO.getIdLivre()
             			+ " n'existe pas");
             }
-            if(unLivreDTO.getIdMembre() == new Integer(null)) {
+            if(unLivreDTO.getIdMembre() == 0) {
             	throw new ServiceException("Le livre "
             			+ livreDTO.getIdLivre()
             			+ " n'a pas été emprunté");
@@ -286,7 +286,7 @@ public class MembreService extends Service{
             			+ livreDTO.getIdLivre()
             			+ " n'existe pas");
             }
-            if(unLivreDTO.getIdMembre() == new Integer(null)) {
+            if(unLivreDTO.getIdMembre() == 0) {
             	throw new ServiceException("Le livre "
             			+ livreDTO.getIdLivre()
             			+ " n'a pas été emprunté");
