@@ -235,7 +235,7 @@ public class LivreService extends Service {
      * @return La variable d'instance <code>this.livreDAO</code>
      */
     private LivreDAO getLivreDAO() {
-        return livreDAO;
+        return this.livreDAO;
     }
 
     /**
@@ -253,7 +253,7 @@ public class LivreService extends Service {
      * @return La variable d'instance <code>this.membreDAO</code>
      */
     private MembreDAO getMembreDAO() {
-        return membreDAO;
+        return this.membreDAO;
     }
 
     /**
@@ -271,7 +271,7 @@ public class LivreService extends Service {
      * @return La variable d'instance <code>this.reservationDAO</code>
      */
     private ReservationDAO getReservationDAO() {
-        return reservationDAO;
+        return this.reservationDAO;
     }
 
     /**
