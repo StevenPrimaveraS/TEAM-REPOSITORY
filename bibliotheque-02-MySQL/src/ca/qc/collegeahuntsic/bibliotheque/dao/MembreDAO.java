@@ -56,7 +56,7 @@ public class MembreDAO extends DAO {
     private static final String GET_ALL_REQUEST = "select idMembre, nom, telephone, limitePret, nbpret"
     +"FROM membre";
     */
-    
+
     /**
      * Crée un DAO à partir d'une connexion à la base de données.
      *
@@ -65,141 +65,141 @@ public class MembreDAO extends DAO {
     public MembreDAO(Connexion connexion) {
         super(connexion);
     }
-// Source > Toggle Comment | Au cas où nécessaire plus tard
-//    /**
-//     * Verifie si un membre existe.
-//     *
-//     * @param idMembre identifiant du membre
-//     * @return boolean si le livre existe ou pas
-//     * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
-//     */
-//    public boolean existe(int idMembre) throws DAOException {
-//        try(
-//            PreparedStatement statementExiste = getConnection().prepareStatement(MembreDAO.READ_REQUEST)) {
-//            statementExiste.setInt(1,
-//                idMembre);
-//            final ResultSet resultset = statementExiste.executeQuery();
-//            final boolean membreExiste = resultset.next();
-//            resultset.close();
-//            return membreExiste;
-//        } catch(SQLException sqlException) {
-//            throw new DAOException(sqlException);
-//        }
-//    }
-//
-//    /**
-//     * Lecture d'un membre.
-//     *
-//     * @param idMembre identifiant du membre.
-//     * @return MembreDTO retourne un DTO de membre
-//     * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
-//     */
-//    public MembreDTO getMembre(int idMembre) throws DAOException {
-//        try(
-//            PreparedStatement statementExiste = getConnection().prepareStatement(MembreDAO.READ_REQUEST)) {
-//            statementExiste.setInt(1,
-//                idMembre);
-//            final ResultSet resultset = statementExiste.executeQuery();
-//            if(resultset.next()) {
-//                final MembreDTO membreDTO = new MembreDTO();
-//                membreDTO.setIdMembre(idMembre);
-//                membreDTO.setNom(resultset.getString(2));
-//                membreDTO.setTelephone(resultset.getLong(3));
-//                membreDTO.setLimitePret(resultset.getInt(4));
-//                membreDTO.setNbPret(resultset.getInt(5));
-//                resultset.close();
-//                return membreDTO;
-//            }
-//            resultset.close();
-//            return null;
-//        } catch(SQLException sqlException) {
-//            throw new DAOException(sqlException);
-//        }
-//    }
-//
-//    /**
-//     * Ajout d'un nouveau membre.
-//     *
-//     * @param idMembre identificateur du membre
-//     * @param nom nom du membre
-//     * @param telephone numero de telephone du membre
-//     * @param limitePret limite de pret du membre
-//     * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
-//     */
-//    public void inscrire(int idMembre,
-//        String nom,
-//        long telephone,
-//        int limitePret) throws DAOException {
-//        try(
-//            PreparedStatement statementInsert = getConnection().prepareStatement(MembreDAO.ADD_REQUEST)) {
-//            /* Ajout du membre. */
-//            statementInsert.setInt(1,
-//                idMembre);
-//            statementInsert.setString(2,
-//                nom);
-//            statementInsert.setLong(3,
-//                telephone);
-//            statementInsert.setInt(4,
-//                limitePret);
-//            statementInsert.executeUpdate();
-//        } catch(SQLException sqlException) {
-//            throw new DAOException(sqlException);
-//        }
-//    }
-//
-//    /**
-//     * Incrementer le nb de pret d'un membre.
-//     *
-//     * @param idMembre identifiant du membre
-//     * @return int resultat de la commande de pret
-//     * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
-//     */
-//    public int preter(int idMembre) throws DAOException {
-//        try(
-//            PreparedStatement statementUpdateIncrementNbPret = getConnection().prepareStatement(MembreDAO.UPDATE_REQUEST_INCREMENT_NB_PRET)) {
-//            statementUpdateIncrementNbPret.setInt(1,
-//                idMembre);
-//            return statementUpdateIncrementNbPret.executeUpdate();
-//        } catch(SQLException sqlException) {
-//            throw new DAOException(sqlException);
-//        }
-//    }
-//
-//    /**
-//     * Decrementer le nb de pret d'un membre.
-//     *
-//     * @param idMembre identifiant du membre
-//     * @return int resultat de la commande de retour
-//     * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
-//     */
-//    public int retourner(int idMembre) throws DAOException {
-//        try(
-//            PreparedStatement statementUpdateDecrementNbPret = getConnection().prepareStatement(MembreDAO.UPDATE_REQUEST_DECREMENT_NB_PRET)) {
-//            statementUpdateDecrementNbPret.setInt(1,
-//                idMembre);
-//            return statementUpdateDecrementNbPret.executeUpdate();
-//        } catch(SQLException sqlException) {
-//            throw new DAOException(sqlException);
-//        }
-//    }
-//
-//    /**
-//     * Suppression d'un membre.
-//     *
-//     * @param idMembre identifiant du membre
-//     * @return int resultat de la suppression
-//     * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
-//     */
-//    public int desinscrire(int idMembre) throws DAOException {
-//        try(
-//            PreparedStatement statementDelete = getConnection().prepareStatement(MembreDAO.DELETE_REQUEST)) {
-//            statementDelete.setInt(1,
-//                idMembre);
-//            return statementDelete.executeUpdate();
-//        } catch(SQLException sqlException) {
-//            throw new DAOException(sqlException);
-//        }
-//    }
+    // Source > Toggle Comment | Au cas où nécessaire plus tard
+    //    /**
+    //     * Verifie si un membre existe.
+    //     *
+    //     * @param idMembre identifiant du membre
+    //     * @return boolean si le livre existe ou pas
+    //     * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
+    //     */
+    //    public boolean existe(int idMembre) throws DAOException {
+    //        try(
+    //            PreparedStatement statementExiste = getConnection().prepareStatement(MembreDAO.READ_REQUEST)) {
+    //            statementExiste.setInt(1,
+    //                idMembre);
+    //            final ResultSet resultset = statementExiste.executeQuery();
+    //            final boolean membreExiste = resultset.next();
+    //            resultset.close();
+    //            return membreExiste;
+    //        } catch(SQLException sqlException) {
+    //            throw new DAOException(sqlException);
+    //        }
+    //    }
+    //
+    //    /**
+    //     * Lecture d'un membre.
+    //     *
+    //     * @param idMembre identifiant du membre.
+    //     * @return MembreDTO retourne un DTO de membre
+    //     * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
+    //     */
+    //    public MembreDTO getMembre(int idMembre) throws DAOException {
+    //        try(
+    //            PreparedStatement statementExiste = getConnection().prepareStatement(MembreDAO.READ_REQUEST)) {
+    //            statementExiste.setInt(1,
+    //                idMembre);
+    //            final ResultSet resultset = statementExiste.executeQuery();
+    //            if(resultset.next()) {
+    //                final MembreDTO membreDTO = new MembreDTO();
+    //                membreDTO.setIdMembre(idMembre);
+    //                membreDTO.setNom(resultset.getString(2));
+    //                membreDTO.setTelephone(resultset.getLong(3));
+    //                membreDTO.setLimitePret(resultset.getInt(4));
+    //                membreDTO.setNbPret(resultset.getInt(5));
+    //                resultset.close();
+    //                return membreDTO;
+    //            }
+    //            resultset.close();
+    //            return null;
+    //        } catch(SQLException sqlException) {
+    //            throw new DAOException(sqlException);
+    //        }
+    //    }
+    //
+    //    /**
+    //     * Ajout d'un nouveau membre.
+    //     *
+    //     * @param idMembre identificateur du membre
+    //     * @param nom nom du membre
+    //     * @param telephone numero de telephone du membre
+    //     * @param limitePret limite de pret du membre
+    //     * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
+    //     */
+    //    public void inscrire(int idMembre,
+    //        String nom,
+    //        long telephone,
+    //        int limitePret) throws DAOException {
+    //        try(
+    //            PreparedStatement statementInsert = getConnection().prepareStatement(MembreDAO.ADD_REQUEST)) {
+    //            /* Ajout du membre. */
+    //            statementInsert.setInt(1,
+    //                idMembre);
+    //            statementInsert.setString(2,
+    //                nom);
+    //            statementInsert.setLong(3,
+    //                telephone);
+    //            statementInsert.setInt(4,
+    //                limitePret);
+    //            statementInsert.executeUpdate();
+    //        } catch(SQLException sqlException) {
+    //            throw new DAOException(sqlException);
+    //        }
+    //    }
+    //
+    //    /**
+    //     * Incrementer le nb de pret d'un membre.
+    //     *
+    //     * @param idMembre identifiant du membre
+    //     * @return int resultat de la commande de pret
+    //     * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
+    //     */
+    //    public int preter(int idMembre) throws DAOException {
+    //        try(
+    //            PreparedStatement statementUpdateIncrementNbPret = getConnection().prepareStatement(MembreDAO.UPDATE_REQUEST_INCREMENT_NB_PRET)) {
+    //            statementUpdateIncrementNbPret.setInt(1,
+    //                idMembre);
+    //            return statementUpdateIncrementNbPret.executeUpdate();
+    //        } catch(SQLException sqlException) {
+    //            throw new DAOException(sqlException);
+    //        }
+    //    }
+    //
+    //    /**
+    //     * Decrementer le nb de pret d'un membre.
+    //     *
+    //     * @param idMembre identifiant du membre
+    //     * @return int resultat de la commande de retour
+    //     * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
+    //     */
+    //    public int retourner(int idMembre) throws DAOException {
+    //        try(
+    //            PreparedStatement statementUpdateDecrementNbPret = getConnection().prepareStatement(MembreDAO.UPDATE_REQUEST_DECREMENT_NB_PRET)) {
+    //            statementUpdateDecrementNbPret.setInt(1,
+    //                idMembre);
+    //            return statementUpdateDecrementNbPret.executeUpdate();
+    //        } catch(SQLException sqlException) {
+    //            throw new DAOException(sqlException);
+    //        }
+    //    }
+    //
+    //    /**
+    //     * Suppression d'un membre.
+    //     *
+    //     * @param idMembre identifiant du membre
+    //     * @return int resultat de la suppression
+    //     * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
+    //     */
+    //    public int desinscrire(int idMembre) throws DAOException {
+    //        try(
+    //            PreparedStatement statementDelete = getConnection().prepareStatement(MembreDAO.DELETE_REQUEST)) {
+    //            statementDelete.setInt(1,
+    //                idMembre);
+    //            return statementDelete.executeUpdate();
+    //        } catch(SQLException sqlException) {
+    //            throw new DAOException(sqlException);
+    //        }
+    //    }
 
     /**
      * Ajoute un nouveau membre.
@@ -329,14 +329,14 @@ public class MembreDAO extends DAO {
         }
         return membres;
     }
-   
-     /**
-     * Emprunte un livre.
-     *
-     * @param idMembre identifiant du membre
-     * @return int resultat de la commande de pret
-     * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
-     */
+
+    /**
+    * Emprunte un livre.
+    *
+    * @param idMembre identifiant du membre
+    * @return int resultat de la commande de pret
+    * @throws DAOException Si une erreur survient, elle l'encapsule avec DAOException.
+    */
     public int emprunter(MembreDTO membreDTO) throws DAOException {
         try(
             PreparedStatement statementUpdateIncrementNbPret = getConnection().prepareStatement(MembreDAO.UPDATE_REQUEST_INCREMENT_NB_PRET)) {
@@ -347,7 +347,7 @@ public class MembreDAO extends DAO {
             throw new DAOException(sqlException);
         }
     }
-   
+
     /**
      * Retourne un livre.
      *
@@ -365,5 +365,5 @@ public class MembreDAO extends DAO {
             throw new DAOException(sqlException);
         }
     }
-   
+
 }
