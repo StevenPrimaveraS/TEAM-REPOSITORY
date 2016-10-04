@@ -11,6 +11,7 @@ import ca.qc.collegeahuntsic.bibliotheque.dao.ReservationDAO;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.ConnexionException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.ServiceException;
 import ca.qc.collegeahuntsic.bibliotheque.service.LivreService;
 import ca.qc.collegeahuntsic.bibliotheque.service.MembreService;
 import ca.qc.collegeahuntsic.bibliotheque.service.PretService;
@@ -40,12 +41,14 @@ public class BibliothequeCreateur {
      * @param nomUtilisateur Nom d'utilisateur sur le serveur SQL
      * @param motPasse Mot de passe sur le serveur SQL
      * @throws BibliothequeException S'il y a une erreur avec la base de données
+     * @throws ServiceException S'il y a une erreur avec les services.
      */
     @SuppressWarnings("resource")
     public BibliothequeCreateur(String typeServeur,
         String schema,
         String nomUtilisateur,
-        String motPasse) throws BibliothequeException {
+        String motPasse) throws BibliothequeException,
+        ServiceException {
         try {
             setConnexion(new Connexion(typeServeur,
                 schema,
@@ -60,7 +63,9 @@ public class BibliothequeCreateur {
             setMembreService(new MembreService(membreDAO,
                 livreDAO,
                 reservationDAO));
-            setPretService(new PretService());
+            setPretService(new PretService(livreDAO,
+                membreDAO,
+                reservationDAO));
             setReservationService(new ReservationService(reservationDAO,
                 livreDAO,
                 membreDAO));
