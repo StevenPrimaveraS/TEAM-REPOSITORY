@@ -1,146 +1,135 @@
 // Fichier Connexion.java
-// Auteur : Primavera Sequeira Steven
-// Date de création : 2016-09-14
+// Auteur : Gilles Bénichou
+// Date de création : 2016-05-18
 
 package ca.qc.collegeahuntsic.bibliotheque.db;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.ConnexionException;
 
 /**
- * Cette classe encapsule une connexion JDBC en fonction d'un type et d'une
- * instance de base de données.
- * La méthode getServeursSupportes() indique les type de serveur supportés.
- * Pré-condition : Le driver JDBC approprié doit être accessible.
- * Post-condition : La connexion est créée en mode autocommit false.
+ * Cette classe encapsule une connexion JDBC en fonction d'un type et d'une instance de base de données.<br /><br />
  *
- * @author Mathieu Lafond
+ * La méthode {@link Connexion#getServeursSupportes()} indique les type de serveur supportés.<br /><br />
+ *
+ * Pré-condition :
+ *     Le driver JDBC approprié doit être accessible.<br />
+ *
+ * Post-condition :
+ *     La connexion est créée en mode autocommit false.
+ *
+ * @author Gilles Benichou
  */
 public class Connexion implements AutoCloseable {
+    private static final String TYPE_SERVEUR_LOCAL = "local";
 
-    private Connection connexion;
+    private static final String TYPE_SERVEUR_DISTANT = "distant";
+
+    private static final String TYPE_SERVEUR_POSTGRES = "postgres";
+
+    private static final String TYPE_SERVEUR_ACCESS = "access";
+
+    private static final String SERVEUR_LOCAL_CLASS = "com.mysql.jdbc.Driver";
+
+    private static final String SERVEUR_DISTANT_CLASS = "oracle.jdbc.driver.OracleDriver";
+
+    private static final String SERVEUR_POSTGRES_CLASS = "org.postgresql.Driver";
+
+    private static final String SERVEUR_ACCESS_CLASS = "org.postgresql.Driver";
+
+    private static final String SERVEUR_LOCAL_URL = "jdbc:mysql://localhost:3306/";
+
+    private static final String SERVEUR_DISTANT_URL = "jdbc:oracle:thin:@localhost:1521:";
+
+    //    private static final String SERVEUR_DISTANT_URL = "jdbc:oracle:thin:@collegeahunstic.info:1521:";
+
+    private static final String SERVEUR_POSTGRES_URL = "jdbc:postgresql:";
+
+    private static final String SERVEUR_ACCESS_URL = "jdbc:postgresql:";
+
+    private Connection connection;
 
     /**
      * Crée une connexion en mode autocommit false.
      *
-     * @param serveur - serveur qu'on veut connecter
-     * @param bd - base de donnée utilisée par l'utlisateur
-     * @param user - identifiant de l'utilisateur
-     * @param pass - mot de passe
-     * @throws ConnexionException - Exception de la classe Connexion
+     * @param typeServeur Type de serveur SQL de la BD
+     * @param schema Nom du schéma de la base de données
+     * @param nomUtilisateur Nom d'utilisateur sur le serveur SQL
+     * @param motPasse Mot de passe sur le serveur SQL
+     * @throws ConnexionException Si le driver n'existe pas, S'il y a une erreur avec la base de données ou si <code>typeServeur</code> n'est
+     *         pas valide
      */
-    public Connexion(String serveur,
-        String bd,
-        String user,
-        String pass) throws ConnexionException {
-        Driver d = null;
+    public Connexion(String typeServeur,
+        String schema,
+        String nomUtilisateur,
+        String motPasse) throws ConnexionException {
+        String urlBD = null;
+
         try {
-            if("local".equals(serveur)) {
-                d = (Driver) Class.forName("com.mysql.jdbc.Driver").newInstance();
-                DriverManager.registerDriver(d);
-                this.connexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/"
-                    + bd,
-                    user,
-                    pass);
-            } else if("distant".equals(serveur)) {
-                d = (Driver) Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
-                DriverManager.registerDriver(d);
-                this.connexion = DriverManager.getConnection("jdbc:oracle:thin:@collegeahuntsic.info:1521:"
-                    + bd,
-                    user,
-                    pass);
-            }
-            /*
-             * else if (serveur.equals("postgres")) { d = (Driver)
-             * Class.forName("org.postgresql.Driver").newInstance();
-             * DriverManager.registerDriver(d); conn =
-             * DriverManager.getConnection( "jdbc:postgresql:" + bd, user,
-             * pass); } else // access { d = (Driver)
-             * Class.forName("org.postgresql.Driver").newInstance();
-             * DriverManager.registerDriver(new sun.jdbc.odbc.JdbcOdbcDriver());
-             * conn = DriverManager.getConnection( "jdbc:odbc:" + bd, "", ""); }
-             */
-
-            // mettre en mode de commit manuel
-            this.connexion.setAutoCommit(false);
-
-            // mettre en mode serialisable si possible
-            // (plus haut niveau d'integrite l'acces concurrent aux donnees)
-            final DatabaseMetaData dbmd = this.connexion.getMetaData();
-            if(dbmd.supportsTransactionIsolationLevel(Connection.TRANSACTION_SERIALIZABLE)) {
-                this.connexion.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-                System.out.println("Ouverture de la connexion en mode sérialisable :\n"
-                    + "Estampille "
-                    + System.currentTimeMillis()
-                    + " "
-                    + this.connexion);
+            if(typeServeur.equals(Connexion.TYPE_SERVEUR_LOCAL)) {
+                Class.forName(Connexion.SERVEUR_LOCAL_CLASS);
+                urlBD = Connexion.SERVEUR_LOCAL_URL
+                    + schema;
+            } else if(typeServeur.equals(Connexion.TYPE_SERVEUR_DISTANT)) {
+                Class.forName(Connexion.SERVEUR_DISTANT_CLASS);
+                urlBD = Connexion.SERVEUR_DISTANT_URL
+                    + schema;
+            } else if(typeServeur.equals(Connexion.TYPE_SERVEUR_POSTGRES)) {
+                Class.forName(Connexion.SERVEUR_POSTGRES_CLASS);
+                urlBD = Connexion.SERVEUR_POSTGRES_URL
+                    + schema;
+            } else if(typeServeur.equals(Connexion.TYPE_SERVEUR_ACCESS)) {
+                Class.forName(Connexion.SERVEUR_ACCESS_CLASS);
+                urlBD = Connexion.SERVEUR_ACCESS_URL
+                    + schema;
             } else {
-                System.out.println("Ouverture de la connexion en mode read committed (default) :\n"
-                    + "Heure "
-                    + System.currentTimeMillis()
-                    + " "
-                    + this.connexion);
+                throw new IllegalArgumentException("Type de serveur "
+                    + typeServeur
+                    + "n'est pas valide.");
             }
-        } catch(SQLException sqlException) {
-            throw new ConnexionException(sqlException);
-        } catch(InstantiationException instantiationException) {
-            throw new ConnexionException(instantiationException);
-        } catch(IllegalAccessException illegalAccessException) {
-            throw new ConnexionException(illegalAccessException);
+            setConnection(DriverManager.getConnection(urlBD,
+                nomUtilisateur,
+                motPasse));
+
+            // Mettre en mode de commit manuel
+            getConnection().setAutoCommit(false);
+
+            System.out.println("Ouverture de la connexion en mode read committed (default) :\n"
+                + "Heure "
+                + System.currentTimeMillis()
+                + " "
+                + getConnection());
         } catch(ClassNotFoundException classNotFoundException) {
             throw new ConnexionException(classNotFoundException);
+        } catch(SQLException sqlException) {
+            throw new ConnexionException(sqlException);
+        } catch(IllegalArgumentException illegalArgumentException) {
+            throw new ConnexionException(illegalArgumentException);
         }
+    }
 
+    // Region Getters and Setters
+    /**
+     * Getter de la variable d'instance <code>this.connection</code>.
+     *
+     * @return La variable d'instance <code>this.connection</code>
+     */
+    public Connection getConnection() {
+        return this.connection;
     }
 
     /**
-     * fermeture d'une connexion.
+     * Setter de la variable d'instance <code>this.connection</code>.
      *
-     * @throws ConnexionException - si la connexion n'arrive pas à se fermer
+     * @param connection La valeur à utiliser pour la variable d'instance <code>this.connection</code>
      */
-    public void fermer() throws ConnexionException {
-        try {
-            this.connexion.rollback();
-            this.connexion.close();
-            System.out.println("Connexion fermée"
-                + " "
-                + this.connexion);
-        } catch(SQLException sqlException) {
-            throw new ConnexionException(sqlException);
-        }
+    private void setConnection(Connection connection) {
+        this.connection = connection;
     }
 
-    /**
-     * Effectue un commit sur la Connection JDBC.
-     *
-     * @throws ConnexionException
-     *             - S'il y a une erreur avec la base de données
-     */
-    public void commit() throws ConnexionException {
-        try {
-            this.connexion.commit();
-        } catch(SQLException sqlException) {
-            throw new ConnexionException(sqlException);
-        }
-    }
-
-    /**
-     * Effectue un rollback sur la Connection JDBC.
-     *
-     * @throws ConnexionException
-     *         - S'il y a une erreur avec la base de données
-     */
-    public void rollback() throws ConnexionException {
-        try {
-            this.connexion.rollback();
-        } catch(SQLException sqlException) {
-            throw new ConnexionException(sqlException);
-        }
-    }
+    // EndRegion Getters and Setters
 
     /**
      * {@inheritDoc}
@@ -152,32 +141,48 @@ public class Connexion implements AutoCloseable {
         System.out.println("\nConnexion fermée"
             + " "
             + getConnection());
-
     }
 
     /**
-     * Getter de la variable d'instance this.connection.
+     * Effectue un commit sur la {@link java.sql.Connection} JDBC.
      *
-     * @return - La valeur à utiliser pour la variable d'instance
-     *         this.connection
+     * @throws ConnexionException S'il y a une erreur avec la base de données
      */
-    public Connection getConnection() {
-        return this.connexion;
+    public void commit() throws ConnexionException {
+        try {
+            getConnection().commit();
+        } catch(SQLException sqlException) {
+            throw new ConnexionException(sqlException);
+        }
     }
 
     /**
-     * Retourne la liste des serveurs supportés par ce gestionnaire de connexion :
-     * . local : MySQL installé localement distant : Oracle installé au
-     * Département d'Informatique du Collège Ahuntsic postgres : Postgres
-     * installé localement access : Microsoft Access installé localement et
-     * inscrit dans ODBC
+     * Effectue un rollback sur la {@link java.sql.Connection} JDBC.
      *
-     * @return La liste des serveurs supportés par ce gestionnaire de connexion
+     * @throws ConnexionException S'il y a une erreur avec la base de données
      */
-    public static String serveursSupportes() {
+    public void rollback() throws ConnexionException {
+        try {
+            getConnection().rollback();
+        } catch(SQLException sqlException) {
+            throw new ConnexionException(sqlException);
+        }
+    }
+
+    /**
+      * Retourne la liste des serveurs supportés par ce gestionnaire de connexion.<br /><br />
+      *
+      * <code>local</code> :  MySQL installé localement<br />
+      * <code>distant</code> : Oracle installé au Département d'Informatique du Collège Ahuntsic<br />
+      * <code>postgres</code> : Postgres installé localement<br />
+      * <code>access</code> : Microsoft Access installé localement et inscrit dans ODBC
+      *
+      * @return La liste des serveurs supportés par ce gestionnaire de connexion
+      */
+    public static String getServeursSupportes() {
         return "local : MySQL installé localement\n"
             + "distant : Oracle installé au Département d'Informatique du Collège Ahuntsic\n"
             + "postgres : Postgres installé localement\n"
             + "access : Microsoft Access installé localement et inscrit dans ODBC";
     }
-} // Classe Connexion
+}
