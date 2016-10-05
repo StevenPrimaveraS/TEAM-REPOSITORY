@@ -4,7 +4,6 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.util;
 
-import java.sql.SQLException;
 import ca.qc.collegeahuntsic.bibliotheque.dao.LivreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.MembreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.ReservationDAO;
@@ -63,9 +62,7 @@ public class BibliothequeCreateur {
             setMembreService(new MembreService(membreDAO,
                 livreDAO,
                 reservationDAO));
-            setPretService(new PretService(livreDAO,
-                membreDAO,
-                reservationDAO));
+            setPretService(new PretService());
             setReservationService(new ReservationService(reservationDAO,
                 livreDAO,
                 membreDAO));
@@ -175,8 +172,8 @@ public class BibliothequeCreateur {
     public void commit() throws BibliothequeException {
         try {
             getConnexion().commit();
-        } catch(SQLException sqlException) {
-            throw new BibliothequeException(sqlException);
+        } catch(ConnexionException connexionException) {
+            throw new BibliothequeException(connexionException);
         }
     }
 
@@ -188,8 +185,8 @@ public class BibliothequeCreateur {
     public void rollback() throws BibliothequeException {
         try {
             getConnexion().rollback();
-        } catch(SQLException sqlException) {
-            throw new BibliothequeException(sqlException);
+        } catch(ConnexionException connexionException) {
+            throw new BibliothequeException(connexionException);
         }
     }
 
