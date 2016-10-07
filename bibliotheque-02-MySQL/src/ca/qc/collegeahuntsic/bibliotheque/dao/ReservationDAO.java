@@ -31,11 +31,11 @@ public class ReservationDAO extends DAO {
     */
     // Pour ne pas générer d'erreur avec l'ancienne version, l'ancien à
     // remplacer par celui là
-    private static final String ADD_REQUEST = "INSERT INTO reservation(idReservation,idLivre,idMembre,dateReservation)"
+    private static final String ADD_REQUEST = "INSERT INTO reservation(idReservation,idLivre,idMembre,dateReservation) "
         + "values (?,?,?,?)";
 
-    private static final String READ_REQUEST = "SELECT idReservation, idLivre, idMembre, dateReservation"
-        + "FROM reservation"
+    private static final String READ_REQUEST = "SELECT idReservation, idLivre, idMembre, dateReservation "
+        + "FROM reservation "
         + "WHERE idReservation = ?";
 
     private static final String READ_REQUEST_LIVRE = "SELECT idReservation, idLivre, idMembre, dateReservation "
@@ -47,11 +47,11 @@ public class ReservationDAO extends DAO {
         + "FROM reservation "
         + "WHERE idMembre = ? ";
 
-    private static final String UPDATE_REQUEST = "UPDATE reservation"
-        + "SET idLivre = ?, idMembre = ?, dateReservation = ?"
+    private static final String UPDATE_REQUEST = "UPDATE reservation "
+        + "SET idLivre = ?, idMembre = ?, dateReservation = ? "
         + "WHERE idReservation = ?";
 
-    private static final String DELETE_REQUEST = "DELETE from reservation"
+    private static final String DELETE_REQUEST = "DELETE from reservation "
         + "WHERE idReservation = ?";
 
     private static final String GET_ALL_REQUEST = "SELECT idReservation, "
