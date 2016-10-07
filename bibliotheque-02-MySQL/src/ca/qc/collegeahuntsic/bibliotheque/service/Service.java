@@ -16,8 +16,6 @@ public class Service implements Serializable {
 
     /**
      * Constructeur par défaut.
-     *
-     * @author Primavera Sequeira Steven
      */
     public Service() {
         super();

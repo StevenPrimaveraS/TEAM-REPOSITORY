@@ -16,8 +16,6 @@ public class Facade implements Serializable {
 
     /**
      * Constructeur par défaut.
-     *
-     * @author Primavera Sequeira Steven
      */
     public Facade() {
 
