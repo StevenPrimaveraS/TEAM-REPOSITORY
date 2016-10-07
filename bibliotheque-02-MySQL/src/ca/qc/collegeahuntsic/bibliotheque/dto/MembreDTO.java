@@ -24,8 +24,6 @@ public class MembreDTO {
 
     /**
      * Constructeur de MembreDTO par défaut.
-     *
-     * @author Leroux Dominic
      */
     public MembreDTO() {
 

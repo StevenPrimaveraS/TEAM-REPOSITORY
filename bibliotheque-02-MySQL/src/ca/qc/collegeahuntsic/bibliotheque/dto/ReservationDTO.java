@@ -24,8 +24,6 @@ public class ReservationDTO {
 
     /**
      * Constructeur de ReservationDTO.
-     *
-     * @author Leroux Dominic
      */
     public ReservationDTO() {
 

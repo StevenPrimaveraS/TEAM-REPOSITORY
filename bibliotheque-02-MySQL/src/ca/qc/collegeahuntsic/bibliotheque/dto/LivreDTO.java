@@ -28,8 +28,6 @@ public class LivreDTO {
 
     /**
      * Constructeur de LivreDTO par défaut.
-     *
-     * @author Leroux Dominic
      */
 
     public LivreDTO() {
