@@ -149,6 +149,7 @@ public final class Bibliotheque {
                 livreDTO.setIdLivre(Bibliotheque.readInt(tokenizer));
                 Bibliotheque.gestionnaireBibliotheque.getLivreService().vendre(livreDTO);
                 Bibliotheque.gestionnaireBibliotheque.commit();
+                //TODO : Gerer le pret avec la table pret.
             } else if("preter".equals(command)) {
                 final MembreDTO membreDTO = new MembreDTO();
                 membreDTO.setIdMembre(Bibliotheque.readInt(tokenizer));
@@ -165,6 +166,7 @@ public final class Bibliotheque {
                 Bibliotheque.gestionnaireBibliotheque.getMembreService().renouveler(membreDTO,
                     livreDTO);
                 Bibliotheque.gestionnaireBibliotheque.commit();
+                //TODO : gerer le retour avec la table pret.
             } else if("retourner".equals(command)) {
                 final MembreDTO membreDTO = new MembreDTO();
                 membreDTO.setIdMembre(Bibliotheque.readInt(tokenizer));

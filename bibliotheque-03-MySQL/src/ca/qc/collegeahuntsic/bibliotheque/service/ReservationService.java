@@ -342,6 +342,7 @@ public class ReservationService extends Service {
                     + emprunteur.getIdMembre()
                     + ")");
             }
+            //TODO : Avec la table pret voir tout les pret d'un membre.
             if(unMembreDTO.getNbPret() == unMembreDTO.getLimitePret()) {
                 throw new ServiceException("Le membre "
                     + unMembreDTO.getNom()
@@ -362,8 +363,7 @@ public class ReservationService extends Service {
             annuler(uneReservationDTO);
             // On voit le manque de la table prêt simulée en ce moment par les deux tables
             unLivreDTO.setIdMembre(unMembreDTO.getIdMembre());
-            getLivreDAO().emprunter(unLivreDTO);
-            getMembreDAO().emprunter(unMembreDTO);
+            //TODO : UTILISER PretDAO pour emprunter.
         } catch(DAOException daoException) {
             throw new ServiceException(daoException);
         }
