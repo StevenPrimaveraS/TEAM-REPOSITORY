@@ -43,6 +43,63 @@ public class LivreService extends Service {
         setReservationDAO(reservationDAO);
     }
 
+    // Region Getters and Setters
+    /**
+     * Getter de la variable d'instance <code>this.livreDAO</code>.
+     *
+     * @return La variable d'instance <code>this.livreDAO</code>
+     */
+    private LivreDAO getLivreDAO() {
+        return this.livreDAO;
+    }
+
+    /**
+     * Setter de la variable d'instance <code>this.livreDAO</code>.
+     *
+     * @param livreDAO La valeur à utiliser pour la variable d'instance <code>this.livreDAO</code>
+     */
+    private void setLivreDAO(LivreDAO livreDAO) {
+        this.livreDAO = livreDAO;
+    }
+
+    /**
+     * Getter de la variable d'instance <code>this.membreDAO</code>.
+     *
+     * @return La variable d'instance <code>this.membreDAO</code>
+     */
+    private MembreDAO getMembreDAO() {
+        return this.membreDAO;
+    }
+
+    /**
+     * Setter de la variable d'instance <code>this.membreDAO</code>.
+     *
+     * @param membreDAO La valeur à utiliser pour la variable d'instance <code>this.membreDAO</code>
+     */
+    private void setMembreDAO(MembreDAO membreDAO) {
+        this.membreDAO = membreDAO;
+    }
+
+    /**
+     * Getter de la variable d'instance <code>this.reservationDAO</code>.
+     *
+     * @return La variable d'instance <code>this.reservationDAO</code>
+     */
+    private ReservationDAO getReservationDAO() {
+        return this.reservationDAO;
+    }
+
+    /**
+     * Setter de la variable d'instance <code>this.reservationDAO</code>.
+     *
+     * @param reservationDAO La valeur à utiliser pour la variable d'instance <code>this.reservationDAO</code>
+     */
+    private void setReservationDAO(ReservationDAO reservationDAO) {
+        this.reservationDAO = reservationDAO;
+    }
+
+    // EndRegion Getters and Setters
+
     /**
      * Ajoute un nouveau livre.
      *
@@ -132,13 +189,13 @@ public class LivreService extends Service {
     /**
      * Trouve les livres à partir d'un membre.
      *
-     * @param membreDTO Le membre à utiliser
+     * @param idMembre L'ID du membre à utiliser
      * @return La liste des livres correspondants ; une liste vide sinon
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
-    public List<LivreDTO> findByMembre(MembreDTO membreDTO) throws ServiceException {
+    public List<LivreDTO> findByMembre(int idMembre) throws ServiceException {
         try {
-            return getLivreDAO().findByMembre(membreDTO);
+            return getLivreDAO().findByMembre(idMembre);
         } catch(DAOException daoException) {
             throw new ServiceException(daoException);
         }
@@ -205,7 +262,7 @@ public class LivreService extends Service {
                     + " n'existe pas");
             }
             final MembreDTO membreDTO = getMembreDAO().read(unLivreDTO.getIdMembre());
-            if(!getLivreDAO().findByMembre(membreDTO).isEmpty()) {
+            if(!getLivreDAO().findByMembre(membreDTO.getIdMembre()).isEmpty()) {
                 throw new ServiceException("Le livre "
                     + unLivreDTO.getTitre()
                     + " (ID de livre : "
@@ -216,7 +273,7 @@ public class LivreService extends Service {
                     + membreDTO.getIdMembre()
                     + ")");
             }
-            if(!getReservationDAO().findByLivre(unLivreDTO).isEmpty()) {
+            if(!getReservationDAO().findByLivre(unLivreDTO.getIdLivre()).isEmpty()) {
                 throw new ServiceException("Le livre "
                     + unLivreDTO.getTitre()
                     + " (ID de livre : "
@@ -228,59 +285,4 @@ public class LivreService extends Service {
             throw new ServiceException(daoException);
         }
     }
-
-    /**
-     * Getter de la variable d'instance <code>this.livreDAO</code>.
-     *
-     * @return La variable d'instance <code>this.livreDAO</code>
-     */
-    private LivreDAO getLivreDAO() {
-        return this.livreDAO;
-    }
-
-    /**
-     * Setter de la variable d'instance <code>this.livreDAO</code>.
-     *
-     * @param livreDAO La valeur à utiliser pour la variable d'instance <code>this.livreDAO</code>
-     */
-    private void setLivreDAO(LivreDAO livreDAO) {
-        this.livreDAO = livreDAO;
-    }
-
-    /**
-     * Getter de la variable d'instance <code>this.membreDAO</code>.
-     *
-     * @return La variable d'instance <code>this.membreDAO</code>
-     */
-    private MembreDAO getMembreDAO() {
-        return this.membreDAO;
-    }
-
-    /**
-     * Setter de la variable d'instance <code>this.membreDAO</code>.
-     *
-     * @param membreDAO La valeur à utiliser pour la variable d'instance <code>this.membreDAO</code>
-     */
-    private void setMembreDAO(MembreDAO membreDAO) {
-        this.membreDAO = membreDAO;
-    }
-
-    /**
-     * Getter de la variable d'instance <code>this.reservationDAO</code>.
-     *
-     * @return La variable d'instance <code>this.reservationDAO</code>
-     */
-    private ReservationDAO getReservationDAO() {
-        return this.reservationDAO;
-    }
-
-    /**
-     * Setter de la variable d'instance <code>this.reservationDAO</code>.
-     *
-     * @param reservationDAO La valeur à utiliser pour la variable d'instance <code>this.reservationDAO</code>
-     */
-    private void setReservationDAO(ReservationDAO reservationDAO) {
-        this.reservationDAO = reservationDAO;
-    }
-
 }

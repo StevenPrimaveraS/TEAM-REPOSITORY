@@ -14,8 +14,6 @@ public class MembreDTO {
 
     private int limitePret;
 
-    private int nbPret;
-
     private int idMembre;
 
     private long telephone;
@@ -106,17 +104,10 @@ public class MembreDTO {
      *
      * @return La variable d'instance <code>this.nbPret</code>
      */
-    public int getNbPret() {
-        return this.nbPret;
-    }
 
     /**
      * Setter de la variable d'instance <code>this.nbPret</code>.
      *
      * @param nbPret La valeur à utiliser pour la variable d'instance <code>this.nbPret</code>
      */
-    public void setNbPret(int nbPret) {
-        this.nbPret = nbPret;
-    }
-
 }

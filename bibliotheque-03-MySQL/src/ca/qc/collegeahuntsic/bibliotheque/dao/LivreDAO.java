@@ -12,7 +12,6 @@ import java.util.Collections;
 import java.util.List;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
-import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 
 /**
@@ -54,7 +53,7 @@ public class LivreDAO extends DAO {
         + "                                       WHERE  idLivre = ?";
 
     private static final String DELETE_REQUEST = "DELETE FROM livre "
-        + "                                       WHERE  idLivre = ?";
+        + "                                       WHERE       idLivre = ?";
 
     private static final String GET_ALL_REQUEST = "SELECT idLivre, "
         + "                                               titre, "
@@ -279,16 +278,16 @@ public class LivreDAO extends DAO {
     /**
      * Trouve les livres à partir d'un membre.
      *
-     * @param membreDTO Le membre à utiliser
+     * @param idMembre L'ID du membre à utiliser
      * @return La liste des livres correspondants ; une liste vide sinon
      * @throws DAOException S'il y a une erreur avec la base de données
      */
-    public List<LivreDTO> findByMembre(MembreDTO membreDTO) throws DAOException {
+    public List<LivreDTO> findByMembre(int idMembre) throws DAOException {
         List<LivreDTO> livres = Collections.EMPTY_LIST;
         try(
             PreparedStatement findByMembrePreparedStatement = getConnection().prepareStatement(LivreDAO.FIND_BY_MEMBRE)) {
             findByMembrePreparedStatement.setInt(1,
-                membreDTO.getIdMembre());
+                idMembre);
             try(
                 ResultSet resultSet = findByMembrePreparedStatement.executeQuery()) {
                 LivreDTO livreDTO = null;
