@@ -1,32 +1,36 @@
 // Fichier MembreDTO.java
-// Auteur : Dominic Leroux
-// Date de création : 2016-09-14
+// Auteur : Gilles Bénichou
+// Date de création : 2016-05-18
 
 package ca.qc.collegeahuntsic.bibliotheque.dto;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 /**
- * DTO de la table membre.
+ * DTO de la table <code>membre</code>.
  *
- * @author Leroux Dominic
+ * @author Gilles Bénichou
  */
-
-public class MembreDTO {
-
-    private int limitePret;
+public class MembreDTO extends DTO {
+    private static final long serialVersionUID = 1L;
 
     private int idMembre;
 
-    private long telephone;
-
     private String nom;
 
+    private long telephone;
+
+    private int limitePret;
+
     /**
-     * Constructeur de MembreDTO par défaut.
+     * Constructeur par défaut.
      */
     public MembreDTO() {
-
+        super();
     }
 
+    // Region Getters and Setters
     /**
      * Getter de la variable d'instance <code>this.idMembre</code>.
      *
@@ -98,16 +102,38 @@ public class MembreDTO {
     public void setLimitePret(int limitePret) {
         this.limitePret = limitePret;
     }
+    // EndRegion Getters and Setters
 
     /**
-     * Getter de la variable d'instance <code>this.nbPret</code>.
-     *
-     * @return La variable d'instance <code>this.nbPret</code>
+     * {@inheritDoc}
      */
+    @Override
+    public boolean equals(Object obj) {
+        boolean equals = this == obj;
+        if(!equals) {
+            equals = obj != null
+                && obj instanceof MembreDTO;
+            if(equals) {
+                final MembreDTO membreDTO = (MembreDTO) obj;
+                final EqualsBuilder equalsBuilder = new EqualsBuilder();
+                equalsBuilder.appendSuper(super.equals(membreDTO));
+                equalsBuilder.append(getIdMembre(),
+                    membreDTO.getIdMembre());
+                equals = equalsBuilder.isEquals();
+            }
+        }
+        return equals;
+    }
 
     /**
-     * Setter de la variable d'instance <code>this.nbPret</code>.
-     *
-     * @param nbPret La valeur à utiliser pour la variable d'instance <code>this.nbPret</code>
+     * {@inheritDoc}
      */
+    @Override
+    public int hashCode() {
+        final HashCodeBuilder hashCodeBuilder = new HashCodeBuilder(461,
+            451);
+        hashCodeBuilder.appendSuper(super.hashCode());
+        hashCodeBuilder.append(getIdMembre());
+        return hashCodeBuilder.toHashCode();
+    }
 }

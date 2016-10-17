@@ -1,22 +1,22 @@
 // Fichier LivreDTO.java
-// Auteur : Dominic Leroux
-// Date de création : 2016-09-14
+// Auteur : Gilles Bénichou
+// Date de création : 2016-05-18
 
 package ca.qc.collegeahuntsic.bibliotheque.dto;
 
 import java.sql.Timestamp;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
- * DTO de la table livre.
+ * DTO de la table <code>livre</code>.
  *
- * @author Leroux Dominic
+ * @author Gilles Bénichou
  */
-
-public class LivreDTO {
+public class LivreDTO extends DTO {
+    private static final long serialVersionUID = 1L;
 
     private int idLivre;
-
-    private int idMembre;
 
     private String titre;
 
@@ -24,16 +24,14 @@ public class LivreDTO {
 
     private Timestamp dateAcquisition;
 
-    private Timestamp datePret;
-
     /**
-     * Constructeur de LivreDTO par défaut.
+     * Constructeur par défaut.
      */
-
     public LivreDTO() {
-
+        super();
     }
 
+    // Region Getters and Setters
     /**
      * Getter de la variable d'instance <code>this.idLivre</code>.
      *
@@ -105,40 +103,38 @@ public class LivreDTO {
     public void setDateAcquisition(Timestamp dateAcquisition) {
         this.dateAcquisition = dateAcquisition;
     }
+    // EndRegion Getters and Setters
 
     /**
-     * Getter de la variable d'instance <code>this.idMembre</code>.
-     *
-     * @return La variable d'instance <code>this.idMembre</code>
+     * {@inheritDoc}
      */
-    public int getIdMembre() {
-        return this.idMembre;
+    @Override
+    public boolean equals(Object obj) {
+        boolean equals = this == obj;
+        if(!equals) {
+            equals = obj != null
+                && obj instanceof LivreDTO;
+            if(equals) {
+                final LivreDTO livreDTO = (LivreDTO) obj;
+                final EqualsBuilder equalsBuilder = new EqualsBuilder();
+                equalsBuilder.appendSuper(super.equals(livreDTO));
+                equalsBuilder.append(getIdLivre(),
+                    livreDTO.getIdLivre());
+                equals = equalsBuilder.isEquals();
+            }
+        }
+        return equals;
     }
 
     /**
-     * Setter de la variable d'instance <code>this.idMembre</code>.
-     *
-     * @param idMembre La valeur à utiliser pour la variable d'instance <code>this.idMembre</code>
+     * {@inheritDoc}
      */
-    public void setIdMembre(int idMembre) {
-        this.idMembre = idMembre;
-    }
-
-    /**
-     * Getter de la variable d'instance <code>this.datePret</code>.
-     *
-     * @return La variable d'instance <code>this.datePret</code>
-     */
-    public Timestamp getDatePret() {
-        return this.datePret;
-    }
-
-    /**
-     * Setter de la variable d'instance <code>this.datePret</code>.
-     *
-     * @param datePret La valeur à utiliser pour la variable d'instance <code>this.datePret</code>
-     */
-    public void setDatePret(Timestamp datePret) {
-        this.datePret = datePret;
+    @Override
+    public int hashCode() {
+        final HashCodeBuilder hashCodeBuilder = new HashCodeBuilder(459,
+            449);
+        hashCodeBuilder.appendSuper(super.hashCode());
+        hashCodeBuilder.append(getIdLivre());
+        return hashCodeBuilder.toHashCode();
     }
 }

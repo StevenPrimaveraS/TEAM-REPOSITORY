@@ -1,35 +1,39 @@
 // Fichier PretDTO.java
-// Auteur : Dominic Leroux
-// Date de création : 2016-10-13
+// Auteur : Gilles Bénichou
+// Date de création : 2016-05-18
 
 package ca.qc.collegeahuntsic.bibliotheque.dto;
 
 import java.sql.Timestamp;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
- * DTO de la table pret.
+ * DTO de la table <code>pret</code>.
  *
- * @author Dominic Leroux
+ * @author Gilles Bénichou
  */
 public class PretDTO extends DTO {
+    private static final long serialVersionUID = 1L;
 
     private int idPret;
 
-    private int idLivre;
+    private MembreDTO membreDTO;
 
-    private int idMembre;
+    private LivreDTO livreDTO;
 
     private Timestamp datePret;
 
     private Timestamp dateRetour;
 
     /**
-     * Constructeur de PretDTO par défaut.
+     * Constructeur par défaut.
      */
     public PretDTO() {
-
+        super();
     }
 
+    // Region Getters and Setters
     /**
      * Getter de la variable d'instance <code>this.idPret</code>.
      *
@@ -49,39 +53,39 @@ public class PretDTO extends DTO {
     }
 
     /**
-     * Getter de la variable d'instance <code>this.idLivre</code>.
+     * Getter de la variable d'instance <code>this.membreDTO</code>.
      *
-     * @return La variable d'instance <code>this.idLivre</code>
+     * @return La variable d'instance <code>this.membreDTO</code>
      */
-    public int getIdLivre() {
-        return this.idLivre;
+    public MembreDTO getMembreDTO() {
+        return this.membreDTO;
     }
 
     /**
-     * Setter de la variable d'instance <code>this.idLivre</code>.
+     * Setter de la variable d'instance <code>this.membreDTO</code>.
      *
-     * @param idLivre La valeur à utiliser pour la variable d'instance <code>this.idLivre</code>
+     * @param membreDTO La valeur à utiliser pour la variable d'instance <code>this.membreDTO</code>
      */
-    public void setIdLivre(int idLivre) {
-        this.idLivre = idLivre;
+    public void setMembreDTO(MembreDTO membreDTO) {
+        this.membreDTO = membreDTO;
     }
 
     /**
-     * Getter de la variable d'instance <code>this.idMembre</code>.
+     * Getter de la variable d'instance <code>this.livreDTO</code>.
      *
-     * @return La variable d'instance <code>this.idMembre</code>
+     * @return La variable d'instance <code>this.livreDTO</code>
      */
-    public int getIdMembre() {
-        return this.idMembre;
+    public LivreDTO getLivreDTO() {
+        return this.livreDTO;
     }
 
     /**
-     * Setter de la variable d'instance <code>this.idMembre</code>.
+     * Setter de la variable d'instance <code>this.livreDTO</code>.
      *
-     * @param idMembre La valeur à utiliser pour la variable d'instance <code>this.idMembre</code>
+     * @param livreDTO La valeur à utiliser pour la variable d'instance <code>this.livreDTO</code>
      */
-    public void setIdMembre(int idMembre) {
-        this.idMembre = idMembre;
+    public void setLivreDTO(LivreDTO livreDTO) {
+        this.livreDTO = livreDTO;
     }
 
     /**
@@ -119,5 +123,38 @@ public class PretDTO extends DTO {
     public void setDateRetour(Timestamp dateRetour) {
         this.dateRetour = dateRetour;
     }
+    // EndRegion Getters and Setters
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object obj) {
+        boolean equals = this == obj;
+        if(!equals) {
+            equals = obj != null
+                && obj instanceof PretDTO;
+            if(equals) {
+                final PretDTO pretDTO = (PretDTO) obj;
+                final EqualsBuilder equalsBuilder = new EqualsBuilder();
+                equalsBuilder.appendSuper(super.equals(pretDTO));
+                equalsBuilder.append(getIdPret(),
+                    pretDTO.getIdPret());
+                equals = equalsBuilder.isEquals();
+            }
+        }
+        return equals;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        final HashCodeBuilder hashCodeBuilder = new HashCodeBuilder(23,
+            13);
+        hashCodeBuilder.appendSuper(super.hashCode());
+        hashCodeBuilder.append(getIdPret());
+        return hashCodeBuilder.toHashCode();
+    }
 }
