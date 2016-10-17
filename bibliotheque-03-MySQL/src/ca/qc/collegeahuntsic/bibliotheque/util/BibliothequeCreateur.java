@@ -71,7 +71,8 @@ public class BibliothequeCreateur {
                 reservationDAO));
             setReservationService(new ReservationService(reservationDAO,
                 livreDAO,
-                membreDAO));
+                membreDAO,
+                pretDAO));
         } catch(ConnexionException connexionException) {
             throw new BibliothequeException(connexionException);
         }
