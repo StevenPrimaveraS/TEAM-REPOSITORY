@@ -23,8 +23,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 public class MembreDAO extends DAO {
     private static final long serialVersionUID = 1L;
 
-    private static final String ADD_REQUEST = "INSERT INTO membre (idMembre, "
-        + "                                                        nom, "
+    private static final String ADD_REQUEST = "INSERT INTO membre (nom, "
         + "                                                        telephone, "
         + "                                                        limitePret,) "
         + "                                    VALUES             (?, "
@@ -72,13 +71,11 @@ public class MembreDAO extends DAO {
     public void add(MembreDTO membreDTO) throws DAOException {
         try(
             PreparedStatement addPreparedStatement = getConnection().prepareStatement(MembreDAO.ADD_REQUEST)) {
-            addPreparedStatement.setInt(1,
-                membreDTO.getIdMembre());
-            addPreparedStatement.setString(2,
+            addPreparedStatement.setString(1,
                 membreDTO.getNom());
-            addPreparedStatement.setLong(3,
+            addPreparedStatement.setLong(2,
                 membreDTO.getTelephone());
-            addPreparedStatement.setInt(4,
+            addPreparedStatement.setInt(3,
                 membreDTO.getLimitePret());
             addPreparedStatement.executeUpdate();
         } catch(SQLException sqlException) {
