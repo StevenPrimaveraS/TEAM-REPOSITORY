@@ -264,7 +264,7 @@ public class ReservationService extends Service {
 
             final List<ReservationDTO> reservations = getReservationDAO().findByMembre(unMembreDTO.getIdMembre());
             for(ReservationDTO uneAutreReservationDTO : reservations) {
-                if(uneAutreReservationDTO.getIdLivre() == unLivreDTO.getIdLivre()) {
+                if(uneAutreReservationDTO.getLivreDTO().getIdLivre() == unLivreDTO.getIdLivre()) {
                     throw new ServiceException("Le livre "
                         + unLivreDTO.getTitre()
                         + " (ID de livre : "
@@ -317,8 +317,8 @@ public class ReservationService extends Service {
             final List<ReservationDTO> reservations = getReservationDAO().findByLivre(unLivreDTO.getIdLivre());
             if(!reservations.isEmpty()) {
                 uneReservationDTO = reservations.get(0);
-                if(uneReservationDTO.getIdMembre() != unMembreDTO.getIdMembre()) {
-                    final MembreDTO booker = getMembreDAO().read(uneReservationDTO.getIdMembre());
+                if(uneReservationDTO.getMembreDTO().getIdMembre() != unMembreDTO.getIdMembre()) {
+                    final MembreDTO booker = getMembreDAO().read(uneReservationDTO.getMembreDTO().getIdMembre());
                     throw new ServiceException("Le livre "
                         + unLivreDTO.getTitre()
                         + " (ID de livre : "
