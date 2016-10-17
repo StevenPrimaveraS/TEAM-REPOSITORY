@@ -217,36 +217,6 @@ public class LivreService extends Service {
     }
 
     /**
-     * Emprunte un livre.
-     *
-     * @param livreDTO Le livre à emprunter
-     * @throws ServiceException S'il y a une erreur avec la base de données
-     */
-    public void emprunter(LivreDTO livreDTO) throws ServiceException {
-        // On voit le manque de la table prêt avec le décalage illogique (bancal) entre MembreService.emprunte et cette méthode
-        try {
-            getLivreDAO().emprunter(livreDTO);
-        } catch(DAOException daoException) {
-            throw new ServiceException(daoException);
-        }
-    }
-
-    /**
-     * Retourne un livre.
-     *
-     * @param livreDTO Le livre à retourner
-     * @throws ServiceException S'il y a une erreur avec la base de données
-     */
-    public void retourner(LivreDTO livreDTO) throws ServiceException {
-        // On voit le manque de la table prêt avec le décalage illogique (bancal) entre MembreService.emprunte et cette méthode
-        try {
-            getLivreDAO().retourner(livreDTO);
-        } catch(DAOException daoException) {
-            throw new ServiceException(daoException);
-        }
-    }
-
-    /**
      * Vendre un livre.
      *
      * @param livreDTO Le livre à vendre
