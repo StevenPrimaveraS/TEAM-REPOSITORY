@@ -4,6 +4,11 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.service;
 
+import ca.qc.collegeahuntsic.bibliotheque.dao.LivreDAO;
+import ca.qc.collegeahuntsic.bibliotheque.dao.MembreDAO;
+import ca.qc.collegeahuntsic.bibliotheque.dao.ReservationDAO;
+import ca.qc.collegeahuntsic.bibliotheque.exception.ServiceException;
+
 /**
  * Service de la table pret.
  *
@@ -26,20 +31,30 @@ public class PretService {
     public PretService() {
 
     }
-    //
-    //    public PretService(LivreDAO livre,
-    //        MembreDAO membre,
-    //        ReservationDAO reservation) throws ServiceException {
-    //
-    //        if(livre.getConnexion() != membre.getConnexion()
-    //            || reservation.getConnexion() != membre.getConnexion()) {
-    //            throw new ServiceException("Les instances de livre, de membre et de reservation n'utilisent pas la même connexion au serveur");
-    //        }
-    //        this.connexion = livre.getConnexion();
-    //        this.livreDAO = livre;
-    //        this.membreDAO = membre;
-    //        this.reservationDAO = reservation;
-    //    }
+
+    /**
+     * Service de la table pret.
+     *
+     * @author Primavera Sequeira Steven
+     * @param livre livre quon veux emprunter
+     * @param membre membre qui veux faire l'emprunt
+     * @param reservation voir les reservation.
+     * @throws ServiceException si jamais il y a une erreur.
+     */
+
+    public PretService(LivreDAO livre,
+        MembreDAO membre,
+        ReservationDAO reservation) throws ServiceException {
+
+        if(livre.getConnexion() != membre.getConnexion()
+            || reservation.getConnexion() != membre.getConnexion()) {
+            throw new ServiceException("Les instances de livre, de membre et de reservation n'utilisent pas la même connexion au serveur");
+        } /*
+          this.connexion = livre.getConnexion();
+          this.livreDAO = livre;
+          this.membreDAO = membre;
+          this.reservationDAO = reservation;*/
+    }
     //
     //    /**
     //     * Pret d'un livre à un membre. Le livre ne doit pas être prêté. Le membre
