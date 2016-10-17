@@ -23,12 +23,10 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
 public class ReservationDAO extends DAO {
     private static final long serialVersionUID = 1L;
 
-    private static final String ADD_REQUEST = "INSERT INTO reservation (idReservation, "
-        + "                                                             idlivre, "
+    private static final String ADD_REQUEST = "INSERT INTO reservation (idlivre, "
         + "                                                             idMembre, "
         + "                                                             dateReservation) "
         + "                                    VALUES                  (?, "
-        + "                                                             ?, "
         + "                                                             ?, "
         + "                                                             CURRENT_TIMESTAMP)";
 
@@ -88,10 +86,8 @@ public class ReservationDAO extends DAO {
         try(
             PreparedStatement addPreparedStatement = getConnection().prepareStatement(ReservationDAO.ADD_REQUEST)) {
             addPreparedStatement.setInt(1,
-                reservationDTO.getIdReservation());
-            addPreparedStatement.setInt(2,
                 reservationDTO.getIdLivre());
-            addPreparedStatement.setInt(3,
+            addPreparedStatement.setInt(2,
                 reservationDTO.getIdMembre());
             addPreparedStatement.executeUpdate();
         } catch(SQLException sqlException) {
