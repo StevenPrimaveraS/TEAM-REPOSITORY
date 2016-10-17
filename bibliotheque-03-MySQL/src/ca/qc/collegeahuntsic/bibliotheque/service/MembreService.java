@@ -7,6 +7,7 @@ package ca.qc.collegeahuntsic.bibliotheque.service;
 import java.util.List;
 import ca.qc.collegeahuntsic.bibliotheque.dao.LivreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.MembreDAO;
+import ca.qc.collegeahuntsic.bibliotheque.dao.PretDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.ReservationDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
@@ -25,6 +26,8 @@ public class MembreService extends Service {
 
     private ReservationDAO reservationDAO;
 
+    private PretDAO pretDAO;
+
     /**
      * Crée le service de la table <code>membre</code>.
      *
@@ -34,14 +37,37 @@ public class MembreService extends Service {
      *            Le DAO de la table <code>livre</code>
      * @param reservationDAO
      *            Le DAO de la table <code>reservation</code>
+     *
+     * @param pretDAO
+     *            Le DAO de la table <code>pret</code>
      */
     public MembreService(MembreDAO membreDAO,
         LivreDAO livreDAO,
-        ReservationDAO reservationDAO) {
+        ReservationDAO reservationDAO,
+        PretDAO pretDAO) {
         super();
         setMembreDAO(membreDAO);
         setLivreDAO(livreDAO);
         setReservationDAO(reservationDAO);
+        setPretDAO(pretDAO);
+    }
+
+    /**
+     * Getter de la variable d'instance <code>this.pretDAO</code>.
+     *
+     * @return La variable d'instance <code>this.pretDAO</code>
+     */
+    public PretDAO getPretDAO() {
+        return this.pretDAO;
+    }
+
+    /**
+     * Setter de la variable d'instance <code>this.pretDAO</code>.
+     *
+     * @param pretDAO La valeur à utiliser pour la variable d'instance <code>this.pretDAO</code>
+     */
+    public void setPretDAO(PretDAO pretDAO) {
+        this.pretDAO = pretDAO;
     }
 
     // Region Getters and Setters
@@ -215,8 +241,8 @@ public class MembreService extends Service {
                     + membreDTO.getIdMembre()
                     + " n'existe pas");
             }
-            // TODO : Le gerer avec la table pret.
-            if(unMembreDTO.getNbPret() > 0) {
+            // TODO : Le gerer avec la table pret. Faire un count avec find_by_membre.
+            if(!getPretDAO().findByMembre(membreDTO.getIdMembre()).isEmpty()) {
                 throw new ServiceException("Le membre "
                     + unMembreDTO.getNom()
                     + " (ID de membre : "
