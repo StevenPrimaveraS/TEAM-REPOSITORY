@@ -28,6 +28,8 @@ public class MembreService extends Service {
 
     private PretDAO pretDAO;
 
+    private LivreDAO livreDAO;
+
     /**
      * Crée le service de la table <code>membre</code>.
      *
@@ -92,6 +94,15 @@ public class MembreService extends Service {
     }
 
     /**
+     * Getter de la variable d'instance <code>this.livreDAO</code>.
+     *
+     * @return La variable d'instance <code>this.livreDAO</code>
+     */
+    public LivreDAO getLivreDAO() {
+        return this.livreDAO;
+    }
+
+    /**
      * Setter de la variable d'instance <code>this.livreDAO</code>.
      *
      * @param livreDAO
@@ -99,7 +110,7 @@ public class MembreService extends Service {
      *            <code>this.livreDAO</code>
      */
     private void setLivreDAO(LivreDAO livreDAO) {
-        this.setLivreDAO(livreDAO);
+        this.livreDAO = livreDAO;
     }
 
     /**
@@ -261,4 +272,5 @@ public class MembreService extends Service {
             throw new ServiceException(daoException);
         }
     }
+
 } // CLASS

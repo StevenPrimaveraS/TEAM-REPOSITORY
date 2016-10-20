@@ -25,7 +25,7 @@ public class MembreDAO extends DAO {
 
     private static final String ADD_REQUEST = "INSERT INTO membre (nom, "
         + "                                                        telephone, "
-        + "                                                        limitePret,) "
+        + "                                                        limitePret) "
         + "                                    VALUES             (?, "
         + "                                                        ?, "
         + "                                                        ?  ";
