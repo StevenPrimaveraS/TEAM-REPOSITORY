@@ -28,8 +28,7 @@ public class MembreDAO extends DAO {
         + "                                                        limitePret,) "
         + "                                    VALUES             (?, "
         + "                                                        ?, "
-        + "                                                        ?, "
-        + "                                                        ?, ";
+        + "                                                        ?  ";
 
     private static final String READ_REQUEST = "SELECT idMembre, "
         + "                                            nom, "
