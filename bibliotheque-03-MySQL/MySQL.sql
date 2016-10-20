@@ -16,8 +16,8 @@ CONSTRAINT limiteNbPret check(nbpret <= limitePret)
 
 CREATE TABLE livre(
 idLivre         integer(3) AUTO_INCREMENT check(idLivre > 0) , 
-titre           varchar(10) NOT NULL, 
-auteur          varchar(10) NOT NULL,
+titre           varchar(50) NOT NULL, 
+auteur          varchar(50) NOT NULL,
 dateAcquisition timestamp(3) not null, 
 idMembre        integer(3) , 
 datePret        timestamp(3) ,

@@ -139,7 +139,6 @@ public final class Bibliotheque {
                 Bibliotheque.afficherAide();
             } else if("acquerir".equals(command)) {
                 final LivreDTO livreDTO = new LivreDTO();
-                livreDTO.setIdLivre(Bibliotheque.readInt(tokenizer));
                 livreDTO.setTitre(Bibliotheque.readString(tokenizer));
                 livreDTO.setAuteur(Bibliotheque.readString(tokenizer));
                 livreDTO.setDateAcquisition(Bibliotheque.readDate(tokenizer));
@@ -182,7 +181,6 @@ public final class Bibliotheque {
                 Bibliotheque.gestionnaireBibliotheque.commit();
             } else if("inscrire".equals(command)) {
                 final MembreDTO membreDTO = new MembreDTO();
-                membreDTO.setIdMembre(Bibliotheque.readInt(tokenizer));
                 membreDTO.setNom(Bibliotheque.readString(tokenizer));
                 membreDTO.setTelephone(Bibliotheque.readLong(tokenizer));
                 membreDTO.setLimitePret(Bibliotheque.readInt(tokenizer));
