@@ -14,6 +14,7 @@ import java.util.StringTokenizer;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
+import ca.qc.collegeahuntsic.bibliotheque.dto.PretDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.ServiceException;
@@ -155,16 +156,20 @@ public final class Bibliotheque {
                 membreDTO.setIdMembre(Bibliotheque.readInt(tokenizer));
                 final LivreDTO livreDTO = new LivreDTO();
                 livreDTO.setIdLivre(Bibliotheque.readInt(tokenizer));
-                Bibliotheque.gestionnaireBibliotheque.getMembreService().emprunter(membreDTO,
-                    livreDTO);
+                final PretDTO pretDTO = new PretDTO();
+                pretDTO.setLivreDTO(livreDTO);
+                pretDTO.setMembreDTO(membreDTO);
+                Bibliotheque.gestionnaireBibliotheque.getPretService().commencer(pretDTO);
                 Bibliotheque.gestionnaireBibliotheque.commit();
             } else if("renouveler".equals(command)) {
                 final MembreDTO membreDTO = new MembreDTO();
                 membreDTO.setIdMembre(Bibliotheque.readInt(tokenizer));
                 final LivreDTO livreDTO = new LivreDTO();
                 livreDTO.setIdLivre(Bibliotheque.readInt(tokenizer));
-                Bibliotheque.gestionnaireBibliotheque.getMembreService().renouveler(membreDTO,
-                    livreDTO);
+                final PretDTO pretDTO = new PretDTO();
+                pretDTO.setLivreDTO(livreDTO);
+                pretDTO.setMembreDTO(membreDTO);
+                Bibliotheque.gestionnaireBibliotheque.getPretService().renouveler(pretDTO);
                 Bibliotheque.gestionnaireBibliotheque.commit();
                 //TODO : gerer le retour avec la table pret.
             } else if("retourner".equals(command)) {
@@ -172,8 +177,10 @@ public final class Bibliotheque {
                 membreDTO.setIdMembre(Bibliotheque.readInt(tokenizer));
                 final LivreDTO livreDTO = new LivreDTO();
                 livreDTO.setIdLivre(Bibliotheque.readInt(tokenizer));
-                Bibliotheque.gestionnaireBibliotheque.getMembreService().retourner(membreDTO,
-                    livreDTO);
+                final PretDTO pretDTO = new PretDTO();
+                pretDTO.setLivreDTO(livreDTO);
+                pretDTO.setMembreDTO(membreDTO);
+                Bibliotheque.gestionnaireBibliotheque.getPretService().retourner(pretDTO);
                 Bibliotheque.gestionnaireBibliotheque.commit();
             } else if("inscrire".equals(command)) {
                 final MembreDTO membreDTO = new MembreDTO();
@@ -193,12 +200,14 @@ public final class Bibliotheque {
                 Thread.sleep(1);
                 final ReservationDTO reservationDTO = new ReservationDTO();
                 reservationDTO.setIdReservation(Bibliotheque.readInt(tokenizer));
-                reservationDTO.setIdMembre(Bibliotheque.readInt(tokenizer));
-                reservationDTO.setIdLivre(Bibliotheque.readInt(tokenizer));
                 final MembreDTO membreDTO = new MembreDTO();
-                membreDTO.setIdMembre(reservationDTO.getIdMembre());
+                membreDTO.setIdMembre(Bibliotheque.readInt(tokenizer));
+                reservationDTO.setMembreDTO(membreDTO);
                 final LivreDTO livreDTO = new LivreDTO();
-                livreDTO.setIdLivre(reservationDTO.getIdLivre());
+                livreDTO.setIdLivre(Bibliotheque.readInt(tokenizer));
+                reservationDTO.setLivreDTO(livreDTO);
+                membreDTO.setIdMembre(reservationDTO.getMembreDTO().getIdMembre());
+                livreDTO.setIdLivre(reservationDTO.getLivreDTO().getIdLivre());
                 Bibliotheque.gestionnaireBibliotheque.getReservationService().reserver(reservationDTO,
                     membreDTO,
                     livreDTO);
