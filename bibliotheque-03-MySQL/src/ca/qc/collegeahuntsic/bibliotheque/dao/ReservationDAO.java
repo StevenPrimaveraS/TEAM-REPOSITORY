@@ -30,7 +30,7 @@ public class ReservationDAO extends DAO {
         + "                                                             dateReservation) "
         + "                                    VALUES                  (?, "
         + "                                                             ?, "
-        + "                                                             CURRENT_TIMESTAMP)";
+        + "                                                             ?)";
 
     private static final String READ_REQUEST = "SELECT idReservation, "
         + "                                            idLivre, "
@@ -92,6 +92,8 @@ public class ReservationDAO extends DAO {
             addPreparedStatement.setInt(2,
                 reservationDTO.getMembreDTO().getIdMembre());
             addPreparedStatement.executeUpdate();
+            addPreparedStatement.setTimestamp(3,
+                reservationDTO.getDateReservation());
         } catch(SQLException sqlException) {
             throw new DAOException(sqlException);
         }

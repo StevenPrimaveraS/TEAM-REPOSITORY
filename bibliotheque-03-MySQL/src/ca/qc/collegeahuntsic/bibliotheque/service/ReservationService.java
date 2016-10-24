@@ -4,6 +4,7 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.service;
 
+import java.sql.Timestamp;
 import java.util.List;
 import ca.qc.collegeahuntsic.bibliotheque.dao.LivreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.MembreDAO;
@@ -301,6 +302,7 @@ public class ReservationService extends Service {
                         + ")");
                 }
             }
+            reservationDTO.setDateReservation(new Timestamp(System.currentTimeMillis()));
             add(reservationDTO);
         } catch(DAOException daoException) {
             throw new ServiceException(daoException);
