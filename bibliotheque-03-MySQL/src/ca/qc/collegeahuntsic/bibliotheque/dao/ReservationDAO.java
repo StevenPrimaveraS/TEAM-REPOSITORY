@@ -91,9 +91,9 @@ public class ReservationDAO extends DAO {
                 reservationDTO.getLivreDTO().getIdLivre());
             addPreparedStatement.setInt(2,
                 reservationDTO.getMembreDTO().getIdMembre());
-            addPreparedStatement.executeUpdate();
             addPreparedStatement.setTimestamp(3,
                 reservationDTO.getDateReservation());
+            addPreparedStatement.executeUpdate();
         } catch(SQLException sqlException) {
             throw new DAOException(sqlException);
         }
