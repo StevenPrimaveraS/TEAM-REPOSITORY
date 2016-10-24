@@ -40,7 +40,6 @@ public class BibliothequeCreateur {
      * @param nomUtilisateur Nom d'utilisateur sur le serveur SQL
      * @param motPasse Mot de passe sur le serveur SQL
      * @throws BibliothequeException S'il y a une erreur avec la base de données
-     * TEST123
      */
     @SuppressWarnings("resource")
     public BibliothequeCreateur(String typeServeur,
