@@ -2,7 +2,7 @@
 // Auteur : Gilles Bénichou
 // Date de création : 2016-05-18
 
-package ca.qc.collegeahuntsic.bibliotheque.dao;
+package ca.qc.collegeahuntsic.bibliotheque.dao.implementations;
 
 import java.io.Serializable;
 import java.sql.Connection;
