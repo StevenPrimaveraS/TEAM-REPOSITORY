@@ -1,17 +1,15 @@
 // Fichier BibliothequeException.java
-// Auteur : Anthony Chan
-// Date de création : 2016-09-14
+// Auteur : Gilles Bénichou
+// Date de création : 2016-05-18
 
 package ca.qc.collegeahuntsic.bibliotheque.exception;
 
 /**
  * Cette exception est utilisée en cas de problème avec l'exécution de la bibliothèque.
  *
- * @author Anthony Chan
+ * @author Gilles Bénichou
  */
-
-public final class BibliothequeException extends Exception {
-
+public class BibliothequeException extends Exception {
     private static final long serialVersionUID = 1L;
 
     /**

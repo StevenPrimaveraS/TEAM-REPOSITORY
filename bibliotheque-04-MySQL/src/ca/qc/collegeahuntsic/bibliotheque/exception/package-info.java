@@ -1,10 +1,11 @@
 // Fichier package-info.java
-// Auteur : Anthony Chan
-// Date de création : 2016-09-12
+// Auteur : Gilles Bénichou
+// Date de création : 2016-05-18
+
 /**
  * Provides the exception classes used with the bibliothèque.
  *
- * @author Anthony Chan
+ * @author Gilles Bénichou
  */
 
 package ca.qc.collegeahuntsic.bibliotheque.exception;

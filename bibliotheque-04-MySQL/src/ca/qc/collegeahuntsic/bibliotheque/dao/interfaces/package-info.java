@@ -1,10 +1,11 @@
 // Fichier package-info.java
-// Auteur : Gilles Benichou
-// Date de création : 2016-10-24
+// Auteur : Gilles Bénichou
+// Date de création : 2016-05-18
+
 /**
- * TODO Auto-generated class javadoc.
+ * Provides the DAO interfaces used with the bibliothèque.
  *
- * @author Gilles Benichou
+ * @author Gilles Bénichou
  */
 
 package ca.qc.collegeahuntsic.bibliotheque.dao.interfaces;

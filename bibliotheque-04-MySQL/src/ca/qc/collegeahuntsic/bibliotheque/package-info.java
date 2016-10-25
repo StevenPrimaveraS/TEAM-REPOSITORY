@@ -1,11 +1,11 @@
 // Fichier package-info.java
-// Auteur : Primavera Sequeira Steven
-// Date de creation : 2016-09-12
+// Auteur : Gilles Bénichou
+// Date de création : 2016-05-18
 
 /**
  * Provides the common classes used with the bibliothèque.
  *
- * @author Mathieu Lafond
+ * @author Gilles Bénichou
  */
 
 package ca.qc.collegeahuntsic.bibliotheque;

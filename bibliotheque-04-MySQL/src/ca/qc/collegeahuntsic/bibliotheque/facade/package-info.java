@@ -1,11 +1,11 @@
 // Fichier package-info.java
-// Auteur : Primavera Sequeira Steven
-// Date de création : 2016-09-12
+// Auteur : Gilles Bénichou
+// Date de création : 2016-05-18
 
 /**
  * Provides the Facade classes used with the bibliothèque.
  *
- * @author Primavera Sequeira Steven
+ * @author Gilles Bénichou
  */
 
 package ca.qc.collegeahuntsic.bibliotheque.facade;
