@@ -19,8 +19,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.ServiceException;
  * @author Primavera Sequeira Steven
  */
 
-public class MembreService extends Service {
-    private static final long serialVersionUID = 1L;
+public class MembreService extends Service implements IMembreService {
 
     private MembreDAO membreDAO;
 
@@ -33,15 +32,10 @@ public class MembreService extends Service {
     /**
      * Crée le service de la table <code>membre</code>.
      *
-     * @param membreDAO
-     *            Le DAO de la table <code>membre</code>
-     * @param livreDAO
-     *            Le DAO de la table <code>livre</code>
-     * @param reservationDAO
-     *            Le DAO de la table <code>reservation</code>
-     *
-     * @param pretDAO
-     *            Le DAO de la table <code>pret</code>
+     * @param membreDAO Le DAO de la table <code>membre</code>
+     * @param livreDAO Le DAO de la table <code>livre</code>
+     * @param reservationDAO Le DAO de la table <code>reservation</code>
+     * @param pretDAO Le DAO de la table <code>pret</code>
      */
     public MembreService(MembreDAO membreDAO,
         LivreDAO livreDAO,
