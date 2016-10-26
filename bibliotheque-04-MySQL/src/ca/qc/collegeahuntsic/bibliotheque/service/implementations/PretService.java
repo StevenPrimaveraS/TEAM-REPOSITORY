@@ -2,7 +2,7 @@
 // Auteur : Gilles Bénichou
 // Date de création : 2016-05-18
 
-package ca.qc.collegeahuntsic.bibliotheque.service;
+package ca.qc.collegeahuntsic.bibliotheque.service.implementations;
 
 import java.sql.Timestamp;
 import java.util.List;

@@ -2,7 +2,7 @@
 // Auteur : Dominic Leroux
 // Date de création : 2016-09-14
 
-package ca.qc.collegeahuntsic.bibliotheque.service;
+package ca.qc.collegeahuntsic.bibliotheque.service.implementations;
 
 import java.sql.Timestamp;
 import java.util.List;
