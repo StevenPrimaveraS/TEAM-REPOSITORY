@@ -20,7 +20,7 @@ public class ReservationDTO extends DTO {
 
     public static final String ID_MEMBRE_COLUMN_NAME = "idMembre";
 
-    public static final String ID_DATE_RESERVATION_COLUMN_NAME = "dateReservation";
+    public static final String DATE_RESERVATION_COLUMN_NAME = "dateReservation";
 
     private static final long serialVersionUID = 1L;
 
