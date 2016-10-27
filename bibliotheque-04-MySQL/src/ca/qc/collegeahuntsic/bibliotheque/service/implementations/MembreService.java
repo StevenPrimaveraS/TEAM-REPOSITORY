@@ -175,7 +175,7 @@ public class MembreService extends Service implements IMembreService {
      */
     @Override
     public MembreDTO get(Connexion connexion,
-        int idMembre) throws InvalidHibernateSessionException,
+        String idMembre) throws InvalidHibernateSessionException,
         InvalidPrimaryKeyException,
         ServiceException {
         try {
@@ -264,7 +264,13 @@ public class MembreService extends Service implements IMembreService {
     @Override
     public void desinscrire(Connexion connexion,
         MembreDTO membreDTO,
-        String sortByPropertyName) throws ServiceException {
+        String sortByPropertyName) throws ServiceException,
+        InvalidHibernateSessionException,
+        InvalidPrimaryKeyException,
+        InvalidCriterionException,
+        InvalidSortByPropertyException,
+        InvalidDTOException,
+        InvalidDTOClassException {
         try {
             final MembreDTO unMembreDTO = get(connexion,
                 membreDTO.getIdMembre());
@@ -273,7 +279,6 @@ public class MembreService extends Service implements IMembreService {
                     + membreDTO.getIdMembre()
                     + " n'existe pas");
             }
-            // TODO : Le gerer avec la table pret. Faire un count avec find_by_membre.
             if(!getPretDAO().findByMembre(connexion,
                 membreDTO.getIdMembre(),
                 sortByPropertyName).isEmpty()) {

@@ -52,7 +52,7 @@ public interface IMembreService extends IService {
      * @throws InvalidPrimaryKeyException Si la clef primaire du livre est <code>null</code>
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
-    LivreDTO get(Connexion connexion,
+    MembreDTO get(Connexion connexion,
         String idMembre) throws InvalidHibernateSessionException,
         InvalidPrimaryKeyException,
         ServiceException;
@@ -100,7 +100,7 @@ public interface IMembreService extends IService {
      * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
-    List<LivreDTO> getAll(Connexion connexion,
+    List<MembreDTO> getAll(Connexion connexion,
         String sortByPropertyName) throws InvalidHibernateSessionException,
         InvalidSortByPropertyException,
         ServiceException;
@@ -148,7 +148,6 @@ public interface IMembreService extends IService {
      *
      * @param connexion La connexion à utiliser
      * @param membreDTO Le membre à desinscrire
-     * @param sortByPropertyName string qu'on utilise pour trier
      * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
      * @throws InvalidDTOException Si le livre est <code>null</code>
      * @throws InvalidDTOClassException Si la classe du livre n'est pas celle que prend en charge le DAO
@@ -161,8 +160,7 @@ public interface IMembreService extends IService {
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
     void desinscrire(Connexion connexion,
-        MembreDTO membreDTO,
-        String sortByPropertyName) throws InvalidHibernateSessionException,
+        MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         InvalidDTOClassException,
         InvalidPrimaryKeyException,
