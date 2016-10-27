@@ -445,11 +445,23 @@ public class ReservationService extends Service implements IReservationService {
         ILivreDAO livreDAO,
         IMembreDAO membreDAO,
         IPretDAO pretDAO) throws InvalidDAOException{
-        super();
-        setReservationDAO(reservationDAO);
-        setMembreDAO(membreDAO);
+    	super();
+        if(livreDAO == null) {
+            throw new InvalidDAOException("Le DAO de livre ne peut être null");
+        }
+        if(membreDAO == null) {
+            throw new InvalidDAOException("Le DAO de membre ne peut être null");
+        }
+        if(pretDAO == null) {
+            throw new InvalidDAOException("Le DAO de prêt ne peut être null");
+        }
+        if(reservationDAO == null) {
+            throw new InvalidDAOException("Le DAO de réservation ne peut être null");
+        }
         setLivreDAO(livreDAO);
+        setMembreDAO(membreDAO);
         setPretDAO(pretDAO);
+        setReservationDAO(reservationDAO);
     }
     
   // Region Getters and Setters
