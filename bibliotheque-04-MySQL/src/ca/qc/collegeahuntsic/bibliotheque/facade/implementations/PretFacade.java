@@ -18,8 +18,8 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.facade.InvalidServiceExcepti
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingLoanException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingReservationException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.InvalidLoanLimitException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.service.MissingLoanException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ServiceException;
+import ca.qc.collegeahuntsic.bibliotheque.facade.interfaces.IPretFacade;
 import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IPretService;
 
 /**
@@ -32,7 +32,7 @@ public class PretFacade extends Facade implements IPretFacade {
     /**
      * Crée la façade de la table <code>pret</code>.
      *
-     * @param IPretService Le service de la table <code>pret</code>
+     * @param pretService Le service de la table <code>pret</code>
      * @throws InvalidServiceException Si le service de pret est <code>null</code>
      */
     public PretFacade(IPretService pretService) throws InvalidServiceException {
@@ -41,7 +41,7 @@ public class PretFacade extends Facade implements IPretFacade {
         if(pretService == null) {
             throw new InvalidServiceException("Le service de prets ne peut être null");
         }
-        setMembreService(pretService);
+        setPretService(pretService);
     }
 
     /**
@@ -81,7 +81,6 @@ public class PretFacade extends Facade implements IPretFacade {
         MissingDTOException,
         InvalidCriterionException,
         InvalidSortByPropertyException,
-        MissingLoanException,
         ExistingLoanException,
         ExistingReservationException,
         InvalidDTOClassException,
@@ -107,7 +106,6 @@ public class PretFacade extends Facade implements IPretFacade {
         MissingDTOException,
         InvalidCriterionException,
         InvalidSortByPropertyException,
-        MissingLoanException,
         ExistingLoanException,
         InvalidDTOClassException,
         FacadeException {
