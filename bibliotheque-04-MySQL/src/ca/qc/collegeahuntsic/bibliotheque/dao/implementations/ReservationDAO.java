@@ -4,17 +4,26 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.dao.implementations;
 
+import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IReservationDAO;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
+import ca.qc.collegeahuntsic.bibliotheque.dto.DTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
-import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dao.DAOException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOClassException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOException;
 
 /**
  * DAO pour effectuer des CRUDs avec la table reservation.
@@ -22,9 +31,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
  * @author Mathieu Lafond
  */
 
-public class ReservationDAO extends DAO {
-    private static final long serialVersionUID = 1L;
-
+public class ReservationDAO extends DAO implements IReservationDAO {
     private static final String ADD_REQUEST = "INSERT INTO reservation (idlivre, "
         + "                                                             idMembre, "
         + "                                                             dateReservation) "
@@ -70,46 +77,70 @@ public class ReservationDAO extends DAO {
         + "                                               WHERE  idMembre = ?";
 
     /**
-     * Crée un DAO à partir d'une connexion à la base de données.
+     * Crée le DAO de la table <code>reservation</code>.
      *
-     * @param connexion La connexion à utiliser
+     * @param livreDTOClass La classe de reservation DTO à utiliser
+     * @throws InvalidDTOClassException Si la classe de DTO est <code>null</code>
      */
-    public ReservationDAO(Connexion connexion) {
-        super(connexion);
+    protected ReservationDAO(Class<? extends DTO> reservationDTOClass) throws InvalidDTOClassException {
+        super(reservationDTOClass);
     }
 
     /**
-     * Ajoute une nouvelle réservation.
-     *
-     * @param reservationDTO La réservation à ajouter
-     * @throws DAOException S'il y a une erreur avec la base de données
+     * {@inheritDoc}
      */
-    public void add(ReservationDTO reservationDTO) throws DAOException {
+    @Override
+    public void add(Connexion connexion,
+        DTO dto) throws InvalidHibernateSessionException,
+        InvalidDTOException,
+        InvalidDTOClassException,
+        DAOException {
+        if(connexion == null) {
+            throw new InvalidHibernateSessionException("La connexion ne peut être null");
+        }
+        if(dto == null) {
+            throw new InvalidDTOException("Le DTO ne peut être null");
+        }
+        if(!dto.getClass().equals(getDtoClass())) {
+            throw new InvalidDTOClassException("Le DTO doit être un "
+                + getDtoClass().getName());
+        }
+        final ReservationDTO reservationDTO = (ReservationDTO) dto;
+        //TODO : vérifier si la base de donnée utilise des String ou encore des int.
         try(
-            PreparedStatement addPreparedStatement = getConnection().prepareStatement(ReservationDAO.ADD_REQUEST)) {
-            addPreparedStatement.setInt(1,
+            PreparedStatement createPreparedStatement = connexion.getConnection().prepareStatement(ReservationDAO.ADD_REQUEST)) {
+            createPreparedStatement.setInt(1,
                 reservationDTO.getLivreDTO().getIdLivre());
-            addPreparedStatement.setInt(2,
+            createPreparedStatement.setInt(2,
                 reservationDTO.getMembreDTO().getIdMembre());
-            addPreparedStatement.executeUpdate();
-            addPreparedStatement.setTimestamp(3,
+            createPreparedStatement.executeUpdate();
+            createPreparedStatement.setTimestamp(3,
                 reservationDTO.getDateReservation());
+            createPreparedStatement.executeUpdate();
         } catch(SQLException sqlException) {
             throw new DAOException(sqlException);
         }
+
     }
 
     /**
-     * Lit une réservation. Si aucune réservation n'est trouvée, <code>null</code> est retourné.
-     *
-     * @param idReservation La réservation à lire
-     * @return La réservation lue ; <code>null</code> sinon
-     * @throws DAOException S'il y a une erreur avec la base de données
+     * {@inheritDoc}
      */
-    public ReservationDTO read(int idReservation) throws DAOException {
+    @Override
+    public DTO get(Connexion connexion,
+        Serializable primaryKey) throws InvalidHibernateSessionException,
+        InvalidPrimaryKeyException,
+        DAOException {
+        if(connexion == null) {
+            throw new InvalidHibernateSessionException("La connexion ne peut être null");
+        }
+        if(primaryKey == null) {
+            throw new InvalidPrimaryKeyException("La clef primaire ne peut être null");
+        }
+        final String idReservation = (String) primaryKey;
         ReservationDTO reservationDTO = null;
         try(
-            PreparedStatement readPreparedStatement = getConnection().prepareStatement(ReservationDAO.READ_REQUEST)) {
+            PreparedStatement readPreparedStatement = connexion.getConnection().prepareStatement(ReservationDAO.READ_REQUEST)) {
             readPreparedStatement.setInt(1,
                 idReservation);
             try(
@@ -133,14 +164,27 @@ public class ReservationDAO extends DAO {
     }
 
     /**
-     * Met à jour une réservation.
-     *
-     * @param reservationDTO La réservation à mettre à jour
-     * @throws DAOException S'il y a une erreur avec la base de données
+     * {@inheritDoc}
      */
-    public void update(ReservationDTO reservationDTO) throws DAOException {
+    @Override
+    public void update(Connexion connexion,
+        DTO dto) throws InvalidHibernateSessionException,
+        InvalidDTOException,
+        InvalidDTOClassException,
+        DAOException {
+        if(connexion == null) {
+            throw new InvalidHibernateSessionException("La connexion ne peut être null");
+        }
+        if(dto == null) {
+            throw new InvalidDTOException("Le DTO ne peut être null");
+        }
+        if(!dto.getClass().equals(getDtoClass())) {
+            throw new InvalidDTOClassException("Le DTO doit être un "
+                + getDtoClass().getName());
+        }
+        final ReservationDTO reservationDTO = (ReservationDTO) dto;
         try(
-            PreparedStatement updatePreparedStatement = getConnection().prepareStatement(ReservationDAO.UPDATE_REQUEST)) {
+            PreparedStatement updatePreparedStatement = connexion.getConnection().prepareStatement(ReservationDAO.UPDATE_REQUEST)) {
             updatePreparedStatement.setInt(1,
                 reservationDTO.getLivreDTO().getIdLivre());
             updatePreparedStatement.setInt(2,
@@ -156,32 +200,53 @@ public class ReservationDAO extends DAO {
     }
 
     /**
-     * Supprime une réservation.
-     *
-     * @param reservationDTO La réservation à supprimer
-     * @throws DAOException S'il y a une erreur avec la base de données
+     * {@inheritDoc}
      */
-    public void delete(ReservationDTO reservationDTO) throws DAOException {
+    @Override
+    public void delete(Connexion connexion,
+        DTO dto) throws InvalidHibernateSessionException,
+        InvalidDTOException,
+        InvalidDTOClassException,
+        DAOException {
+        if(connexion == null) {
+            throw new InvalidHibernateSessionException("La connexion ne peut être null");
+        }
+        if(dto == null) {
+            throw new InvalidDTOException("Le DTO ne peut être null");
+        }
+        if(!dto.getClass().equals(getDtoClass())) {
+            throw new InvalidDTOClassException("Le DTO doit être un "
+                + getDtoClass().getName());
+        }
+        final ReservationDTO reservationDTO = (ReservationDTO) dto;
         try(
-            PreparedStatement deletePreparedStatement = getConnection().prepareStatement(ReservationDAO.DELETE_REQUEST)) {
+            PreparedStatement deletePreparedStatement = connexion.getConnection().prepareStatement(ReservationDAO.DELETE_REQUEST)) {
             deletePreparedStatement.setInt(1,
                 reservationDTO.getIdReservation());
             deletePreparedStatement.executeUpdate();
         } catch(SQLException sqlException) {
             throw new DAOException(sqlException);
         }
+
     }
 
     /**
-     * Trouve toutes les réservations.
-     *
-     * @return La liste des réservations ; une liste vide sinon
-     * @throws DAOException S'il y a une erreur avec la base de données
+     * {@inheritDoc}
      */
-    public List<ReservationDTO> getAll() throws DAOException {
+    @Override
+    public List<? extends DTO> getAll(Connexion connexion,
+        String sortByPropertyName) throws InvalidHibernateSessionException,
+        InvalidSortByPropertyException,
+        DAOException {
+        if(connexion == null) {
+            throw new InvalidHibernateSessionException("La connexion ne peut être null");
+        }
+        if(sortByPropertyName == null) {
+            throw new InvalidSortByPropertyException("La propriété utilisée pour classer ne peut être null");
+        }
         List<ReservationDTO> reservations = Collections.EMPTY_LIST;
         try(
-            PreparedStatement getAllPreparedStatement = getConnection().prepareStatement(ReservationDAO.GET_ALL_REQUEST)) {
+            PreparedStatement getAllPreparedStatement = connexion.getConnection().prepareStatement(ReservationDAO.GET_ALL_REQUEST)) {
             try(
                 ResultSet resultSet = getAllPreparedStatement.executeQuery()) {
                 ReservationDTO reservationDTO = null;
@@ -208,16 +273,27 @@ public class ReservationDAO extends DAO {
     }
 
     /**
-     * Trouve les réservations à partir d'un livre.
-     *
-     * @param idLivre L'ID du livre à utiliser
-     * @return La liste des réservations correspondantes, triée par date de réservation croissante ; une liste vide sinon
-     * @throws DAOException S'il y a une erreur avec la base de données
+     * {@inheritDoc}
      */
-    public List<ReservationDTO> findByLivre(int idLivre) throws DAOException {
+    @Override
+    public List<ReservationDTO> findByLivre(Connexion connexion,
+        String idLivre,
+        String sortByPropertyName) throws InvalidHibernateSessionException,
+        InvalidCriterionException,
+        InvalidSortByPropertyException,
+        DAOException {
+        if(connexion == null) {
+            throw new InvalidHibernateSessionException("La connexion ne peut être null");
+        }
+        if(idLivre == null) {
+            throw new InvalidCriterionException("L'ID de livre ne peut être null");
+        }
+        if(sortByPropertyName == null) {
+            throw new InvalidSortByPropertyException("La propriété utilisée pour classer ne peut être null");
+        }
         List<ReservationDTO> reservations = Collections.EMPTY_LIST;
         try(
-            PreparedStatement findByLivrePreparedStatement = getConnection().prepareStatement(ReservationDAO.FIND_BY_LIVRE_REQUEST)) {
+            PreparedStatement findByLivrePreparedStatement = connexion.getConnection().prepareStatement(ReservationDAO.FIND_BY_LIVRE_REQUEST)) {
             findByLivrePreparedStatement.setInt(1,
                 idLivre);
             try(
@@ -246,20 +322,31 @@ public class ReservationDAO extends DAO {
     }
 
     /**
-     * Trouve les réservations à partir d'un membre.
-     *
-     * @param idMembre L'ID du membre à utiliser
-     * @return La liste des réservations correspondantes ; une liste vide sinon
-     * @throws DAOException S'il y a une erreur avec la base de données
+     * {@inheritDoc}
      */
-    public List<ReservationDTO> findByMembre(int idMembre) throws DAOException {
+    @Override
+    public List<ReservationDTO> findByMembre(Connexion connexion,
+        String idMembre,
+        String sortByPropertyName) throws InvalidHibernateSessionException,
+        InvalidCriterionException,
+        InvalidSortByPropertyException,
+        DAOException {
+        if(connexion == null) {
+            throw new InvalidHibernateSessionException("La connexion ne peut être null");
+        }
+        if(idMembre == null) {
+            throw new InvalidCriterionException("L'ID de membre ne peut être null");
+        }
+        if(sortByPropertyName == null) {
+            throw new InvalidSortByPropertyException("La propriété utilisée pour classer ne peut être null");
+        }
         List<ReservationDTO> reservations = Collections.EMPTY_LIST;
         try(
-            PreparedStatement findByMembrePreparedStatement = getConnection().prepareStatement(ReservationDAO.FIND_BY_MEMBRE_REQUEST)) {
-            findByMembrePreparedStatement.setInt(1,
+            PreparedStatement findByLivrePreparedStatement = connexion.getConnection().prepareStatement(ReservationDAO.FIND_BY_MEMBRE_REQUEST)) {
+            findByLivrePreparedStatement.setInt(1,
                 idMembre);
             try(
-                ResultSet resultSet = findByMembrePreparedStatement.executeQuery()) {
+                ResultSet resultSet = findByLivrePreparedStatement.executeQuery()) {
                 ReservationDTO reservationDTO = null;
                 if(resultSet.next()) {
                     reservations = new ArrayList<>();
@@ -282,4 +369,5 @@ public class ReservationDAO extends DAO {
         }
         return reservations;
     }
+
 }
