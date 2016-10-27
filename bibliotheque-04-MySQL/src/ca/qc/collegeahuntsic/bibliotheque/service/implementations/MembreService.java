@@ -19,9 +19,6 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyExcepti
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOClassException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dto.MissingDTOException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingLoanException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingReservationException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.InvalidDAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ServiceException;
 import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IMembreService;
@@ -247,7 +244,10 @@ public class MembreService extends Service implements IMembreService {
     @Override
     public void inscrire(Connexion connexion,
         MembreDTO membreDTO) throws ServiceException,
-        InvalidHibernateSessionException {
+        InvalidHibernateSessionException,
+        InvalidPrimaryKeyException,
+        InvalidDTOException,
+        InvalidDTOClassException {
         if(get(connexion,
             membreDTO.getIdMembre()) != null) {
             throw new ServiceException("Le membre "
@@ -300,18 +300,6 @@ public class MembreService extends Service implements IMembreService {
     }
 
     /* (non-Javadoc)
-     * @see ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IMembreService#get(ca.qc.collegeahuntsic.bibliotheque.db.Connexion, java.lang.String)
-     */
-    @Override
-    public LivreDTO get(Connexion connexion,
-        String idMembre) throws InvalidHibernateSessionException,
-        InvalidPrimaryKeyException,
-        ServiceException {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /* (non-Javadoc)
      * @see ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IMembreService#findByNom(ca.qc.collegeahuntsic.bibliotheque.db.Connexion, java.lang.String, java.lang.String)
      */
     @Override
@@ -328,25 +316,6 @@ public class MembreService extends Service implements IMembreService {
         } catch(DAOException daoException) {
             throw new ServiceException(daoException);
         }
-    }
-
-    /* (non-Javadoc)
-     * @see ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IMembreService#desinscrire(ca.qc.collegeahuntsic.bibliotheque.db.Connexion, ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO)
-     */
-    @Override
-    public void desinscrire(Connexion connexion,
-        MembreDTO membreDTO) throws InvalidHibernateSessionException,
-        InvalidDTOException,
-        InvalidDTOClassException,
-        InvalidPrimaryKeyException,
-        MissingDTOException,
-        InvalidCriterionException,
-        InvalidSortByPropertyException,
-        ExistingLoanException,
-        ExistingReservationException,
-        ServiceException {
-        // TODO Auto-generated method stub
-
     }
 
 } // CLASS
