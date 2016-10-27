@@ -170,7 +170,7 @@ public class PretService extends Service implements IPretService {
     @Override
 
     public PretDTO get(Connexion connexion,
-        int idPret) throws InvalidHibernateSessionException,
+        String idPret) throws InvalidHibernateSessionException,
         InvalidPrimaryKeyException,
         ServiceException {
         try {
@@ -239,7 +239,7 @@ public class PretService extends Service implements IPretService {
     @Override
 
     public List<PretDTO> findByMembre(Connexion connexion,
-        int idMembre,
+        String idMembre,
         String sortByPropertyName) throws InvalidHibernateSessionException,
         InvalidCriterionException,
         InvalidSortByPropertyException,
@@ -258,7 +258,7 @@ public class PretService extends Service implements IPretService {
      */
     @Override
     public List<PretDTO> findByLivre(Connexion connexion,
-        int idLivre,
+        String idLivre,
         String sortByPropertyName) throws InvalidHibernateSessionException,
         InvalidCriterionException,
         InvalidSortByPropertyException,
@@ -352,7 +352,7 @@ public class PretService extends Service implements IPretService {
             prets = findByMembre(connexion,
                 unMembreDTO.getIdMembre(),
                 sortByPropertyName);
-            if(prets.size() == unMembreDTO.getLimitePret()) {
+            if(prets.size() == Integer.parseInt(unMembreDTO.getLimitePret())) {
                 throw new ServiceException("Le membre "
                     + unMembreDTO.getNom()
                     + " (ID de membre : "
@@ -464,7 +464,8 @@ public class PretService extends Service implements IPretService {
         PretDTO pretDTO,
         String sortByPropertyName) throws ServiceException {
         try {
-            final PretDTO unPretDTO = get(pretDTO.getIdPret());
+            final PretDTO unPretDTO = get(connexion,
+                pretDTO.getIdPret());
             if(unPretDTO == null) {
                 throw new ServiceException("Le prêt "
                     + pretDTO.getIdPret()
