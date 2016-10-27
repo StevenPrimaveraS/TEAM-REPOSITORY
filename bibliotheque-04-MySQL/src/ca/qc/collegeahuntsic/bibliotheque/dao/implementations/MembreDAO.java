@@ -100,9 +100,9 @@ public class MembreDAO extends DAO implements IMembreDAO {
             PreparedStatement createPreparedStatement = connexion.getConnection().prepareStatement(MembreDAO.ADD_REQUEST)) {
             createPreparedStatement.setString(1,
                 membreDTO.getNom());
-            createPreparedStatement.setLong(2,
+            createPreparedStatement.setString(2,
                 membreDTO.getTelephone());
-            createPreparedStatement.setLong(3,
+            createPreparedStatement.setString(3,
                 membreDTO.getLimitePret());
             createPreparedStatement.executeUpdate();
         } catch(SQLException sqlException) {
@@ -116,7 +116,8 @@ public class MembreDAO extends DAO implements IMembreDAO {
     @Override
     public MembreDTO get(Connexion connexion,
         Serializable primaryKey) throws InvalidHibernateSessionException,
-        InvalidPrimaryKeyException {
+        InvalidPrimaryKeyException,
+        DAOException {
         if(connexion == null) {
             throw new InvalidHibernateSessionException("La connexion ne peut être null");
         }
@@ -133,10 +134,10 @@ public class MembreDAO extends DAO implements IMembreDAO {
                 ResultSet resultSet = readPreparedStatement.executeQuery()) {
                 if(resultSet.next()) {
                     membreDTO = new MembreDTO();
-                    membreDTO.setIdMembre(resultSet.getInt(1));
+                    membreDTO.setIdMembre(resultSet.getString(1));
                     membreDTO.setNom(resultSet.getString(2));
-                    membreDTO.setTelephone(resultSet.getLong(3));
-                    membreDTO.setLimitePret(resultSet.getInt(4));
+                    membreDTO.setTelephone(resultSet.getString(3));
+                    membreDTO.setLimitePret(resultSet.getString(4));
                 }
             }
         } catch(SQLException sqlException) {
@@ -152,7 +153,8 @@ public class MembreDAO extends DAO implements IMembreDAO {
     public void update(Connexion connexion,
         DTO dto) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidDTOClassException {
+        InvalidDTOClassException,
+        DAOException {
         if(connexion == null) {
             throw new InvalidHibernateSessionException("La connexion ne peut être null");
         }
@@ -168,11 +170,11 @@ public class MembreDAO extends DAO implements IMembreDAO {
             PreparedStatement updatePreparedStatement = connexion.getConnection().prepareStatement(MembreDAO.UPDATE_REQUEST)) {
             updatePreparedStatement.setString(1,
                 membreDTO.getNom());
-            updatePreparedStatement.setLong(2,
+            updatePreparedStatement.setString(2,
                 membreDTO.getTelephone());
-            updatePreparedStatement.setInt(3,
+            updatePreparedStatement.setString(3,
                 membreDTO.getLimitePret());
-            updatePreparedStatement.setInt(4,
+            updatePreparedStatement.setString(4,
                 membreDTO.getIdMembre());
             updatePreparedStatement.executeUpdate();
         } catch(SQLException sqlException) {
@@ -187,7 +189,8 @@ public class MembreDAO extends DAO implements IMembreDAO {
     public void delete(Connexion connexion,
         DTO dto) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidDTOClassException {
+        InvalidDTOClassException,
+        DAOException {
         if(connexion == null) {
             throw new InvalidHibernateSessionException("La connexion ne peut être null");
         }
@@ -201,7 +204,7 @@ public class MembreDAO extends DAO implements IMembreDAO {
         final MembreDTO membreDTO = (MembreDTO) dto;
         try(
             PreparedStatement deletePreparedStatement = connexion.getConnection().prepareStatement(MembreDAO.DELETE_REQUEST)) {
-            deletePreparedStatement.setInt(1,
+            deletePreparedStatement.setString(1,
                 membreDTO.getIdMembre());
             deletePreparedStatement.executeUpdate();
         } catch(SQLException sqlException) {
@@ -215,7 +218,8 @@ public class MembreDAO extends DAO implements IMembreDAO {
     @Override
     public List<MembreDTO> getAll(Connexion connexion,
         String sortByPropertyName) throws InvalidHibernateSessionException,
-        InvalidSortByPropertyException {
+        InvalidSortByPropertyException,
+        DAOException {
         if(connexion == null) {
             throw new InvalidHibernateSessionException("La connexion ne peut être null");
         }
@@ -232,10 +236,10 @@ public class MembreDAO extends DAO implements IMembreDAO {
                     membre = new ArrayList<>();
                     do {
                         membreDTO = new MembreDTO();
-                        membreDTO.setIdMembre(resultSet.getInt(1));
+                        membreDTO.setIdMembre(resultSet.getString(1));
                         membreDTO.setNom(resultSet.getString(2));
-                        membreDTO.setTelephone(resultSet.getLong(3));
-                        membreDTO.setLimitePret(resultSet.getInt(4));
+                        membreDTO.setTelephone(resultSet.getString(3));
+                        membreDTO.setLimitePret(resultSet.getString(4));
                         membre.add(membreDTO);
                     } while(resultSet.next());
                 }
@@ -254,7 +258,8 @@ public class MembreDAO extends DAO implements IMembreDAO {
         String nom,
         String sortByPropertyName) throws InvalidHibernateSessionException,
         InvalidCriterionException,
-        InvalidSortByPropertyException {
+        InvalidSortByPropertyException,
+        DAOException {
         if(connexion == null) {
             throw new InvalidHibernateSessionException("La connexion ne peut être null");
         }
@@ -264,7 +269,7 @@ public class MembreDAO extends DAO implements IMembreDAO {
         if(sortByPropertyName == null) {
             throw new InvalidSortByPropertyException("La propriété utilisée pour classer ne peut être null");
         }
-        final List<MembreDTO> membres = Collections.emptyList();
+        List<MembreDTO> membres = Collections.emptyList();
         try(
             PreparedStatement findByNomPreparedStatement = connexion.getConnection().prepareStatement(MembreDAO.FIND_BY_NOM)) {
             findByNomPreparedStatement.setString(1,
@@ -278,10 +283,10 @@ public class MembreDAO extends DAO implements IMembreDAO {
                     membres = new ArrayList<>();
                     do {
                         membreDTO = new MembreDTO();
-                        membreDTO.setIdLivre(resultSet.getString(1));
+                        membreDTO.setIdMembre(resultSet.getString(1));
                         membreDTO.setNom(resultSet.getString(2));
-                        membreDTO.setTelephone(resultSet.getInt(3));
-                        membreDTO.setLimitePret(resultSet.getInt(4));
+                        membreDTO.setTelephone(resultSet.getString(3));
+                        membreDTO.setLimitePret(resultSet.getString(4));
                         membres.add(membreDTO);
                     } while(resultSet.next());
                 }
