@@ -693,9 +693,11 @@ public class ReservationService extends Service implements IReservationService {
                     + reservationDTO.getLivreDTO().getIdLivre()
                     + " n'existe pas");
             }
-            //TODO : refaire autrement
-            final MembreDTO emprunteur = getMembreDAO().get(connexion,
-                unLivreDTO.getIdMembre());
+            //TODO : refaire autrement -> (vérifier si ¸a fonctionne)
+            final MembreDTO emprunteur = (MembreDTO) getMembreDAO().get(connexion,
+                getPretDAO().findByLivre(connexion,
+                    unLivreDTO.getIdLivre(),
+                    PretDTO.DATE_PRET_COLUMN_NAME).get(0).getMembreDTO().getIdMembre());
             if(emprunteur == null) {
                 throw new MissingLoanException("Le livre "
                     + unLivreDTO.getTitre()
