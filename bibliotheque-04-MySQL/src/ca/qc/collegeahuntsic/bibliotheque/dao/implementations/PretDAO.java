@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -80,6 +81,16 @@ public class PretDAO extends DAO implements IPretDAO {
         + "                                                dateRetour "
         + "                                       FROM     pret "
         + "                                       WHERE    idLivre = ? "
+        + "                                       AND      dateRetour IS NULL "
+        + "                                       ORDER BY datePret ASC";
+
+    private static final String FIND_BY_DATE_PRET = "SELECT   idPret, "
+        + "                                                idMembre, "
+        + "                                                idLivre, "
+        + "                                                datePret, "
+        + "                                                dateRetour "
+        + "                                       FROM     pret "
+        + "                                       WHERE    datePret = ? "
         + "                                       AND      dateRetour IS NULL "
         + "                                       ORDER BY datePret ASC";
 
@@ -538,36 +549,42 @@ public class PretDAO extends DAO implements IPretDAO {
         return prets;
     }
 
-}
-
-/*   /**
-    * Trouve les livres en cours d'emprunt.
-    *
-    * @param idLivre L'ID du livre à trouver
-    * @return La liste des prêts correspondants ; une liste vide sinon
-    * @throws DAOException S'il y a une erreur avec la base de données
-    */
-/*
-    public List<PretDTO> findByLivre(int idLivre) throws DAOException {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<PretDTO> findByDatePret(Connexion connexion,
+        Timestamp datePret,
+        String sortByPropertyName) throws InvalidHibernateSessionException,
+        InvalidCriterionException,
+        InvalidSortByPropertyException,
+        DAOException {
+        if(connexion == null) {
+            throw new InvalidHibernateSessionException("La connexion ne peut être null");
+        }
+        if(datePret == null) {
+            throw new InvalidCriterionException("La date de pret ne peut être null");
+        }
+        if(sortByPropertyName == null) {
+            throw new InvalidSortByPropertyException("La propriété utilisée pour classer ne peut être null");
+        }
         List<PretDTO> prets = Collections.emptyList();
         try(
-            PreparedStatement findByLivrePreparedStatement = getConnection().prepareStatement(PretDAO.FIND_BY_LIVRE)) {
-            findByLivrePreparedStatement.setInt(1,
-                idLivre);
+            PreparedStatement findByTitrePreparedStatement = connexion.getConnection().prepareStatement(PretDAO.FIND_BY_DATE_PRET)) {
+            findByTitrePreparedStatement.setString(1,
+                "%"
+                    + datePret
+                    + "%");
             try(
-                ResultSet resultSet = findByLivrePreparedStatement.executeQuery()) {
+                ResultSet resultSet = findByTitrePreparedStatement.executeQuery()) {
                 PretDTO pretDTO = null;
                 if(resultSet.next()) {
                     prets = new ArrayList<>();
                     do {
                         pretDTO = new PretDTO();
-                        pretDTO.setIdPret(resultSet.getInt(1));
-                        final MembreDTO membreDTO = new MembreDTO();
-                        membreDTO.setIdMembre(resultSet.getInt(2));
-                        pretDTO.setMembreDTO(membreDTO);
-                        final LivreDTO livreDTO = new LivreDTO();
-                        livreDTO.setIdLivre(resultSet.getInt(3));
-                        pretDTO.setLivreDTO(livreDTO);
+                        pretDTO.setIdPret(resultSet.getString(1));
+                        pretDTO.getMembreDTO().setIdMembre(resultSet.getString(2));
+                        pretDTO.getLivreDTO().setIdLivre(resultSet.getString(3));
                         pretDTO.setDatePret(resultSet.getTimestamp(4));
                         pretDTO.setDateRetour(resultSet.getTimestamp(5));
                         prets.add(pretDTO);
@@ -578,47 +595,56 @@ public class PretDAO extends DAO implements IPretDAO {
             throw new DAOException(sqlException);
         }
         return prets;
-    }*/
-
-/* /**
- * Trouve les prêts à partir d'une date de prêt.
- *
- * @param datePret La date de prêt à trouver
- * @return La liste des prêts correspondants ; une liste vide sinon
- * @throws DAOException S'il y a une erreur avec la base de données
- */
-/* public List<PretDTO> findByDatePret(Timestamp datePret) throws DAOException {
-    List<PretDTO> prets = Collections.emptyList();
-    try(
-        PreparedStatement findByDatePretPreparedStatement = getConnection().prepareStatement(PretDAO.FIND_BY_DATE_PRET)) {
-        findByDatePretPreparedStatement.setTimestamp(1,
-            datePret);
-        try(
-            ResultSet resultSet = findByDatePretPreparedStatement.executeQuery()) {
-            PretDTO pretDTO = null;
-            if(resultSet.next()) {
-                prets = new ArrayList<>();
-                do {
-                    pretDTO = new PretDTO();
-                    pretDTO.setIdPret(resultSet.getInt(1));
-                    final MembreDTO membreDTO = new MembreDTO();
-                    membreDTO.setIdMembre(resultSet.getInt(2));
-                    pretDTO.setMembreDTO(membreDTO);
-                    final LivreDTO livreDTO = new LivreDTO();
-                    livreDTO.setIdLivre(resultSet.getInt(3));
-                    pretDTO.setLivreDTO(livreDTO);
-                    pretDTO.setDatePret(resultSet.getTimestamp(4));
-                    pretDTO.setDateRetour(resultSet.getTimestamp(5));
-                    prets.add(pretDTO);
-                } while(resultSet.next());
-            }
-        }
-    } catch(SQLException sqlException) {
-        throw new DAOException(sqlException);
     }
-    return prets;
-}*/
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<PretDTO> findByDateRetour(Connexion connexion,
+        Timestamp dateRetour,
+        String sortByPropertyName) throws InvalidHibernateSessionException,
+        InvalidCriterionException,
+        InvalidSortByPropertyException,
+        DAOException {
+        if(connexion == null) {
+            throw new InvalidHibernateSessionException("La connexion ne peut être null");
+        }
+        if(dateRetour == null) {
+            throw new InvalidCriterionException("La date de pret ne peut être null");
+        }
+        if(sortByPropertyName == null) {
+            throw new InvalidSortByPropertyException("La propriété utilisée pour classer ne peut être null");
+        }
+        List<PretDTO> prets = Collections.emptyList();
+        try(
+            PreparedStatement findByDatePretPreparedStatement = connexion.getConnection().prepareStatement(PretDAO.FIND_BY_DATE_PRET)) {
+            findByDatePretPreparedStatement.setString(1,
+                "%"
+                    + dateRetour
+                    + "%");
+            try(
+                ResultSet resultSet = findByDatePretPreparedStatement.executeQuery()) {
+                PretDTO pretDTO = null;
+                if(resultSet.next()) {
+                    prets = new ArrayList<>();
+                    do {
+                        pretDTO = new PretDTO();
+                        pretDTO.setIdPret(resultSet.getString(1));
+                        pretDTO.getMembreDTO().setIdMembre(resultSet.getString(2));
+                        pretDTO.getLivreDTO().setIdLivre(resultSet.getString(3));
+                        pretDTO.setDatePret(resultSet.getTimestamp(4));
+                        pretDTO.setDateRetour(resultSet.getTimestamp(5));
+                        prets.add(pretDTO);
+                    } while(resultSet.next());
+                }
+            }
+        } catch(SQLException sqlException) {
+            throw new DAOException(sqlException);
+        }
+        return prets;
+    }
+}
 /*/**
  * Trouve les prêts à partir d'une date de retour.
  *
