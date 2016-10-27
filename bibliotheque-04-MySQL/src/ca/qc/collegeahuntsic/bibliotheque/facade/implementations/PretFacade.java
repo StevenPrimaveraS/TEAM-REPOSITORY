@@ -18,6 +18,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.facade.InvalidServiceExcepti
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingLoanException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingReservationException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.InvalidLoanLimitException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.service.MissingLoanException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ServiceException;
 import ca.qc.collegeahuntsic.bibliotheque.facade.interfaces.IPretFacade;
 import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IPretService;
@@ -28,6 +29,7 @@ import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IPretService;
  * @author Gilles Benichou
  */
 public class PretFacade extends Facade implements IPretFacade {
+    private IPretService pretService;
 
     /**
      * Crée la façade de la table <code>pret</code>.
@@ -42,6 +44,24 @@ public class PretFacade extends Facade implements IPretFacade {
             throw new InvalidServiceException("Le service de prets ne peut être null");
         }
         setPretService(pretService);
+    }
+
+    /**
+     * Getter de la variable d'instance <code>this.pretService</code>.
+     *
+     * @return La variable d'instance <code>this.pretService</code>
+     */
+    public IPretService getPretService() {
+        return this.pretService;
+    }
+
+    /**
+     * Setter de la variable d'instance <code>this.membreService</code>.
+     *
+     * @param pretService La valeur à utiliser pour la variable d'instance <code>this.pretService</code>
+     */
+    public void setPretService(IPretService pretService) {
+        this.pretService = pretService;
     }
 
     /**
@@ -62,7 +82,7 @@ public class PretFacade extends Facade implements IPretFacade {
         FacadeException {
         try {
             getPretService().commencer(connexion,
-                PretDTO);
+                pretDTO);
         } catch(
             ServiceException
             | InvalidPrimaryKeyException serviceException) {
@@ -87,10 +107,11 @@ public class PretFacade extends Facade implements IPretFacade {
         FacadeException {
         try {
             getPretService().renouveler(connexion,
-                PretDTO);
+                pretDTO);
         } catch(
             ServiceException
-            | InvalidPrimaryKeyException serviceException) {
+            | InvalidPrimaryKeyException
+            | MissingLoanException serviceException) {
             throw new FacadeException(serviceException);
         }
     }
@@ -111,10 +132,11 @@ public class PretFacade extends Facade implements IPretFacade {
         FacadeException {
         try {
             getPretService().terminer(connexion,
-                PretDTO);
+                pretDTO);
         } catch(
             ServiceException
-            | InvalidPrimaryKeyException serviceException) {
+            | InvalidPrimaryKeyException
+            | MissingLoanException serviceException) {
             throw new FacadeException(serviceException);
         }
     }
