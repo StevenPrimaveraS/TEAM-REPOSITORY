@@ -808,7 +808,7 @@ public class ReservationService extends Service implements IReservationService {
                 }
             }
             //TODO : refaire autrement
-            final MembreDTO emprunteur = getMembreDAO().get(connexion,
+            /*final MembreDTO emprunteur = getMembreDAO().get(connexion,
                 livreDTO.getIdMembre());
             if(emprunteur != null) {
                 throw new ServiceException("Le livre "
@@ -820,11 +820,13 @@ public class ReservationService extends Service implements IReservationService {
                     + " (ID de membre : "
                     + emprunteur.getIdMembre()
                     + ")");
-            }
+            }*/
             //TODO : changer findByMembre dans PretDAO
             final List<PretDTO> empruntsMembre = getPretDAO().findByMembre(connexion,
-                unMembreDTO.getIdMembre());
-            if(empruntsMembre.size() == unMembreDTO.getLimitePret()) {
+                unMembreDTO.getIdMembre(),
+                PretDTO.DATE_PRET_COLUMN_NAME);
+            if((empruntsMembre.size()
+                + "").equals(unMembreDTO.getLimitePret())) {
                 throw new ServiceException("Le membre "
                     + unMembreDTO.getNom()
                     + " (ID de membre : "
@@ -845,7 +847,7 @@ public class ReservationService extends Service implements IReservationService {
                 uneReservationDTO);
             // On voit le manque de la table prêt simulée en ce moment par les deux tables
             //TODO : refaire autrement (si nécessaire)
-            unLivreDTO.setIdMembre(unMembreDTO.getIdMembre());
+            //unLivreDTO.setIdMembre(unMembreDTO.getIdMembre());
         } catch(DAOException daoException) {
             throw new ServiceException(daoException);
         }
@@ -863,18 +865,14 @@ public class ReservationService extends Service implements IReservationService {
         MissingDTOException,
         InvalidDTOClassException,
         ServiceException {
-        try {
-            final ReservationDTO uneReservationDTO = get(connexion,
-                reservationDTO.getIdReservation());
-            if(uneReservationDTO == null) {
-                throw new ServiceException("La réservation "
-                    + reservationDTO.getIdReservation()
-                    + " n'existe pas");
-            }
-            delete(connexion,
-                uneReservationDTO);
-        } catch(DAOException daoException) {
-            throw new ServiceException(daoException);
+        final ReservationDTO uneReservationDTO = get(connexion,
+            reservationDTO.getIdReservation());
+        if(uneReservationDTO == null) {
+            throw new ServiceException("La réservation "
+                + reservationDTO.getIdReservation()
+                + " n'existe pas");
         }
+        delete(connexion,
+            uneReservationDTO);
     }
 }

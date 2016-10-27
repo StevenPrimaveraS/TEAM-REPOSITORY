@@ -79,7 +79,7 @@ public class ReservationDAO extends DAO implements IReservationDAO {
     /**
      * Crée le DAO de la table <code>reservation</code>.
      *
-     * @param livreDTOClass La classe de reservation DTO à utiliser
+     * @param reservationDTOClass La classe de reservation DTO à utiliser
      * @throws InvalidDTOClassException Si la classe de DTO est <code>null</code>
      */
     protected ReservationDAO(Class<? extends DTO> reservationDTOClass) throws InvalidDTOClassException {
@@ -109,9 +109,9 @@ public class ReservationDAO extends DAO implements IReservationDAO {
         //TODO : vérifier si la base de donnée utilise des String ou encore des int.
         try(
             PreparedStatement createPreparedStatement = connexion.getConnection().prepareStatement(ReservationDAO.ADD_REQUEST)) {
-            createPreparedStatement.setInt(1,
+            createPreparedStatement.setString(1,
                 reservationDTO.getLivreDTO().getIdLivre());
-            createPreparedStatement.setInt(2,
+            createPreparedStatement.setString(2,
                 reservationDTO.getMembreDTO().getIdMembre());
             createPreparedStatement.executeUpdate();
             createPreparedStatement.setTimestamp(3,
@@ -141,18 +141,18 @@ public class ReservationDAO extends DAO implements IReservationDAO {
         ReservationDTO reservationDTO = null;
         try(
             PreparedStatement readPreparedStatement = connexion.getConnection().prepareStatement(ReservationDAO.READ_REQUEST)) {
-            readPreparedStatement.setInt(1,
+            readPreparedStatement.setString(1,
                 idReservation);
             try(
                 ResultSet resultSet = readPreparedStatement.executeQuery()) {
                 if(resultSet.next()) {
                     reservationDTO = new ReservationDTO();
-                    reservationDTO.setIdReservation(resultSet.getInt(1));
+                    reservationDTO.setIdReservation(resultSet.getString(1));
                     final LivreDTO livreDTO = new LivreDTO();
-                    livreDTO.setIdLivre(resultSet.getInt(2));
+                    livreDTO.setIdLivre(resultSet.getString(2));
                     reservationDTO.setLivreDTO(livreDTO);
                     final MembreDTO membreDTO = new MembreDTO();
-                    membreDTO.setIdMembre(resultSet.getInt(3));
+                    membreDTO.setIdMembre(resultSet.getString(3));
                     reservationDTO.setMembreDTO(membreDTO);
                     reservationDTO.setDateReservation(resultSet.getTimestamp(4));
                 }
@@ -185,13 +185,13 @@ public class ReservationDAO extends DAO implements IReservationDAO {
         final ReservationDTO reservationDTO = (ReservationDTO) dto;
         try(
             PreparedStatement updatePreparedStatement = connexion.getConnection().prepareStatement(ReservationDAO.UPDATE_REQUEST)) {
-            updatePreparedStatement.setInt(1,
+            updatePreparedStatement.setString(1,
                 reservationDTO.getLivreDTO().getIdLivre());
-            updatePreparedStatement.setInt(2,
+            updatePreparedStatement.setString(2,
                 reservationDTO.getMembreDTO().getIdMembre());
             updatePreparedStatement.setTimestamp(3,
                 reservationDTO.getDateReservation());
-            updatePreparedStatement.setInt(4,
+            updatePreparedStatement.setString(4,
                 reservationDTO.getIdReservation());
             updatePreparedStatement.executeUpdate();
         } catch(SQLException sqlException) {
@@ -221,7 +221,7 @@ public class ReservationDAO extends DAO implements IReservationDAO {
         final ReservationDTO reservationDTO = (ReservationDTO) dto;
         try(
             PreparedStatement deletePreparedStatement = connexion.getConnection().prepareStatement(ReservationDAO.DELETE_REQUEST)) {
-            deletePreparedStatement.setInt(1,
+            deletePreparedStatement.setString(1,
                 reservationDTO.getIdReservation());
             deletePreparedStatement.executeUpdate();
         } catch(SQLException sqlException) {
@@ -254,12 +254,12 @@ public class ReservationDAO extends DAO implements IReservationDAO {
                     reservations = new ArrayList<>();
                     do {
                         reservationDTO = new ReservationDTO();
-                        reservationDTO.setIdReservation(resultSet.getInt(1));
+                        reservationDTO.setIdReservation(resultSet.getString(1));
                         final LivreDTO livreDTO = new LivreDTO();
-                        livreDTO.setIdLivre(resultSet.getInt(2));
+                        livreDTO.setIdLivre(resultSet.getString(2));
                         reservationDTO.setLivreDTO(livreDTO);
                         final MembreDTO membreDTO = new MembreDTO();
-                        membreDTO.setIdMembre(resultSet.getInt(3));
+                        membreDTO.setIdMembre(resultSet.getString(3));
                         reservationDTO.setMembreDTO(membreDTO);
                         reservationDTO.setDateReservation(resultSet.getTimestamp(4));
                         reservations.add(reservationDTO);
@@ -294,7 +294,7 @@ public class ReservationDAO extends DAO implements IReservationDAO {
         List<ReservationDTO> reservations = Collections.EMPTY_LIST;
         try(
             PreparedStatement findByLivrePreparedStatement = connexion.getConnection().prepareStatement(ReservationDAO.FIND_BY_LIVRE_REQUEST)) {
-            findByLivrePreparedStatement.setInt(1,
+            findByLivrePreparedStatement.setString(1,
                 idLivre);
             try(
                 ResultSet resultSet = findByLivrePreparedStatement.executeQuery()) {
@@ -303,12 +303,12 @@ public class ReservationDAO extends DAO implements IReservationDAO {
                     reservations = new ArrayList<>();
                     do {
                         reservationDTO = new ReservationDTO();
-                        reservationDTO.setIdReservation(resultSet.getInt(1));
+                        reservationDTO.setIdReservation(resultSet.getString(1));
                         final LivreDTO livreDTO = new LivreDTO();
-                        livreDTO.setIdLivre(resultSet.getInt(2));
+                        livreDTO.setIdLivre(resultSet.getString(2));
                         reservationDTO.setLivreDTO(livreDTO);
                         final MembreDTO membreDTO = new MembreDTO();
-                        membreDTO.setIdMembre(resultSet.getInt(3));
+                        membreDTO.setIdMembre(resultSet.getString(3));
                         reservationDTO.setMembreDTO(membreDTO);
                         reservationDTO.setDateReservation(resultSet.getTimestamp(4));
                         reservations.add(reservationDTO);
@@ -343,7 +343,7 @@ public class ReservationDAO extends DAO implements IReservationDAO {
         List<ReservationDTO> reservations = Collections.EMPTY_LIST;
         try(
             PreparedStatement findByLivrePreparedStatement = connexion.getConnection().prepareStatement(ReservationDAO.FIND_BY_MEMBRE_REQUEST)) {
-            findByLivrePreparedStatement.setInt(1,
+            findByLivrePreparedStatement.setString(1,
                 idMembre);
             try(
                 ResultSet resultSet = findByLivrePreparedStatement.executeQuery()) {
@@ -352,12 +352,12 @@ public class ReservationDAO extends DAO implements IReservationDAO {
                     reservations = new ArrayList<>();
                     do {
                         reservationDTO = new ReservationDTO();
-                        reservationDTO.setIdReservation(resultSet.getInt(1));
+                        reservationDTO.setIdReservation(resultSet.getString(1));
                         final LivreDTO livreDTO = new LivreDTO();
-                        livreDTO.setIdLivre(resultSet.getInt(2));
+                        livreDTO.setIdLivre(resultSet.getString(2));
                         reservationDTO.setLivreDTO(livreDTO);
                         final MembreDTO membreDTO = new MembreDTO();
-                        membreDTO.setIdMembre(resultSet.getInt(3));
+                        membreDTO.setIdMembre(resultSet.getString(3));
                         reservationDTO.setMembreDTO(membreDTO);
                         reservationDTO.setDateReservation(resultSet.getTimestamp(4));
                         reservations.add(reservationDTO);
