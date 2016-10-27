@@ -73,6 +73,16 @@ public class PretDAO extends DAO implements IPretDAO {
         + "                                       AND      dateRetour IS NULL "
         + "                                       ORDER BY datePret ASC";
 
+    private static final String FIND_BY_LIVRE = "SELECT   idPret, "
+        + "                                                idMembre, "
+        + "                                                idLivre, "
+        + "                                                datePret, "
+        + "                                                dateRetour "
+        + "                                       FROM     pret "
+        + "                                       WHERE    idLivre = ? "
+        + "                                       AND      dateRetour IS NULL "
+        + "                                       ORDER BY datePret ASC";
+
     /**
      * Crée un DAO à partir d'une connexion à la base de données.
      *
@@ -460,6 +470,52 @@ public class PretDAO extends DAO implements IPretDAO {
                 "%"
                     + idMembre
                     + "%");
+            try(
+                ResultSet resultSet = findByTitrePreparedStatement.executeQuery()) {
+                PretDTO pretDTO = null;
+                if(resultSet.next()) {
+                    prets = new ArrayList<>();
+                    do {
+                        pretDTO = new PretDTO();
+                        pretDTO.setIdPret(resultSet.getString(1));
+                        pretDTO.getMembreDTO().setIdMembre(resultSet.getString(2));
+                        pretDTO.getLivreDTO().setIdLivre(resultSet.getString(3));
+                        pretDTO.setDatePret(resultSet.getTimestamp(4));
+                        pretDTO.setDateRetour(resultSet.getTimestamp(5));
+                        prets.add(pretDTO);
+                    } while(resultSet.next());
+                }
+            }
+        } catch(SQLException sqlException) {
+            throw new DAOException(sqlException);
+        }
+        return prets;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<PretDTO> findByLivre(Connexion connexion,
+        String idLivre,
+        String sortByPropertyName) throws InvalidHibernateSessionException,
+        InvalidCriterionException,
+        InvalidSortByPropertyException,
+        DAOException {
+        if(connexion == null) {
+            throw new InvalidHibernateSessionException("La connexion ne peut être null");
+        }
+        if(idLivre == null) {
+            throw new InvalidCriterionException("Le titre ne peut être null");
+        }
+        if(sortByPropertyName == null) {
+            throw new InvalidSortByPropertyException("La propriété utilisée pour classer ne peut être null");
+        }
+        List<PretDTO> prets = Collections.emptyList();
+        try(
+            PreparedStatement findByTitrePreparedStatement = connexion.getConnection().prepareStatement(PretDAO.FIND_BY_LIVRE)) {
+            findByTitrePreparedStatement.setString(1,
+                idLivre);
             try(
                 ResultSet resultSet = findByTitrePreparedStatement.executeQuery()) {
                 PretDTO pretDTO = null;
