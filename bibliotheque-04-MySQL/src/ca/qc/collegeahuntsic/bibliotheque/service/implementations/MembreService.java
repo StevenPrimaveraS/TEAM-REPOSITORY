@@ -5,22 +5,23 @@
 package ca.qc.collegeahuntsic.bibliotheque.service.implementations;
 
 import java.util.List;
-import ca.qc.collegeahuntsic.bibliotheque.dao.implementations.LivreDAO;
-import ca.qc.collegeahuntsic.bibliotheque.dao.implementations.MembreDAO;
-import ca.qc.collegeahuntsic.bibliotheque.dao.implementations.PretDAO;
-import ca.qc.collegeahuntsic.bibliotheque.dao.implementations.ReservationDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.ILivreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IMembreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IPretDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IReservationDAO;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
+import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.DAOException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOClassException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dto.MissingDTOException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingLoanException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingReservationException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.InvalidDAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ServiceException;
 import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IMembreService;
@@ -33,13 +34,13 @@ import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IMembreService;
 
 public class MembreService extends Service implements IMembreService {
 
-    private MembreDAO membreDAO;
+    private IMembreDAO membreDAO;
 
-    private ReservationDAO reservationDAO;
+    private IReservationDAO reservationDAO;
 
-    private PretDAO pretDAO;
+    private IPretDAO pretDAO;
 
-    private LivreDAO livreDAO;
+    private ILivreDAO livreDAO;
 
     /**
      * Crée le service de la table <code>membre</code>.
@@ -245,7 +246,8 @@ public class MembreService extends Service implements IMembreService {
      */
     @Override
     public void inscrire(Connexion connexion,
-        MembreDTO membreDTO) throws ServiceException {
+        MembreDTO membreDTO) throws ServiceException,
+        InvalidHibernateSessionException {
         if(get(connexion,
             membreDTO.getIdMembre()) != null) {
             throw new ServiceException("Le membre "
@@ -295,6 +297,56 @@ public class MembreService extends Service implements IMembreService {
         } catch(DAOException daoException) {
             throw new ServiceException(daoException);
         }
+    }
+
+    /* (non-Javadoc)
+     * @see ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IMembreService#get(ca.qc.collegeahuntsic.bibliotheque.db.Connexion, java.lang.String)
+     */
+    @Override
+    public LivreDTO get(Connexion connexion,
+        String idMembre) throws InvalidHibernateSessionException,
+        InvalidPrimaryKeyException,
+        ServiceException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /* (non-Javadoc)
+     * @see ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IMembreService#findByNom(ca.qc.collegeahuntsic.bibliotheque.db.Connexion, java.lang.String, java.lang.String)
+     */
+    @Override
+    public List<LivreDTO> findByNom(Connexion connexion,
+        String nom,
+        String sortByPropertyName) throws InvalidHibernateSessionException,
+        InvalidCriterionException,
+        InvalidSortByPropertyException,
+        ServiceException {
+        try {
+            return getLivreDAO().findByTitre(connexion,
+                nom,
+                sortByPropertyName);
+        } catch(DAOException daoException) {
+            throw new ServiceException(daoException);
+        }
+    }
+
+    /* (non-Javadoc)
+     * @see ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IMembreService#desinscrire(ca.qc.collegeahuntsic.bibliotheque.db.Connexion, ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO)
+     */
+    @Override
+    public void desinscrire(Connexion connexion,
+        MembreDTO membreDTO) throws InvalidHibernateSessionException,
+        InvalidDTOException,
+        InvalidDTOClassException,
+        InvalidPrimaryKeyException,
+        MissingDTOException,
+        InvalidCriterionException,
+        InvalidSortByPropertyException,
+        ExistingLoanException,
+        ExistingReservationException,
+        ServiceException {
+        // TODO Auto-generated method stub
+
     }
 
 } // CLASS

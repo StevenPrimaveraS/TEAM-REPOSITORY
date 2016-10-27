@@ -11,10 +11,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IMembreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.DTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
-import ca.qc.collegeahuntsic.bibliotheque.exception.DAOException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dao.DAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyException;
@@ -28,7 +29,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOException;
  * @author Mathieu Lafond
  */
 
-public class MembreDAO extends DAO {
+public class MembreDAO extends DAO implements IMembreDAO {
     private static final String ADD_REQUEST = "INSERT INTO membre (nom, "
         + "                                                        telephone, "
         + "                                                        limitePret) "
@@ -76,15 +77,9 @@ public class MembreDAO extends DAO {
     }
 
     /**
-     * Ajoute un nouveau membre.
-     *
-     * @param dto Le membre à ajouter
-     * @param connexion recoit en parametre la connexion
-     * @throws DAOException S'il y a une erreur avec la base de données
-     * @throws InvalidHibernateSessionException S'il y a une erreur avec la connexion
-     * @throws InvalidDTOException S'il y a une erreur avec l'objet DTO
-     * @throws InvalidDTOClassException S'il y a une erreur avec la classe de l'objet dto
+     * {@inheritDoc}
      */
+    @Override
     public void add(Connexion connexion,
         DTO dto) throws InvalidHibernateSessionException,
         InvalidDTOException,
@@ -116,19 +111,12 @@ public class MembreDAO extends DAO {
     }
 
     /**
-     * Lit un membre. Si aucun membre n'est trouvé, <code>null</code> est retourné.
-     *
-     * @param connexion la connexion JDBC
-     * @param primaryKey clé primaire qu'on recoit en paramètre
-     * @return Le membre lu ; <code>null</code> sinon
-     * @throws InvalidHibernateSessionException S'il y a une erreur avec la connexion
-     * @throws InvalidPrimaryKeyException S'il y a une erreur avec la cle primaire d'un DTO
-     * @throws DAOException S'il y a une erreur de DAO
+     * {@inheritDoc}
      */
-    public static MembreDTO get(Connexion connexion,
+    @Override
+    public MembreDTO get(Connexion connexion,
         Serializable primaryKey) throws InvalidHibernateSessionException,
-        InvalidPrimaryKeyException,
-        DAOException {
+        InvalidPrimaryKeyException {
         if(connexion == null) {
             throw new InvalidHibernateSessionException("La connexion ne peut être null");
         }
@@ -158,20 +146,13 @@ public class MembreDAO extends DAO {
     }
 
     /**
-     * Met à jour un membre.
-     *
-     * @param dto Le membre à mettre à jour
-     * @param connexion la connexion JDBC
-     * @throws DAOException S'il y a une erreur avec la base de données
-     * @throws InvalidHibernateSessionException S'il y a une erreur avec la connexion
-     * @throws InvalidDTOException S'il y a une erreur avec l'objet DTO
-     * @throws InvalidDTOClassException S'il y a une erreur avec la classe d'un objet DTO
+     * {@inheritDoc}
      */
+    @Override
     public void update(Connexion connexion,
         DTO dto) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidDTOClassException,
-        DAOException {
+        InvalidDTOClassException {
         if(connexion == null) {
             throw new InvalidHibernateSessionException("La connexion ne peut être null");
         }
@@ -200,20 +181,13 @@ public class MembreDAO extends DAO {
     }
 
     /**
-     * Supprime un membre.
-     *
-     * @param dto Le membre à supprimer
-     * @param connexion La connexion JDBC
-     * @throws InvalidHibernateSessionException S'il y a une erreur avec la connexion
-     * @throws InvalidDTOException S'il y a une erreur avec l'objet DTO
-     * @throws InvalidDTOClassException S'il y a une erreur avec la classe de l'objet DTO
-     * @throws DAOException S'il y a une erreur avec la base de données
+     * {@inheritDoc}
      */
+    @Override
     public void delete(Connexion connexion,
         DTO dto) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidDTOClassException,
-        DAOException {
+        InvalidDTOClassException {
         if(connexion == null) {
             throw new InvalidHibernateSessionException("La connexion ne peut être null");
         }
@@ -241,8 +215,7 @@ public class MembreDAO extends DAO {
     @Override
     public List<MembreDTO> getAll(Connexion connexion,
         String sortByPropertyName) throws InvalidHibernateSessionException,
-        InvalidSortByPropertyException,
-        DAOException {
+        InvalidSortByPropertyException {
         if(connexion == null) {
             throw new InvalidHibernateSessionException("La connexion ne peut être null");
         }
@@ -281,8 +254,7 @@ public class MembreDAO extends DAO {
         String nom,
         String sortByPropertyName) throws InvalidHibernateSessionException,
         InvalidCriterionException,
-        InvalidSortByPropertyException,
-        DAOException {
+        InvalidSortByPropertyException {
         if(connexion == null) {
             throw new InvalidHibernateSessionException("La connexion ne peut être null");
         }
