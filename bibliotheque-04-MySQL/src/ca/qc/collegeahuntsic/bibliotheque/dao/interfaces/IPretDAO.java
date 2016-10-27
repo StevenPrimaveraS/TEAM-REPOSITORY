@@ -32,7 +32,7 @@ public interface IPretDAO extends IDAO {
      * @throws DAOException S'il y a une erreur avec la base de données
      */
     List<PretDTO> findByMembre(Connexion connexion,
-        int idMembre,
+        String idMembre,
         String sortByPropertyName) throws InvalidHibernateSessionException,
         InvalidCriterionException,
         InvalidSortByPropertyException,
