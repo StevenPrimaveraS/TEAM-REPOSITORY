@@ -105,11 +105,11 @@ public interface IReservationService extends IService {
         String sortByPropertyName) throws InvalidHibernateSessionException,
         InvalidSortByPropertyException,
         ServiceException;
-    
+
     /**
-     * Trouve les réservations à partir d'un membre. La liste est classée par ordre croissant sur <code>sortByPropertyName</code>. 
+     * Trouve les réservations à partir d'un membre. La liste est classée par ordre croissant sur <code>sortByPropertyName</code>.
      * Si aucune réservation n'est trouvée, une {@link List} vide est retournée.
-     * 
+     *
      * @param connexion La connexion à utiliser
      * @param idMembre L'ID du membre à trouver
      * @param sortByPropertyName Le nom de la propriété à utiliser pour classer
@@ -120,16 +120,16 @@ public interface IReservationService extends IService {
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
     List<ReservationDTO> findByMembre(Connexion connexion,
-    		String idMembre,
-            String sortByPropertyName) throws InvalidHibernateSessionException,
-            InvalidCriterionException,
-            InvalidSortByPropertyException,
-            ServiceException;
-    
+        String idMembre,
+        String sortByPropertyName) throws InvalidHibernateSessionException,
+        InvalidCriterionException,
+        InvalidSortByPropertyException,
+        ServiceException;
+
     /**
-     * Trouve les réservations à partir d'un livre. La liste est classée par ordre croissant sur <code>sortByPropertyName</code>. 
+     * Trouve les réservations à partir d'un livre. La liste est classée par ordre croissant sur <code>sortByPropertyName</code>.
      * Si aucune réservation n'est trouvée, une {@link List} vide est retournée.
-     * 
+     *
      * @param connexion La connexion à utiliser
      * @param idLivre L'ID du livre à trouver
      * @param sortByPropertyName Le nom de la propriété à utiliser pour classer
@@ -140,15 +140,15 @@ public interface IReservationService extends IService {
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
     List<ReservationDTO> findByLivre(Connexion connexion,
-    		String idLivre,
-            String sortByPropertyName) throws InvalidHibernateSessionException,
-            InvalidCriterionException,
-            InvalidSortByPropertyException,
-            ServiceException;
-    
+        String idLivre,
+        String sortByPropertyName) throws InvalidHibernateSessionException,
+        InvalidCriterionException,
+        InvalidSortByPropertyException,
+        ServiceException;
+
     /**
      * Place une réservation.
-     * 
+     *
      * @param connexion La connexion à utiliser
      * @param reservationDTO La réservation à placer
      * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
@@ -164,20 +164,21 @@ public interface IReservationService extends IService {
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
     void placer(Connexion connexion,
-            ReservationDTO reservationDTO) throws InvalidHibernateSessionException,
-            InvalidDTOException,
-            InvalidPrimaryKeyException,
-            MissingDTOException,
-            InvalidCriterionException,
-            InvalidSortByPropertyException,
-            MissingLoanException,
-            ExistingLoanException,
-            ExistingReservationException,
-            InvalidDTOClassException,
-            ServiceException;
+        ReservationDTO reservationDTO) throws InvalidHibernateSessionException,
+        InvalidDTOException,
+        InvalidPrimaryKeyException,
+        MissingDTOException,
+        InvalidCriterionException,
+        InvalidSortByPropertyException,
+        MissingLoanException,
+        ExistingLoanException,
+        ExistingReservationException,
+        InvalidDTOClassException,
+        ServiceException;
+
     /**
      * Utilise une réservation.
-     * 
+     *
      * @param connexion La connexion à utiliser
      * @param reservationDTO La réservation à placer
      * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
@@ -193,20 +194,21 @@ public interface IReservationService extends IService {
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
     void utiliser(Connexion connexion,
-            ReservationDTO reservationDTO) throws InvalidHibernateSessionException,
-            InvalidDTOException,
-            InvalidPrimaryKeyException,
-            MissingDTOException,
-            InvalidCriterionException,
-            InvalidSortByPropertyException,
-            ExistingReservationException,
-            ExistingLoanException,
-            InvalidLoanLimitException,
-            InvalidDTOClassException,
-            ServiceException;
+        ReservationDTO reservationDTO) throws InvalidHibernateSessionException,
+        InvalidDTOException,
+        InvalidPrimaryKeyException,
+        MissingDTOException,
+        InvalidCriterionException,
+        InvalidSortByPropertyException,
+        ExistingReservationException,
+        ExistingLoanException,
+        InvalidLoanLimitException,
+        InvalidDTOClassException,
+        ServiceException;
+
     /**
      * Annule une réservation.
-     * 
+     *
      * @param connexion La connexion à utiliser
      * @param reservationDTO La reservation à annuler
      * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
@@ -217,11 +219,11 @@ public interface IReservationService extends IService {
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
     void annuler(Connexion connexion,
-            ReservationDTO reservationDTO) throws InvalidHibernateSessionException,
-            InvalidDTOException,
-            InvalidPrimaryKeyException,
-            MissingDTOException,
-            InvalidDTOClassException,
-            ServiceException;
+        ReservationDTO reservationDTO) throws InvalidHibernateSessionException,
+        InvalidDTOException,
+        InvalidPrimaryKeyException,
+        MissingDTOException,
+        InvalidDTOClassException,
+        ServiceException;
 
 }

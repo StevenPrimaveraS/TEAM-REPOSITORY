@@ -58,11 +58,18 @@ public class MembreDAO extends DAO {
         + "                                               limitePret "
         + "                                        FROM   membre";
 
+    private static final String FIND_BY_NOM = "SELECT idMembre, "
+        + "                                             nom, "
+        + "                                             telephone, "
+        + "                                             limitePret "
+        + "                                      FROM   membre "
+        + "                                      WHERE  LOWER(membre) LIKE LOWER(?)";
+
     /**
      * Crée un DAO à partir d'une connexion à la base de données.
      *
      * @param membreDTOclass classe du membre dto
-     * @throws InvalidDTOClassExceptionn, S'il y a une erreur avec la classe d'un objet DTO.
+     * @throws InvalidDTOClassException S'il y a une erreur avec l'objet DTO
      */
     public MembreDAO(Class<MembreDTO> membreDTOclass) throws InvalidDTOClassException {
         super(membreDTOclass);
@@ -74,8 +81,8 @@ public class MembreDAO extends DAO {
      * @param dto Le membre à ajouter
      * @param connexion recoit en parametre la connexion
      * @throws DAOException S'il y a une erreur avec la base de données
-     * @throws InvalidHibernateSessionException, S'il y a une erreur avec la connexion
-     * @throws InvalidDTOException, S'il y a une erreur avec l'objet DTO
+     * @throws InvalidHibernateSessionException S'il y a une erreur avec la connexion
+     * @throws InvalidDTOException S'il y a une erreur avec l'objet DTO
      * @throws InvalidDTOClassException S'il y a une erreur avec la classe de l'objet dto
      */
     public void add(Connexion connexion,
@@ -97,11 +104,11 @@ public class MembreDAO extends DAO {
         try(
             PreparedStatement createPreparedStatement = connexion.getConnection().prepareStatement(MembreDAO.ADD_REQUEST)) {
             createPreparedStatement.setString(1,
-                MembreDTO.getNom());
-            createPreparedStatement.setString(2,
-                MembreDTO.getTelephone());
+                membreDTO.getNom());
+            createPreparedStatement.setLong(2,
+                membreDTO.getTelephone());
             createPreparedStatement.setLong(3,
-                MembreDTO.getLimitePret());
+                membreDTO.getLimitePret());
             createPreparedStatement.executeUpdate();
         } catch(SQLException sqlException) {
             throw new DAOException(sqlException);
@@ -112,12 +119,13 @@ public class MembreDAO extends DAO {
      * Lit un membre. Si aucun membre n'est trouvé, <code>null</code> est retourné.
      *
      * @param connexion la connexion JDBC
-     * @param Serializable permet a un objet d'etre serialisable
+     * @param primaryKey clé primaire qu'on recoit en paramètre
      * @return Le membre lu ; <code>null</code> sinon
      * @throws InvalidHibernateSessionException S'il y a une erreur avec la connexion
      * @throws InvalidPrimaryKeyException S'il y a une erreur avec la cle primaire d'un DTO
+     * @throws DAOException S'il y a une erreur de DAO
      */
-    public MembreDTO get(Connexion connexion,
+    public static MembreDTO get(Connexion connexion,
         Serializable primaryKey) throws InvalidHibernateSessionException,
         InvalidPrimaryKeyException,
         DAOException {
@@ -140,7 +148,7 @@ public class MembreDAO extends DAO {
                     membreDTO.setIdMembre(resultSet.getInt(1));
                     membreDTO.setNom(resultSet.getString(2));
                     membreDTO.setTelephone(resultSet.getLong(3));
-                    membreDTO.setlimitePret(resultSet.getInt(4));
+                    membreDTO.setLimitePret(resultSet.getInt(4));
                 }
             }
         } catch(SQLException sqlException) {
@@ -152,7 +160,7 @@ public class MembreDAO extends DAO {
     /**
      * Met à jour un membre.
      *
-     * @param DTO Le membre à mettre à jour
+     * @param dto Le membre à mettre à jour
      * @param connexion la connexion JDBC
      * @throws DAOException S'il y a une erreur avec la base de données
      * @throws InvalidHibernateSessionException S'il y a une erreur avec la connexion
@@ -182,7 +190,7 @@ public class MembreDAO extends DAO {
             updatePreparedStatement.setLong(2,
                 membreDTO.getTelephone());
             updatePreparedStatement.setInt(3,
-                membreDTO.getlimitePret());
+                membreDTO.getLimitePret());
             updatePreparedStatement.setInt(4,
                 membreDTO.getIdMembre());
             updatePreparedStatement.executeUpdate();
@@ -194,7 +202,7 @@ public class MembreDAO extends DAO {
     /**
      * Supprime un membre.
      *
-     * @param DTO Le membre à supprimer
+     * @param dto Le membre à supprimer
      * @param connexion La connexion JDBC
      * @throws InvalidHibernateSessionException S'il y a une erreur avec la connexion
      * @throws InvalidDTOException S'il y a une erreur avec l'objet DTO
@@ -228,14 +236,9 @@ public class MembreDAO extends DAO {
     }
 
     /**
-     * Trouve tous les membres.
-     *
-     * @param connexion La connexion JDBC
-     * @return La liste des membres ; une liste vide sinon
-     * @throws InvalidHibernateSessionException S'il y a une erreur avec la connexion
-     * @throws InvalidSortByPropertyException S'il y a une erreur avec la propriété utilisée pour classer une liste de DTOs.
-     * @throws DAOException S'il y a une erreur avec la base de données
+     * {@inheritDoc}
      */
+    @Override
     public List<MembreDTO> getAll(Connexion connexion,
         String sortByPropertyName) throws InvalidHibernateSessionException,
         InvalidSortByPropertyException,
@@ -259,7 +262,7 @@ public class MembreDAO extends DAO {
                         membreDTO.setIdMembre(resultSet.getInt(1));
                         membreDTO.setNom(resultSet.getString(2));
                         membreDTO.setTelephone(resultSet.getLong(3));
-                        membreDTO.setlimitePret(resultSet.getInt(4));
+                        membreDTO.setLimitePret(resultSet.getInt(4));
                         membre.add(membreDTO);
                     } while(resultSet.next());
                 }
@@ -271,18 +274,49 @@ public class MembreDAO extends DAO {
     }
 
     /**
-     * Trouve les membres à partir d'un nom. La liste est classée par ordre croissant sur sortByPropertyName.
-     *
-     * @param connexion La connexion JDBC
-     * @throws InvalidHibernateSessionException S'il y a une erreur avec la connexion
+     * {@inheritDoc}
      */
+    @Override
     public List<MembreDTO> findByNom(Connexion connexion,
         String nom,
         String sortByPropertyName) throws InvalidHibernateSessionException,
         InvalidCriterionException,
         InvalidSortByPropertyException,
         DAOException {
-        List<MembreDTO> membres = Collections.EMPTY_LIST;
+        if(connexion == null) {
+            throw new InvalidHibernateSessionException("La connexion ne peut être null");
+        }
+        if(nom == null) {
+            throw new InvalidCriterionException("Le titre ne peut être null");
+        }
+        if(sortByPropertyName == null) {
+            throw new InvalidSortByPropertyException("La propriété utilisée pour classer ne peut être null");
+        }
+        final List<MembreDTO> membres = Collections.emptyList();
+        try(
+            PreparedStatement findByNomPreparedStatement = connexion.getConnection().prepareStatement(MembreDAO.FIND_BY_NOM)) {
+            findByNomPreparedStatement.setString(1,
+                "%"
+                    + nom
+                    + "%");
+            try(
+                ResultSet resultSet = findByNomPreparedStatement.executeQuery()) {
+                MembreDTO membreDTO = null;
+                if(resultSet.next()) {
+                    membres = new ArrayList<>();
+                    do {
+                        membreDTO = new MembreDTO();
+                        membreDTO.setIdLivre(resultSet.getString(1));
+                        membreDTO.setNom(resultSet.getString(2));
+                        membreDTO.setTelephone(resultSet.getInt(3));
+                        membreDTO.setLimitePret(resultSet.getInt(4));
+                        membres.add(membreDTO);
+                    } while(resultSet.next());
+                }
+            }
+        } catch(SQLException sqlException) {
+            throw new DAOException(sqlException);
+        }
         return membres;
     }
 }
