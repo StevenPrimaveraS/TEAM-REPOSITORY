@@ -112,7 +112,8 @@ public class PretDAO extends DAO implements IPretDAO {
     public void add(Connexion connexion,
         DTO dto) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidDTOClassException {
+        InvalidDTOClassException,
+        DAOException {
         if(connexion == null) {
             throw new InvalidHibernateSessionException("La connexion ne peut être null");
         }
@@ -127,9 +128,9 @@ public class PretDAO extends DAO implements IPretDAO {
         try(
             PreparedStatement createPreparedStatement = connexion.getConnection().prepareStatement(PretDAO.ADD_REQUEST)) {
             createPreparedStatement.setString(1,
-                pretDTO.getIdMembre());
+                pretDTO.getMembreDTO().getIdMembre());
             createPreparedStatement.setString(2,
-                pretDTO.getIdLivre());
+                pretDTO.getLivreDTO().getIdLivre());
             createPreparedStatement.setTimestamp(3,
                 pretDTO.getDatePret());
             createPreparedStatement.executeUpdate();
@@ -178,7 +179,8 @@ public class PretDAO extends DAO implements IPretDAO {
     @Override
     public PretDTO get(Connexion connexion,
         Serializable primaryKey) throws InvalidHibernateSessionException,
-        InvalidPrimaryKeyException {
+        InvalidPrimaryKeyException,
+        DAOException {
         if(connexion == null) {
             throw new InvalidHibernateSessionException("La connexion ne peut être null");
         }
@@ -196,8 +198,8 @@ public class PretDAO extends DAO implements IPretDAO {
                 if(resultSet.next()) {
                     pretDTO = new PretDTO();
                     pretDTO.setIdPret(resultSet.getString(1));
-                    pretDTO.setIdMembre(resultSet.getString(2));
-                    pretDTO.setIdLivre(resultSet.getString(3));
+                    pretDTO.getMembreDTO().setIdMembre(resultSet.getString(2));
+                    pretDTO.getLivreDTO().setIdLivre(resultSet.getString(3));
                     pretDTO.setDatePret(resultSet.getTimestamp(4));
                     pretDTO.setDateRetour(resultSet.getTimestamp(5));
                 }
@@ -240,7 +242,8 @@ public class PretDAO extends DAO implements IPretDAO {
     public void update(Connexion connexion,
         DTO dto) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidDTOClassException {
+        InvalidDTOClassException,
+        DAOException {
         if(connexion == null) {
             throw new InvalidHibernateSessionException("La connexion ne peut être null");
         }
@@ -255,9 +258,9 @@ public class PretDAO extends DAO implements IPretDAO {
         try(
             PreparedStatement updatePreparedStatement = connexion.getConnection().prepareStatement(PretDAO.UPDATE_REQUEST)) {
             updatePreparedStatement.setString(1,
-                pretDTO.getIdMembre());
+                pretDTO.getMembreDTO().getIdMembre());
             updatePreparedStatement.setString(2,
-                pretDTO.getIdLivre());
+                pretDTO.getLivreDTO().getIdLivre());
             updatePreparedStatement.setTimestamp(3,
                 pretDTO.getDatePret());
             updatePreparedStatement.setTimestamp(4,
@@ -293,7 +296,8 @@ public class PretDAO extends DAO implements IPretDAO {
     public void delete(Connexion connexion,
         DTO dto) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidDTOClassException {
+        InvalidDTOClassException,
+        DAOException {
         if(connexion == null) {
             throw new InvalidHibernateSessionException("La connexion ne peut être null");
         }
@@ -308,7 +312,7 @@ public class PretDAO extends DAO implements IPretDAO {
         try(
             PreparedStatement deletePreparedStatement = connexion.getConnection().prepareStatement(PretDAO.DELETE_REQUEST)) {
             deletePreparedStatement.setString(1,
-                PretDTO.getIdPret());
+                pretDTO.getIdPret());
             deletePreparedStatement.executeUpdate();
         } catch(SQLException sqlException) {
             throw new DAOException(sqlException);
@@ -358,7 +362,8 @@ public class PretDAO extends DAO implements IPretDAO {
     @Override
     public List<PretDTO> getAll(Connexion connexion,
         String sortByPropertyName) throws InvalidHibernateSessionException,
-        InvalidSortByPropertyException {
+        InvalidSortByPropertyException,
+        DAOException {
         if(connexion == null) {
             throw new InvalidHibernateSessionException("La connexion ne peut être null");
         }
@@ -376,8 +381,8 @@ public class PretDAO extends DAO implements IPretDAO {
                     do {
                         pretDTO = new PretDTO();
                         pretDTO.setIdPret(resultSet.getString(1));
-                        pretDTO.setIdMembre(resultSet.getString(2));
-                        pretDTO.setIdLivre(resultSet.getString(3));
+                        pretDTO.getMembreDTO().setIdMembre(resultSet.getString(2));
+                        pretDTO.getLivreDTO().setIdLivre(resultSet.getString(3));
                         pretDTO.setDatePret(resultSet.getTimestamp(4));
                         pretDTO.setDateRetour(resultSet.getTimestamp(5));
                         prets.add(pretDTO);
@@ -437,7 +442,8 @@ public class PretDAO extends DAO implements IPretDAO {
         String idMembre,
         String sortByPropertyName) throws InvalidHibernateSessionException,
         InvalidCriterionException,
-        InvalidSortByPropertyException {
+        InvalidSortByPropertyException,
+        DAOException {
         if(connexion == null) {
             throw new InvalidHibernateSessionException("La connexion ne peut être null");
         }
@@ -462,8 +468,8 @@ public class PretDAO extends DAO implements IPretDAO {
                     do {
                         pretDTO = new PretDTO();
                         pretDTO.setIdPret(resultSet.getString(1));
-                        pretDTO.setIdMembre(resultSet.getString(2));
-                        pretDTO.setIdLivre(resultSet.getString(3));
+                        pretDTO.getMembreDTO().setIdMembre(resultSet.getString(2));
+                        pretDTO.getLivreDTO().setIdLivre(resultSet.getString(3));
                         pretDTO.setDatePret(resultSet.getTimestamp(4));
                         pretDTO.setDateRetour(resultSet.getTimestamp(5));
                         prets.add(pretDTO);
