@@ -147,37 +147,79 @@ public final class Bibliotheque {
             final String command = tokenizer.nextToken();
             Connexion connexion = Bibliotheque.gestionnaireBibliotheque.getConnexion();
 
-            if("aide".equals(command)) {
-                Bibliotheque.afficherAide();
-            } else if("acquerir".equals(command)) {
-                Bibliotheque.acquerir(tokenizer,connexion);
-            } else if("vendre".equals(command)) {
-                Bibliotheque.vendre(tokenizer,connexion);
-            } else if("preter".equals(command)) {
+            switch(command){
+            case "aide":
+            	Bibliotheque.afficherAide();
+            	break;
+            case "acquerir":
+            	Bibliotheque.acquerir(tokenizer,connexion);
+            	break;
+            case "vendre":
+            	Bibliotheque.vendre(tokenizer,connexion);
+            	break;
+            case "preter":
             	Bibliotheque.preter(tokenizer,connexion);
-            } else if("renouveler".equals(command)) {
+            	break;
+            case "renouveler":
             	Bibliotheque.renouveler(tokenizer,connexion);
-            } else if("retourner".equals(command)) {
+            	break;
+            case "retourner":
             	Bibliotheque.retourner(tokenizer,connexion);
-            } else if("inscrire".equals(command)) {
+            	break;
+            case "inscrire":
             	Bibliotheque.inscrire(tokenizer,connexion);
-            } else if("desinscrire".equals(command)) {
+            	break;
+            case "desinscrire":
             	Bibliotheque.desinscrire(tokenizer,connexion);
-            } else if("reserver".equals(command)) {
+            	break;
+            case "reserver":
             	Bibliotheque.reserver(tokenizer,connexion);
-            } else if("utiliser".equals(command)) {
+            	break;
+            case "utiliser":
             	Bibliotheque.utiliser(tokenizer,connexion);
-            } else if("annuler".equals(command)) {
+            	break;
+            case "annuler":
             	Bibliotheque.annuler(tokenizer,connexion);
-                // } else if("listerLivres".equals(command)) {
-                //     Bibliotheque.gestionBibliothque.livreDAO.listerLivres();
-                // } else if("listerLivresRetard".equals(command)) {
-                //     Bibliotheque.gestionBibliothque.livreDAO.listerLivresRetard(readString(tokenizer) /* date courante */);
-                // } else if("listerLivresTitre".equals(command)) {
-                //     Bibliotheque.gestionBibliothque.livreDAO.listerLivresTitre(readString(tokenizer) /* mot */);
-            } else if(!"--".equals(command)) {
-                System.out.println("  Transactions non reconnue.  Essayer \"aide\"");
+            	break;
+            case "--":
+            	//Ne rien faire
+            	break;
+            default :
+            	System.out.println("  Transactions non reconnue.  Essayer \"aide\"");
+            	break;
             }
+//******************* ANCIEN ***********************
+//            if("aide".equals(command)) {
+//                Bibliotheque.afficherAide();
+//            } else if("acquerir".equals(command)) {
+//                Bibliotheque.acquerir(tokenizer,connexion);
+//            } else if("vendre".equals(command)) {
+//                Bibliotheque.vendre(tokenizer,connexion);
+//            } else if("preter".equals(command)) {
+//            	Bibliotheque.preter(tokenizer,connexion);
+//            } else if("renouveler".equals(command)) {
+//            	Bibliotheque.renouveler(tokenizer,connexion);
+//            } else if("retourner".equals(command)) {
+//            	Bibliotheque.retourner(tokenizer,connexion);
+//            } else if("inscrire".equals(command)) {
+//            	Bibliotheque.inscrire(tokenizer,connexion);
+//            } else if("desinscrire".equals(command)) {
+//            	Bibliotheque.desinscrire(tokenizer,connexion);
+//            } else if("reserver".equals(command)) {
+//            	Bibliotheque.reserver(tokenizer,connexion);
+//            } else if("utiliser".equals(command)) {
+//            	Bibliotheque.utiliser(tokenizer,connexion);
+//            } else if("annuler".equals(command)) {
+//            	Bibliotheque.annuler(tokenizer,connexion);
+//                // } else if("listerLivres".equals(command)) {
+//                //     Bibliotheque.gestionBibliothque.livreDAO.listerLivres();
+//                // } else if("listerLivresRetard".equals(command)) {
+//                //     Bibliotheque.gestionBibliothque.livreDAO.listerLivresRetard(readString(tokenizer) /* date courante */);
+//                // } else if("listerLivresTitre".equals(command)) {
+//                //     Bibliotheque.gestionBibliothque.livreDAO.listerLivresTitre(readString(tokenizer) /* mot */);
+//            } else if(!"--".equals(command)) {
+//                System.out.println("  Transactions non reconnue.  Essayer \"aide\"");
+//            }
         } catch(BibliothequeException bibliothequeException) {
             System.out.println("** "
                 + bibliothequeException.toString());
@@ -254,7 +296,7 @@ public final class Bibliotheque {
 	}
 	
 	/**
-     * Transaction pour preter un livre à un membre.
+     * Transaction pour prêter un livre à un membre.
      * 
      * @param tokenizer Données de la transaction
      * @param connexion La connexion à utiliser
@@ -353,7 +395,7 @@ public final class Bibliotheque {
 	}
 	
 	/**
-     * Transaction pour desinscrire un livre.
+     * Transaction pour désinscrire un livre.
      * 
      * @param tokenizer Données de la transaction
      * @param connexion La connexion à utiliser
@@ -374,7 +416,7 @@ public final class Bibliotheque {
 	}
 	
 	/**
-     * Transaction pour reserver un livre.
+     * Transaction pour réserver un livre.
      * 
      * @param tokenizer Données de la transaction
      * @param connexion La connexion à utiliser
@@ -405,7 +447,7 @@ public final class Bibliotheque {
 	}
 
 	/**
-     * Transaction pour utiliser une reservation.
+     * Transaction pour utiliser une réservation.
      * 
      * @param tokenizer Données de la transaction
      * @param connexion La connexion à utiliser
@@ -432,7 +474,7 @@ public final class Bibliotheque {
 	}
 	
 	/**
-     * Transaction pour annuler une reservation.
+     * Transaction pour annuler une réservation.
      * 
      * @param tokenizer Données de la transaction
      * @param connexion La connexion à utiliser
