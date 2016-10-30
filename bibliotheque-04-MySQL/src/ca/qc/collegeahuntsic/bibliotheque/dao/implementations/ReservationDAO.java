@@ -82,7 +82,7 @@ public class ReservationDAO extends DAO implements IReservationDAO {
      * @param reservationDTOClass La classe de reservation DTO à utiliser
      * @throws InvalidDTOClassException Si la classe de DTO est <code>null</code>
      */
-    protected ReservationDAO(Class<? extends DTO> reservationDTOClass) throws InvalidDTOClassException {
+    public ReservationDAO(Class<? extends DTO> reservationDTOClass) throws InvalidDTOClassException {
         super(reservationDTOClass);
     }
 
@@ -244,7 +244,7 @@ public class ReservationDAO extends DAO implements IReservationDAO {
         if(sortByPropertyName == null) {
             throw new InvalidSortByPropertyException("La propriété utilisée pour classer ne peut être null");
         }
-        List<ReservationDTO> reservations = Collections.EMPTY_LIST;
+        List<ReservationDTO> reservations = Collections.emptyList();
         try(
             PreparedStatement getAllPreparedStatement = connexion.getConnection().prepareStatement(ReservationDAO.GET_ALL_REQUEST)) {
             try(
@@ -291,7 +291,7 @@ public class ReservationDAO extends DAO implements IReservationDAO {
         if(sortByPropertyName == null) {
             throw new InvalidSortByPropertyException("La propriété utilisée pour classer ne peut être null");
         }
-        List<ReservationDTO> reservations = Collections.EMPTY_LIST;
+        List<ReservationDTO> reservations = Collections.emptyList();
         try(
             PreparedStatement findByLivrePreparedStatement = connexion.getConnection().prepareStatement(ReservationDAO.FIND_BY_LIVRE_REQUEST)) {
             findByLivrePreparedStatement.setString(1,
@@ -340,7 +340,7 @@ public class ReservationDAO extends DAO implements IReservationDAO {
         if(sortByPropertyName == null) {
             throw new InvalidSortByPropertyException("La propriété utilisée pour classer ne peut être null");
         }
-        List<ReservationDTO> reservations = Collections.EMPTY_LIST;
+        List<ReservationDTO> reservations = Collections.emptyList();
         try(
             PreparedStatement findByLivrePreparedStatement = connexion.getConnection().prepareStatement(ReservationDAO.FIND_BY_MEMBRE_REQUEST)) {
             findByLivrePreparedStatement.setString(1,
