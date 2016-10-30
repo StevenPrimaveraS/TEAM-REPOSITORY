@@ -100,7 +100,7 @@ public class BibliothequeCreateur {
      *
      * @return La variable d'instance <code>this.connexion</code>
      */
-    private Connexion getConnexion() {
+    public Connexion getConnexion() {
         return this.connexion;
     }
 
