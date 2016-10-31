@@ -34,7 +34,7 @@ public class MembreDAO extends DAO implements IMembreDAO {
         + "                                                        nom, "
         + "                                                        telephone, "
         + "                                                        limitePret) "
-        + "                                    VALUES             (seqIdMembre.nextVal "
+        + "                                    VALUES             (seqIdMembre.NEXTVAL, "
         + "                                                        ?, "
         + "                                                        ?, "
         + "                                                        ?  )";
