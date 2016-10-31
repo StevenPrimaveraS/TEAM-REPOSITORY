@@ -32,10 +32,12 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOException;
  */
 
 public class ReservationDAO extends DAO implements IReservationDAO {
-    private static final String ADD_REQUEST = "INSERT INTO reservation (idlivre, "
+    private static final String ADD_REQUEST = "INSERT INTO reservation (idReservation, "
+        + "                                                             idLivre, "
         + "                                                             idMembre, "
         + "                                                             dateReservation) "
-        + "                                    VALUES                  (?, "
+        + "                                    VALUES                  (seqIdReservation.NEXTVAL, "
+        + "                                                             ?, "
         + "                                                             ?, "
         + "                                                             ?)";
 
