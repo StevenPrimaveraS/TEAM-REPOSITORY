@@ -30,11 +30,13 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOException;
  * @author Gilles Bénichou
  */
 public class PretDAO extends DAO implements IPretDAO {
-    private static final String ADD_REQUEST = "INSERT INTO pret (idMembre, "
+    private static final String ADD_REQUEST = "INSERT INTO pret (idPret,"
+        + "                                                      idMembre, "
         + "                                                      idLivre, "
         + "                                                      datePret, "
         + "                                                      dateRetour) "
-        + "                                    VALUES           (?, "
+        + "                                    VALUES           (seqIdPret.NEXTVAL, "
+        + "                                                      ?, "
         + "                                                      ?, "
         + "                                                      ?, "
         + "                                                      NULL)";
