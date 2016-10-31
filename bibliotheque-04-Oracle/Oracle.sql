@@ -5,11 +5,11 @@ DROP SEQUENCE seqIdReservation;
 DROP TABLE membre CASCADE CONSTRAINTS;
 
 CREATE TABLE membre ( 
-idMembre        number(3) check(idMembre > 0), 
+idMembre        varchar(3) check(idMembre > 0), 
 nom             varchar(10) NOT NULL, 
-telephone       number(10) , 
-limitePret      number(2) check(limitePret > 0 and limitePret <= 10) , 
-nbpret          number(2) default 0 check(nbpret >= 0) , 
+telephone       varchar(50) , 
+limitePret      varchar(2) check(limitePret > 0 and limitePret <= 10) , 
+nbpret          varchar(2) default 0 check(nbpret >= 0) , 
 CONSTRAINT cleMembre PRIMARY KEY (idMembre), 
 CONSTRAINT limiteNbPret check(nbpret <= limitePret) 
 );
@@ -17,7 +17,7 @@ CONSTRAINT limiteNbPret check(nbpret <= limitePret)
 DROP TABLE livre CASCADE CONSTRAINTS;
     
 CREATE TABLE livre ( 
-idLivre         number(3) check(idLivre > 0) , 
+idLivre         varchar(3) check(idLivre > 0) , 
 titre           varchar(50) NOT NULL, 
 auteur          varchar(50) NOT NULL,
 dateAcquisition date not null, 
@@ -27,9 +27,9 @@ CONSTRAINT cleLivre PRIMARY KEY (idLivre)
 DROP TABLE pret CASCADE CONSTRAINTS;
 
 CREATE TABLE pret ( 
-idPret   number(3) , 
-idLivre       number(3) , 
-idMembre         number(3) , 
+idPret   varchar(3) , 
+idLivre       varchar(3) , 
+idMembre         varchar(3) , 
 datePret date , 
 dateRetour date , 
 CONSTRAINT clePret PRIMARY KEY (idPret), 
@@ -43,9 +43,9 @@ CONSTRAINT refPretLivre FOREIGN KEY (idLivre) REFERENCES livre
 DROP TABLE reservation CASCADE CONSTRAINTS;
 
 CREATE TABLE reservation ( 
-idReservation   number(3) , 
-idMembre        number(3) , 
-idLivre         number(3) , 
+idReservation   varchar(3) , 
+idMembre        varchar(3) , 
+idLivre         varchar(3) , 
 dateReservation date , 
 CONSTRAINT cleReservation PRIMARY KEY (idReservation) , 
 CONSTRAINT cleCandidateReservation UNIQUE (idMembre,idLivre) , 
