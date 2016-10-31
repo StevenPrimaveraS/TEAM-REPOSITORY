@@ -32,7 +32,8 @@ public class LivreDAO extends DAO implements ILivreDAO {
     private static final String CREATE_REQUEST = "INSERT INTO livre (titre, "
         + "                                                          auteur, "
         + "                                                          dateAcquisition) "
-        + "                                       VALUES            (?, "
+        + "                                       VALUES            (seqIdLivre.nextVal"
+        + "                                                           ?, "
         + "                                                          ?, "
         + "                                                          ?)";
 
