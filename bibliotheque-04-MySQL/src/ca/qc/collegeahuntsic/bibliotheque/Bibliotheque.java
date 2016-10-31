@@ -142,10 +142,11 @@ public final class Bibliotheque {
      * @param tokenizer L'entrée à décoder
      * @throws BibliothequeException Si une erreur survient
      */
+    @SuppressWarnings("resource")
     private static void executerTransaction(StringTokenizer tokenizer) throws BibliothequeException {
         try {
             final String command = tokenizer.nextToken();
-            @SuppressWarnings("resource")
+
             final Connexion connexion = Bibliotheque.gestionnaireBibliotheque.getConnexion();
 
             /*switch(command) {

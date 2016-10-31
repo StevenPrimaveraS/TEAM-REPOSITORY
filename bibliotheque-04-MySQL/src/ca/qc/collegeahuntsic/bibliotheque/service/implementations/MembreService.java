@@ -255,7 +255,7 @@ public class MembreService extends Service implements IMembreService {
         InvalidDTOClassException {
         if(get(connexion,
             membreDTO.getIdMembre()) != null) {
-            throw new ServiceException("Le membre "
+            throw new InvalidDTOException("Le membre "
                 + membreDTO.getIdMembre()
                 + " existe déjà");
         }
@@ -282,14 +282,14 @@ public class MembreService extends Service implements IMembreService {
             final MembreDTO unMembreDTO = get(connexion,
                 membreDTO.getIdMembre());
             if(unMembreDTO == null) {
-                throw new ServiceException("Le membre "
+                throw new MissingDTOException("Le membre "
                     + membreDTO.getIdMembre()
                     + " n'existe pas");
             }
             if(!getPretDAO().findByMembre(connexion,
                 membreDTO.getIdMembre(),
                 PretDTO.DATE_PRET_COLUMN_NAME).isEmpty()) {
-                throw new ServiceException("Le membre "
+                throw new ExistingLoanException("Le membre "
                     + unMembreDTO.getNom()
                     + " (ID de membre : "
                     + unMembreDTO.getIdMembre()
@@ -298,7 +298,7 @@ public class MembreService extends Service implements IMembreService {
             if(!getReservationDAO().findByMembre(connexion,
                 unMembreDTO.getIdMembre(),
                 ReservationDTO.DATE_RESERVATION_COLUMN_NAME).isEmpty()) {
-                throw new ServiceException("Le membre "
+                throw new ExistingReservationException("Le membre "
                     + unMembreDTO.getNom()
                     + " (ID de membre : "
                     + unMembreDTO.getIdMembre()

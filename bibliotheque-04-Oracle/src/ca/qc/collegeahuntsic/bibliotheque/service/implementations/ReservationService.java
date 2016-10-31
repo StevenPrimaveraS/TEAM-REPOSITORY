@@ -675,7 +675,7 @@ public class ReservationService extends Service implements IReservationService {
             final ReservationDTO uneReservationDTO = get(connexion,
                 reservationDTO.getIdReservation());
             if(uneReservationDTO != null) {
-                throw new ServiceException("La réservation "
+                throw new ExistingReservationException("La réservation "
                     + reservationDTO.getIdReservation()
                     + " existe déjà");
             }
@@ -772,21 +772,21 @@ public class ReservationService extends Service implements IReservationService {
             ReservationDTO uneReservationDTO = get(connexion,
                 reservationDTO.getIdReservation());
             if(uneReservationDTO == null) {
-                throw new ServiceException("La réservation "
+                throw new MissingDTOException("La réservation "
                     + reservationDTO.getIdReservation()
                     + " n'existe pas");
             }
             final MembreDTO unMembreDTO = (MembreDTO) getMembreDAO().get(connexion,
                 uneReservationDTO.getMembreDTO().getIdMembre());
             if(unMembreDTO == null) {
-                throw new ServiceException("Le membre "
+                throw new MissingDTOException("Le membre "
                     + uneReservationDTO.getMembreDTO().getIdMembre()
                     + " n'existe pas");
             }
             final LivreDTO unLivreDTO = (LivreDTO) getLivreDAO().get(connexion,
                 uneReservationDTO.getLivreDTO().getIdLivre());
             if(unLivreDTO == null) {
-                throw new ServiceException("Le livre "
+                throw new MissingDTOException("Le livre "
                     + uneReservationDTO.getLivreDTO().getIdLivre()
                     + " n'existe pas");
             }
@@ -798,7 +798,7 @@ public class ReservationService extends Service implements IReservationService {
                 if(uneReservationDTO.getMembreDTO().getIdMembre() != unMembreDTO.getIdMembre()) {
                     final MembreDTO booker = (MembreDTO) getMembreDAO().get(connexion,
                         uneReservationDTO.getMembreDTO().getIdMembre());
-                    throw new ServiceException("Le livre "
+                    throw new ExistingReservationException("Le livre "
                         + unLivreDTO.getTitre()
                         + " (ID de livre : "
                         + unLivreDTO.getIdLivre()
@@ -829,7 +829,7 @@ public class ReservationService extends Service implements IReservationService {
                 PretDTO.DATE_PRET_COLUMN_NAME);
             if((empruntsMembre.size()
                 + "").equals(unMembreDTO.getLimitePret())) {
-                throw new ServiceException("Le membre "
+                throw new InvalidLoanLimitException("Le membre "
                     + unMembreDTO.getNom()
                     + " (ID de membre : "
                     + unMembreDTO.getIdMembre()
@@ -870,7 +870,7 @@ public class ReservationService extends Service implements IReservationService {
         final ReservationDTO uneReservationDTO = get(connexion,
             reservationDTO.getIdReservation());
         if(uneReservationDTO == null) {
-            throw new ServiceException("La réservation "
+            throw new MissingDTOException("La réservation "
                 + reservationDTO.getIdReservation()
                 + " n'existe pas");
         }
