@@ -29,11 +29,12 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOException;
  * @author Gilles Bénichou
  */
 public class LivreDAO extends DAO implements ILivreDAO {
-    private static final String CREATE_REQUEST = "INSERT INTO livre (titre, "
+    private static final String CREATE_REQUEST = "INSERT INTO livre (idLivre, "
+        + "                                                          titre, "
         + "                                                          auteur, "
         + "                                                          dateAcquisition) "
-        + "                                       VALUES            (seqIdLivre.nextVal"
-        + "                                                           ?, "
+        + "                                       VALUES            (seqIdLivre.NEXTVAL,"
+        + "                                                          ?, "
         + "                                                          ?, "
         + "                                                          ?)";
 
