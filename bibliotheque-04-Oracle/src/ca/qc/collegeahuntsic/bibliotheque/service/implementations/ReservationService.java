@@ -671,7 +671,6 @@ public class ReservationService extends Service implements IReservationService {
         ServiceException {
         try {
             //TODO : Mettre en string le ID de reservationDTO
-            //TODO : Check si bon type exception existe
             final ReservationDTO uneReservationDTO = get(connexion,
                 reservationDTO.getIdReservation());
             if(uneReservationDTO != null) {

@@ -13,7 +13,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionE
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
 
 /**
- * TODO Auto-generated class javadoc.
+ * Interface DAO pour manipuler les réservations dans la base de données.
  *
  * @author Gilles Benichou
  */

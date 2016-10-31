@@ -80,16 +80,32 @@ public class BibliothequeCreateur {
             final IReservationDAO reservationDAO = new ReservationDAO(ReservationDTO.class);
             final IPretDAO pretDAO = new PretDAO(PretDTO.class);
             //Service
-            final ILivreService livreService = new LivreService(livreDAO, membreDAO, pretDAO, reservationDAO);
-            final IMembreService membreService = new MembreService(membreDAO, livreDAO, reservationDAO, pretDAO);
-            final IPretService pretService = new PretService(pretDAO, membreDAO, livreDAO, reservationDAO);
-            final IReservationService reservationService = new ReservationService(reservationDAO, livreDAO, membreDAO, pretDAO);
+            final ILivreService livreService = new LivreService(livreDAO,
+                membreDAO,
+                pretDAO,
+                reservationDAO);
+            final IMembreService membreService = new MembreService(membreDAO,
+                livreDAO,
+                reservationDAO,
+                pretDAO);
+            final IPretService pretService = new PretService(pretDAO,
+                membreDAO,
+                livreDAO,
+                reservationDAO);
+            final IReservationService reservationService = new ReservationService(reservationDAO,
+                livreDAO,
+                membreDAO,
+                pretDAO);
             //Facade
             setLivreFacade(new LivreFacade(livreService));
             setMembreFacade(new MembreFacade(membreService));
             setPretFacade(new PretFacade(pretService));
             setReservationFacade(new ReservationFacade(reservationService));
-        } catch(ConnexionException | InvalidDTOClassException | InvalidDAOException | InvalidServiceException exception) {
+        } catch(
+            ConnexionException
+            | InvalidDTOClassException
+            | InvalidDAOException
+            | InvalidServiceException exception) {
             throw new BibliothequeException(exception);
         }
     }
