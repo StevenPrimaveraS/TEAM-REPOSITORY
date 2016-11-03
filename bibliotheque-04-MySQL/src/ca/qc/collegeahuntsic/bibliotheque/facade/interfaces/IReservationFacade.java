@@ -24,7 +24,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.service.MissingLoanException
  *
  * @author Gilles Benichou
  */
-public interface IReservationFacade {
+public interface IReservationFacade extends IFacade {
     /**
      * Place une réservation.
      *
