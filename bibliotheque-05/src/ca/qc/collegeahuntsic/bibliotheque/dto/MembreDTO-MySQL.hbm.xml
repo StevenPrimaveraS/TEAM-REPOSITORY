@@ -5,8 +5,8 @@
           "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
           "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-  <class name="ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO"
-table="LIVRE">
+  <class name="ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO"
+table="MEMBRE">
         <id name="idMembre"
              type="string">
              <column name="IDMEMBRE">
