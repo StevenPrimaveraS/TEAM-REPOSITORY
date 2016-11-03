@@ -19,7 +19,7 @@
              <column name="IDPRET">
              </column>
              <generator class="sequence">
-                        <param name="sequence">SEQ_ID_PRET</param>
+                        <param name="sequence">seqIdPret</param>
              </generator>
          </id>
 
