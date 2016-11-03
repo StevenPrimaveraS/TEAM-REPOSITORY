@@ -5,6 +5,8 @@
 package ca.qc.collegeahuntsic.bibliotheque.dto;
 
 import java.sql.Timestamp;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * DTO de la table livre.
@@ -12,7 +14,8 @@ import java.sql.Timestamp;
  * @author Leroux Dominic
  */
 
-public class LivreDTO {
+public class LivreDTO extends DTO {
+    private static final long serialVersionUID = 1L;
 
     private int idLivre;
 
@@ -140,6 +143,39 @@ public class LivreDTO {
      */
     public void setDatePret(Timestamp datePret) {
         this.datePret = datePret;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object obj) {
+        boolean equals = this == obj;
+        if(!equals) {
+            equals = obj != null
+                && obj instanceof LivreDTO;
+            if(equals) {
+                final LivreDTO livreDTO = (LivreDTO) obj;
+                final EqualsBuilder equalsBuilder = new EqualsBuilder();
+                equalsBuilder.appendSuper(super.equals(livreDTO));
+                equalsBuilder.append(getIdLivre(),
+                    livreDTO.getIdLivre());
+                equals = equalsBuilder.isEquals();
+            }
+        }
+        return equals;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        final HashCodeBuilder hashCodeBuilder = new HashCodeBuilder(461,
+            451);
+        hashCodeBuilder.appendSuper(super.hashCode());
+        hashCodeBuilder.append(getIdLivre());
+        return hashCodeBuilder.toHashCode();
     }
 
 }
