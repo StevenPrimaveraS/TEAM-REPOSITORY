@@ -12,7 +12,8 @@ import java.sql.Timestamp;
  * @author Leroux Dominic
  */
 
-public class LivreDTO {
+public class LivreDTO extends DTO {
+    private static final long serialVersionUID = 1L;
 
     private int idLivre;
 
