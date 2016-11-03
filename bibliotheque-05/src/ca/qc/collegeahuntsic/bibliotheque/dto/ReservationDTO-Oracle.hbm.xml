@@ -1,23 +1,46 @@
-<?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2016-11-03 12:07:08 by Hibernate Tools 3.5.0.Final -->
+<?xml version="1.0"
+      encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!--
+   - PretDTO mapping file.
+   -
+   - Author: Primavera Sequeira Steven
+-->
+
 <hibernate-mapping>
-    <joined-subclass name="ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO" extends="ca.qc.collegeahuntsic.bibliotheque.dto.DTO" table="RESERVATIONDTO" lazy="false">
-        <key>
-            <column name="ID" />
-        </key>
-        <property name="idReservation" type="java.lang.String">
-            <column name="IDRESERVATION" />
-        </property>
-        <many-to-one name="livreDTO" class="ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO" fetch="join">
-            <column name="LIVREDTO" />
-        </many-to-one>
-        <property name="dateReservation" type="java.sql.Timestamp">
-            <column name="DATERESERVATION" />
-        </property>
-        <many-to-one name="membreDTO" class="ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO" fetch="join">
-            <column name="MEMBREDTO" />
-        </many-to-one>
-    </joined-subclass>
+  <class name="ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO"
+         table="RESERVATION">
+         <id name="idReservation"
+             type="string">
+             <column name="IDRESERVATION">
+             </column>
+             <generator class="sequence">
+                        <param name="sequence">seqIdReservation</param>
+             </generator>
+         </id>
+
+         <property name="dateReservation"
+                   type="timestamp">
+                   <column name="DATERESERVATION">
+                   </column>
+         </property>
+         
+         <many-to-one name="membreDTO"
+                      class="ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO"
+                      not-null="true">
+                      <column name="IDMEMBRE">
+                      </column>
+         </many-to-one>
+         
+         <many-to-one name="livreDTO"
+                      class="ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO"
+                      not-null="true">
+                      <column name="IDLIVRE">
+                      </column>
+         </many-to-one>
+  </class>
 </hibernate-mapping>
