@@ -38,42 +38,6 @@ public final class LivreDTO extends DTO {
     private Set<PretDTO> prets;
 
     /**
-     * Getter de la variable d'instance <code>this.reservations</code>.
-     *
-     * @return La variable d'instance <code>this.reservations</code>
-     */
-    public Set<ReservationDTO> getReservations() {
-        return this.reservations;
-    }
-
-    /**
-     * Setter de la variable d'instance <code>this.reservations</code>.
-     *
-     * @param reservations La valeur à utiliser pour la variable d'instance <code>this.reservations</code>
-     */
-    public void setReservations(Set<ReservationDTO> reservations) {
-        this.reservations = reservations;
-    }
-
-    /**
-     * Getter de la variable d'instance <code>this.prets</code>.
-     *
-     * @return La variable d'instance <code>this.prets</code>
-     */
-    public Set<PretDTO> getPrets() {
-        return this.prets;
-    }
-
-    /**
-     * Setter de la variable d'instance <code>this.prets</code>.
-     *
-     * @param prets La valeur à utiliser pour la variable d'instance <code>this.prets</code>
-     */
-    public void setPrets(Set<PretDTO> prets) {
-        this.prets = prets;
-    }
-
-    /**
      * Constructeur par défaut.
      */
     public LivreDTO() {
@@ -151,6 +115,42 @@ public final class LivreDTO extends DTO {
      */
     public void setDateAcquisition(Timestamp dateAcquisition) {
         this.dateAcquisition = dateAcquisition;
+    }
+
+    /**
+     * Getter de la variable d'instance <code>this.reservations</code>.
+     *
+     * @return La variable d'instance <code>this.reservations</code>
+     */
+    public Set<ReservationDTO> getReservations() {
+        return this.reservations;
+    }
+
+    /**
+     * Setter de la variable d'instance <code>this.reservations</code>.
+     *
+     * @param reservations La valeur à utiliser pour la variable d'instance <code>this.reservations</code>
+     */
+    public void setReservations(Set<ReservationDTO> reservations) {
+        this.reservations = reservations;
+    }
+
+    /**
+     * Getter de la variable d'instance <code>this.prets</code>.
+     *
+     * @return La variable d'instance <code>this.prets</code>
+     */
+    public Set<PretDTO> getPrets() {
+        return this.prets;
+    }
+
+    /**
+     * Setter de la variable d'instance <code>this.prets</code>.
+     *
+     * @param prets La valeur à utiliser pour la variable d'instance <code>this.prets</code>
+     */
+    public void setPrets(Set<PretDTO> prets) {
+        this.prets = prets;
     }
     // EndRegion Getters and Setters
 
