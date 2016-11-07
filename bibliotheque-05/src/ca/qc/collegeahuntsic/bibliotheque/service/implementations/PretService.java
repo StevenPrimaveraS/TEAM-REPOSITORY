@@ -20,7 +20,6 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionValueExc
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOClassException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.MissingDTOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingLoanException;
@@ -242,15 +241,9 @@ public class PretService extends Service implements IPretService {
     public void commencer(Session session,
         PretDTO pretDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidPrimaryKeyException,
-        MissingDTOException,
-        InvalidCriterionException,
-        InvalidCriterionValueException,
-        InvalidSortByPropertyException,
         ExistingLoanException,
         InvalidLoanLimitException,
         ExistingReservationException,
-        InvalidDTOClassException,
         ServiceException {
         try {
             final MembreDTO unMembreDTO = (MembreDTO) getMembreDAO().get(session,
@@ -316,7 +309,13 @@ public class PretService extends Service implements IPretService {
             pretDTO.setDatePret(new Timestamp(System.currentTimeMillis()));
             add(session,
                 pretDTO);
-        } catch(DAOException daoException) {
+        } catch(
+            DAOException
+            | InvalidCriterionValueException
+            | InvalidCriterionException
+            | InvalidSortByPropertyException
+            | InvalidPrimaryKeyException
+            | MissingDTOException daoException) {
             throw new ServiceException(daoException);
         }
     }
@@ -329,13 +328,8 @@ public class PretService extends Service implements IPretService {
         PretDTO pretDTO) throws ServiceException,
         MissingLoanException,
         InvalidHibernateSessionException,
-        InvalidPrimaryKeyException,
-        InvalidCriterionException,
-        InvalidCriterionValueException,
-        InvalidSortByPropertyException,
         ExistingReservationException,
-        InvalidDTOException,
-        InvalidDTOClassException {
+        InvalidDTOException {
         try {
             final PretDTO unPretDTO = (PretDTO) get(session,
                 pretDTO.getIdPret());
@@ -394,7 +388,12 @@ public class PretService extends Service implements IPretService {
             unPretDTO.setDatePret(new Timestamp(System.currentTimeMillis()));
             update(session,
                 unPretDTO);
-        } catch(DAOException daoException) {
+        } catch(
+            DAOException
+            | InvalidPrimaryKeyException
+            | InvalidCriterionException
+            | InvalidCriterionValueException
+            | InvalidSortByPropertyException daoException) {
             throw new ServiceException(daoException);
         }
     }
@@ -406,13 +405,8 @@ public class PretService extends Service implements IPretService {
     public void terminer(Session session,
         PretDTO pretDTO) throws ServiceException,
         InvalidHibernateSessionException,
-        InvalidPrimaryKeyException,
-        InvalidCriterionException,
-        InvalidCriterionValueException,
-        InvalidSortByPropertyException,
         MissingLoanException,
-        InvalidDTOException,
-        InvalidDTOClassException {
+        InvalidDTOException {
         try {
             final PretDTO unPretDTO = (PretDTO) get(session,
                 pretDTO.getIdPret());
@@ -454,7 +448,12 @@ public class PretService extends Service implements IPretService {
             unPretDTO.setDateRetour(new Timestamp(System.currentTimeMillis()));
             update(session,
                 unPretDTO);
-        } catch(DAOException daoException) {
+        } catch(
+            DAOException
+            | InvalidPrimaryKeyException
+            | InvalidCriterionValueException
+            | InvalidCriterionException
+            | InvalidSortByPropertyException daoException) {
             throw new ServiceException(daoException);
         }
     }

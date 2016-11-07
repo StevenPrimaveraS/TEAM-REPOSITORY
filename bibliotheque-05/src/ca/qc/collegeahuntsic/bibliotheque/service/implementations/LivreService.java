@@ -19,7 +19,6 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionValueExc
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOClassException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.MissingDTOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingLoanException;
@@ -178,7 +177,6 @@ public class LivreService extends Service implements ILivreService {
     public void acquerir(Session session,
         LivreDTO livreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidDTOClassException,
         ServiceException {
         add(session,
             livreDTO);
@@ -193,12 +191,7 @@ public class LivreService extends Service implements ILivreService {
         InvalidDTOException,
         ExistingLoanException,
         ExistingReservationException,
-        ServiceException,
-        InvalidPrimaryKeyException,
-        MissingDTOException,
-        InvalidCriterionException,
-        InvalidCriterionValueException,
-        InvalidSortByPropertyException {
+        ServiceException {
         if(session == null) {
             throw new InvalidHibernateSessionException("La connexion ne peut être null");
         }
@@ -252,7 +245,13 @@ public class LivreService extends Service implements ILivreService {
             }
             delete(session,
                 unLivreDTO);
-        } catch(DAOException daoException) {
+        } catch(
+            DAOException
+            | InvalidPrimaryKeyException
+            | InvalidCriterionException
+            | InvalidCriterionValueException
+            | InvalidSortByPropertyException
+            | MissingDTOException daoException) {
             throw new ServiceException(daoException);
         }
     }
