@@ -96,12 +96,6 @@ public interface IReservationFacade extends IFacade {
      * @throws InvalidDTOClassException Si la classe du livre n'est pas celle que prend en charge le DAO
      * @throws InvalidPrimaryKeyException Si la clef primaire du livre est <code>null</code>
      * @throws MissingDTOException Si le livre n'existe pas
-     * @throws InvalidCriterionException Si l'ID du membre est <code>null</code>
-     * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
-     * @throws ExistingLoanException Si le livre a été prêté
-     * @throws MissingLoanException Si le pret n'existe pas.
-     * @throws InvalidLoanLimitException Si la limite de prêt est excedée
-     * @throws ExistingReservationException Si le livre a été réservé
      * @throws FacadeException S'il y a une erreur avec la base de données
      */
     void annuler(Connexion connexion,
