@@ -593,7 +593,7 @@ public class ReservationService extends Service implements IReservationService {
         try {
             //TODO : Mettre en string le ID de reservationDTO
             //TODO : Check si bon type exception existe
-            final ReservationDTO uneReservationDTO = get(session,
+            final ReservationDTO uneReservationDTO = (ReservationDTO) get(session,
                 reservationDTO.getIdReservation());
             if(uneReservationDTO != null) {
                 throw new ExistingReservationException("La réservation "
@@ -692,7 +692,7 @@ public class ReservationService extends Service implements IReservationService {
         InvalidDTOClassException,
         ServiceException {
         try {
-            ReservationDTO uneReservationDTO = get(session,
+            ReservationDTO uneReservationDTO = (ReservationDTO) get(session,
                 reservationDTO.getIdReservation());
             if(uneReservationDTO == null) {
                 throw new MissingDTOException("La réservation "
@@ -792,7 +792,7 @@ public class ReservationService extends Service implements IReservationService {
         MissingDTOException,
         InvalidDTOClassException,
         ServiceException {
-        final ReservationDTO uneReservationDTO = get(session,
+        final ReservationDTO uneReservationDTO = (ReservationDTO) get(session,
             reservationDTO.getIdReservation());
         if(uneReservationDTO == null) {
             throw new MissingDTOException("La réservation "
