@@ -180,15 +180,9 @@ public class MembreService extends Service implements IMembreService {
     public void desinscrire(Session session,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidDTOClassException,
-        InvalidPrimaryKeyException,
-        MissingDTOException,
-        InvalidCriterionException,
-        InvalidSortByPropertyException,
         ExistingLoanException,
         ExistingReservationException,
-        ServiceException,
-        InvalidCriterionValueException {
+        ServiceException {
         try {
             final MembreDTO unMembreDTO = (MembreDTO) get(session,
                 membreDTO.getIdMembre());
@@ -217,7 +211,13 @@ public class MembreService extends Service implements IMembreService {
             }
             delete(session,
                 unMembreDTO);
-        } catch(DAOException daoException) {
+        } catch(
+            DAOException
+            | InvalidPrimaryKeyException
+            | InvalidCriterionException
+            | InvalidCriterionValueException
+            | InvalidSortByPropertyException
+            | MissingDTOException daoException) {
             throw new ServiceException(daoException);
         }
     }
