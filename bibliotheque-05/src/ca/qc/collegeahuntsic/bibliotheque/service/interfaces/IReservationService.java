@@ -87,14 +87,9 @@ public interface IReservationService extends IService {
     void placer(Session session,
         ReservationDTO reservationDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidPrimaryKeyException,
-        MissingDTOException,
-        InvalidCriterionException,
-        InvalidSortByPropertyException,
         MissingLoanException,
         ExistingLoanException,
         ExistingReservationException,
-        InvalidDTOClassException,
         ServiceException;
 
     /**
@@ -117,14 +112,9 @@ public interface IReservationService extends IService {
     void utiliser(Session session,
         ReservationDTO reservationDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidPrimaryKeyException,
-        MissingDTOException,
-        InvalidCriterionException,
-        InvalidSortByPropertyException,
         ExistingReservationException,
         ExistingLoanException,
         InvalidLoanLimitException,
-        InvalidDTOClassException,
         ServiceException;
 
     /**
