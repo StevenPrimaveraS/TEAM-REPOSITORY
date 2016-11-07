@@ -13,7 +13,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionValueExc
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOClassException;
-import org.hibernate.classic.Session;
+import org.hibernate.Session;
 
 /**
  * DAO pour effectuer des CRUDs avec la table <code>livre</code>.
