@@ -4,18 +4,17 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.service.implementations;
 
-import java.io.Serializable;
 import java.util.List;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.ILivreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IMembreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IPretDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IReservationDAO;
-import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.PretDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.DAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionValueException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
@@ -27,6 +26,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingReservationE
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.InvalidDAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ServiceException;
 import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IMembreService;
+import org.hibernate.classic.Session;
 
 /**
  * Service de la table membre.
@@ -58,7 +58,7 @@ public class MembreService extends Service implements IMembreService {
         ILivreDAO livreDAO,
         IReservationDAO reservationDAO,
         IPretDAO pretDAO) throws InvalidDAOException {
-        super();
+        super(membreDAO);
         if(livreDAO == null) {
             throw new InvalidDAOException("Le DAO de livre ne peut être null");
         }
@@ -95,22 +95,19 @@ public class MembreService extends Service implements IMembreService {
         this.pretDAO = pretDAO;
     }
 
-    // Region Getters and Setters
     /**
      * Getter de la variable d'instance <code>this.membreDAO</code>.
      *
      * @return La variable d'instance <code>this.membreDAO</code>
      */
-    private IMembreDAO getMembreDAO() {
+    public IMembreDAO getMembreDAO() {
         return this.membreDAO;
     }
 
     /**
      * Setter de la variable d'instance <code>this.membreDAO</code>.
      *
-     * @param membreDAO
-     *            La valeur à utiliser pour la variable d'instance
-     *            <code>this.membreDAO</code>
+     * @param membreDAO La valeur à utiliser pour la variable d'instance <code>this.membreDAO</code>
      */
     private void setMembreDAO(IMembreDAO membreDAO) {
         this.membreDAO = membreDAO;
@@ -128,9 +125,7 @@ public class MembreService extends Service implements IMembreService {
     /**
      * Setter de la variable d'instance <code>this.livreDAO</code>.
      *
-     * @param livreDAO
-     *            La valeur à utiliser pour la variable d'instance
-     *            <code>this.livreDAO</code>
+     * @param livreDAO La valeur à utiliser pour la variable d'instance <code>this.livreDAO</code>
      */
     private void setLivreDAO(ILivreDAO livreDAO) {
         this.livreDAO = livreDAO;
@@ -162,31 +157,10 @@ public class MembreService extends Service implements IMembreService {
      * {@inheritDoc}
      */
     @Override
-    public MembreDTO get(Session session,
-        Serializable primaryKey) throws InvalidHibernateSessionException,
-        InvalidPrimaryKeyException,
-        ServiceException {
-        if(session == null) {
-            throw new InvalidHibernateSessionException("La session Hibernate ne peut être null");
-        }
-        if(primaryKey == null) {
-            throw new InvalidPrimaryKeyException("La clef primaire ne peut être null");
-        }
-        try {
-            final MembreDTO membredto = getMembreDAO().get(session,
-                primaryKey);
-            return membredto;
-        } catch(DAOException daoException) {
-            throw new ServiceException(daoException);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void inscrire(Session session,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
+        InvalidDTOException,
+        InvalidDTOClassException,
         InvalidPrimaryKeyException,
         ServiceException {
         if(get(session,
@@ -213,9 +187,10 @@ public class MembreService extends Service implements IMembreService {
         InvalidSortByPropertyException,
         ExistingLoanException,
         ExistingReservationException,
-        ServiceException {
+        ServiceException,
+        InvalidCriterionValueException {
         try {
-            final MembreDTO unMembreDTO = get(session,
+            final MembreDTO unMembreDTO = (MembreDTO) get(session,
                 membreDTO.getIdMembre());
             if(unMembreDTO == null) {
                 throw new MissingDTOException("Le membre "
@@ -251,14 +226,15 @@ public class MembreService extends Service implements IMembreService {
      * {@inheritDoc}
      */
     @Override
-    public List<LivreDTO> findByNom(Session session,
+    public List<MembreDTO> findByNom(Session session,
         String nom,
         String sortByPropertyName) throws InvalidHibernateSessionException,
         InvalidCriterionException,
         InvalidSortByPropertyException,
-        ServiceException {
+        ServiceException,
+        InvalidCriterionValueException {
         try {
-            return getLivreDAO().findByTitre(session,
+            return getMembreDAO().findByNom(session,
                 nom,
                 sortByPropertyName);
         } catch(DAOException daoException) {
