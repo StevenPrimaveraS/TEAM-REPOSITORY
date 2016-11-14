@@ -32,9 +32,9 @@ public interface ILivreService extends IService {
      * @param titre Le titre à trouver
      * @param sortByPropertyName Le nom de la propriété à utiliser pour classer
      * @return La liste des livres correspondants ; une liste vide sinon
-     * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
-     * @throws InvalidCriterionException Si le titre est <code>null</code>
-     * @throws InvalidCriterionValueException Si la value est <code>null</code>
+     * @throws InvalidHibernateSessionException Si la session Hibernate est <code>null</code>
+     * @throws InvalidCriterionException Si la propriété à utiliser est <code>null</code>
+     * @throws InvalidCriterionValueException Si la valeur à trouver est <code>null</code>
      * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
@@ -51,7 +51,7 @@ public interface ILivreService extends IService {
      *
      * @param session La session à utiliser
      * @param livreDTO Le livre à acquérir
-     * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
+     * @throws InvalidHibernateSessionException Si la session Hibernate est <code>null</code>
      * @throws InvalidDTOException Si le livre est <code>null</code>
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
@@ -65,7 +65,7 @@ public interface ILivreService extends IService {
      *
      * @param session La session à utiliser
      * @param livreDTO Le livre à vendre
-     * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
+     * @throws InvalidHibernateSessionException Si la session Hibernate est <code>null</code>
      * @throws InvalidDTOException Si le livre est <code>null</code>
      * @throws ExistingLoanException Si le livre a été prêté
      * @throws ExistingReservationException Si le livre a été réservé

@@ -9,9 +9,7 @@ import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionValueException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOClassException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingLoanException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingReservationException;
@@ -34,9 +32,9 @@ public interface IMembreService extends IService {
      * @param nom Le nom à trouver
      * @param sortByPropertyName Le nom de la propriété à utiliser pour classer
      * @return La liste des livres correspondants ; une liste vide sinon
-     * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
-     * @throws InvalidCriterionException Si le titre est <code>null</code>
-     * @throws InvalidCriterionValueException Si le titre est <code>null</code>
+     * @throws InvalidHibernateSessionException Si la session Hibernate est <code>null</code>
+     * @throws InvalidCriterionException Si la propriété à utiliser est <code>null</code>
+     * @throws InvalidCriterionValueException Si la valeur à trouver est <code>null</code>
      * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
@@ -53,17 +51,13 @@ public interface IMembreService extends IService {
      *
      * @param session La session à utiliser
      * @param membreDTO Le membre à inscrire
-     * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
-     * @throws InvalidDTOException Si le livre est <code>null</code>
-     * @throws InvalidDTOClassException Si la classe du livre n'est pas celle que prend en charge le DAO
-     * @throws InvalidPrimaryKeyException Si la clé primaire est est <code>null</code>
+     * @throws InvalidHibernateSessionException Si la session Hibernate est <code>null</code>
+     * @throws InvalidDTOException Si le membre est <code>null</code>
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
     void inscrire(Session session,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidDTOClassException,
-        InvalidPrimaryKeyException,
         ServiceException;
 
     /**
@@ -71,10 +65,10 @@ public interface IMembreService extends IService {
      *
      * @param session La session à utiliser
      * @param membreDTO Le membre à desinscrire
-     * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
-     * @throws InvalidDTOException Si le livre est <code>null</code>
-     * @throws ExistingLoanException Si le livre a été prêté
-     * @throws ExistingReservationException Si le livre a été réservé
+     * @throws InvalidHibernateSessionException Si la session Hibernate est <code>null</code>
+     * @throws InvalidDTOException Si le membre est <code>null</code>
+     * @throws ExistingLoanException Si le membre a encore des prêts
+     * @throws ExistingReservationException Si le membre a des réservations
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
     void desinscrire(Session session,
