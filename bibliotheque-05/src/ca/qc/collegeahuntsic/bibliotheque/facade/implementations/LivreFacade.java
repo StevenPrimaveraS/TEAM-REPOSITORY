@@ -4,15 +4,9 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.facade.implementations;
 
-import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOClassException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dto.MissingDTOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.facade.FacadeException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.facade.InvalidServiceException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingLoanException;
@@ -20,6 +14,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingReservationE
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ServiceException;
 import ca.qc.collegeahuntsic.bibliotheque.facade.interfaces.ILivreFacade;
 import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.ILivreService;
+import org.hibernate.Session;
 
 /**
  * Facade pour interagir avec le service de livres.
@@ -37,7 +32,7 @@ public class LivreFacade extends Facade implements ILivreFacade {
      */
     public LivreFacade(ILivreService livreService) throws InvalidServiceException {
         // TODO: Change the constructor visibility to package when switching to Spring
-        super();
+        super(livreService);
         if(livreService == null) {
             throw new InvalidServiceException("Le service de livres ne peut être null");
         }
@@ -68,10 +63,9 @@ public class LivreFacade extends Facade implements ILivreFacade {
      * {@inheritDoc}
      */
     @Override
-    public void acquerir(Connexion connexion,
+    public void acquerir(Session connexion,
         LivreDTO livreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidDTOClassException,
         FacadeException {
         try {
             getLivreService().acquerir(connexion,
@@ -85,19 +79,14 @@ public class LivreFacade extends Facade implements ILivreFacade {
      * {@inheritDoc}
      */
     @Override
-    public void vendre(Connexion connexion,
+    public void vendre(Session session,
         LivreDTO livreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidDTOClassException,
-        InvalidPrimaryKeyException,
-        MissingDTOException,
-        InvalidCriterionException,
-        InvalidSortByPropertyException,
         ExistingLoanException,
         ExistingReservationException,
         FacadeException {
         try {
-            getLivreService().vendre(connexion,
+            getLivreService().vendre(session,
                 livreDTO);
         } catch(ServiceException serviceException) {
             throw new FacadeException(serviceException);
