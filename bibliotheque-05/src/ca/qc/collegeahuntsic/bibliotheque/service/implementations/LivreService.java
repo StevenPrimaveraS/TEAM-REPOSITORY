@@ -249,7 +249,9 @@ public class LivreService extends Service implements ILivreService {
             | InvalidCriterionException
             | InvalidCriterionValueException
             | InvalidSortByPropertyException
-            | MissingDTOException daoException) {
+            | MissingDTOException
+            | ExistingLoanException
+            | ExistingReservationException daoException) {
             throw new ServiceException(daoException);
         }
     }
