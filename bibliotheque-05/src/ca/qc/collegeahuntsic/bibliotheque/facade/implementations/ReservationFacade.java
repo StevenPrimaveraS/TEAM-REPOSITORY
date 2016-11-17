@@ -4,15 +4,9 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.facade.implementations;
 
-import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOClassException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dto.MissingDTOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.facade.FacadeException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.facade.InvalidServiceException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingLoanException;
@@ -22,13 +16,14 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.service.MissingLoanException
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ServiceException;
 import ca.qc.collegeahuntsic.bibliotheque.facade.interfaces.IReservationFacade;
 import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IReservationService;
+import org.hibernate.Session;
 
 /**
  * Facade pour interagir avec le service des réservations.
  *
  * @author Gilles Bénichou
  */
-public class ReservationFacade implements IReservationFacade {
+public class ReservationFacade extends Facade implements IReservationFacade {
     private IReservationService reservationService;
 
     /**
@@ -37,9 +32,9 @@ public class ReservationFacade implements IReservationFacade {
          * @param reservationService Le service de la table <code>livre</code>
          * @throws InvalidServiceException Si le service de livres est <code>null</code>
          */
-    public ReservationFacade(IReservationService reservationService) throws InvalidServiceException {
+    ReservationFacade(IReservationService reservationService) throws InvalidServiceException {
         // TODO: Change the constructor visibility to package when switching to Spring
-        super();
+        super(reservationService);
         if(reservationService == null) {
             throw new InvalidServiceException("Le service de réservations ne peut être null");
         }
@@ -70,20 +65,15 @@ public class ReservationFacade implements IReservationFacade {
      * {@inheritDoc}
      */
     @Override
-    public void placer(Connexion connexion,
+    public void placer(Session session,
         ReservationDTO reservationDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidPrimaryKeyException,
-        MissingDTOException,
-        InvalidCriterionException,
-        InvalidSortByPropertyException,
         MissingLoanException,
         ExistingLoanException,
         ExistingReservationException,
-        InvalidDTOClassException,
         FacadeException {
         try {
-            getReservationService().placer(connexion,
+            getReservationService().placer(session,
                 reservationDTO);
         } catch(ServiceException serviceException) {
             throw new FacadeException(serviceException);
@@ -94,20 +84,15 @@ public class ReservationFacade implements IReservationFacade {
      * {@inheritDoc}
      */
     @Override
-    public void utiliser(Connexion connexion,
+    public void utiliser(Session session,
         ReservationDTO reservationDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidPrimaryKeyException,
-        MissingDTOException,
-        InvalidCriterionException,
-        InvalidSortByPropertyException,
         ExistingReservationException,
         ExistingLoanException,
         InvalidLoanLimitException,
-        InvalidDTOClassException,
         FacadeException {
         try {
-            getReservationService().utiliser(connexion,
+            getReservationService().utiliser(session,
                 reservationDTO);
         } catch(ServiceException serviceException) {
             throw new FacadeException(serviceException);
@@ -118,18 +103,16 @@ public class ReservationFacade implements IReservationFacade {
      * {@inheritDoc}
      */
     @Override
-    public void annuler(Connexion connexion,
+    public void annuler(Session session,
         ReservationDTO reservationDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidPrimaryKeyException,
-        MissingDTOException,
-        InvalidDTOClassException,
         FacadeException {
         try {
-            getReservationService().annuler(connexion,
+            getReservationService().annuler(session,
                 reservationDTO);
         } catch(ServiceException serviceException) {
             throw new FacadeException(serviceException);
         }
     }
+
 }

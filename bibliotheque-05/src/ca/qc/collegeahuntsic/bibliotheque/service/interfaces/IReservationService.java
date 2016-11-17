@@ -15,7 +15,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingReservationE
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.InvalidLoanLimitException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.MissingLoanException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ServiceException;
-import org.hibernate.classic.Session;
+import org.hibernate.Session;
 
 /**
  * Interface pour ReservationService.<br />

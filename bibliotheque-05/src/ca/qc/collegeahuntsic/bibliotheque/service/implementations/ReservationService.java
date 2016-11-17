@@ -29,7 +29,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.service.InvalidLoanLimitExce
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.MissingLoanException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ServiceException;
 import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IReservationService;
-import org.hibernate.classic.Session;
+import org.hibernate.Session;
 
 /**
  * Service de la table reservation.

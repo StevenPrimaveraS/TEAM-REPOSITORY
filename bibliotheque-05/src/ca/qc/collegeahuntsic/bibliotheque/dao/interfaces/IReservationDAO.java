@@ -11,7 +11,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionExceptio
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionValueException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
-import org.hibernate.classic.Session;
+import org.hibernate.Session;
 
 /**
  * TODO Auto-generated class javadoc.
