@@ -27,7 +27,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingReservationE
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.InvalidDAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ServiceException;
 import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.ILivreService;
-import org.hibernate.classic.Session;
+import org.hibernate.Session;
 
 /**
  * Service de la table <code>livre</code>.
@@ -39,9 +39,9 @@ public class LivreService extends Service implements ILivreService {
 
     private IMembreDAO membreDAO;
 
-    private IPretDAO pretDAO;
-
     private IReservationDAO reservationDAO;
+
+    private IPretDAO pretDAO;
 
     /**
      * Crée le service de la table <code>livre</code>.
@@ -119,8 +119,18 @@ public class LivreService extends Service implements ILivreService {
      *
      * @param pretDAO La valeur à utiliser pour la variable d'instance <code>this.pretDAO</code>
      */
-    private void setPretDAO(IPretDAO pretDAO) {
+    public void setPretDAO(IPretDAO pretDAO) {
         this.pretDAO = pretDAO;
+    }
+
+    /**
+     * Getter de la variable d'instance <code>this.pretDAO</code>.
+     *
+     * @return La variable d'instance <code>this.pretDAO</code>
+     */
+
+    public IPretDAO getPretDAO() {
+        return this.pretDAO;
     }
 
     /**
@@ -181,8 +191,6 @@ public class LivreService extends Service implements ILivreService {
     public void vendre(Session session,
         LivreDTO livreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        ExistingLoanException,
-        ExistingReservationException,
         ServiceException {
         if(session == null) {
             throw new InvalidHibernateSessionException("La connexion ne peut être null");
