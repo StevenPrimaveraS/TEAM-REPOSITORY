@@ -29,7 +29,7 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.service.InvalidLoanLimitExce
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.MissingLoanException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ServiceException;
 import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IPretService;
-import org.hibernate.classic.Session;
+import org.hibernate.Session;
 
 /**
  * Service de la table <code>pret</code>.
@@ -157,12 +157,11 @@ public class PretService extends Service implements IPretService {
      * {@inheritDoc}
      */
     @Override
-
     public List<PretDTO> findByMembre(Session session,
         String idMembre,
         String sortByPropertyName) throws InvalidHibernateSessionException,
-        InvalidCriterionValueException,
         InvalidCriterionException,
+        InvalidCriterionValueException,
         InvalidSortByPropertyException,
         ServiceException {
         try {
@@ -201,8 +200,8 @@ public class PretService extends Service implements IPretService {
     public List<PretDTO> findByDatePret(Session session,
         Timestamp datePret,
         String sortByPropertyName) throws InvalidHibernateSessionException,
-        InvalidCriterionException,
         InvalidCriterionValueException,
+        InvalidCriterionException,
         InvalidSortByPropertyException,
         ServiceException {
         try {
@@ -325,11 +324,11 @@ public class PretService extends Service implements IPretService {
      */
     @Override
     public void renouveler(Session session,
-        PretDTO pretDTO) throws ServiceException,
+        PretDTO pretDTO) throws InvalidHibernateSessionException,
+        InvalidDTOException,
         MissingLoanException,
-        InvalidHibernateSessionException,
         ExistingReservationException,
-        InvalidDTOException {
+        ServiceException {
         try {
             final PretDTO unPretDTO = (PretDTO) get(session,
                 pretDTO.getIdPret());
@@ -403,10 +402,10 @@ public class PretService extends Service implements IPretService {
      */
     @Override
     public void terminer(Session session,
-        PretDTO pretDTO) throws ServiceException,
-        InvalidHibernateSessionException,
+        PretDTO pretDTO) throws InvalidHibernateSessionException,
+        InvalidDTOException,
         MissingLoanException,
-        InvalidDTOException {
+        ServiceException {
         try {
             final PretDTO unPretDTO = (PretDTO) get(session,
                 pretDTO.getIdPret());
