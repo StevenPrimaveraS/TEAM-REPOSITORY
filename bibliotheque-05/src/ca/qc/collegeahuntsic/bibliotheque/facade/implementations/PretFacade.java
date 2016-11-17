@@ -32,9 +32,9 @@ public class PretFacade extends Facade implements IPretFacade {
      * @param pretService Le service de la table <code>pret</code>
      * @throws InvalidServiceException Si le service de pret est <code>null</code>
      */
-    public PretFacade(IPretService pretService) throws InvalidServiceException {
+    PretFacade(IPretService pretService) throws InvalidServiceException {
         // TODO: Change the constructor visibility to package when switching to Spring
-        super();
+        super(pretService);
         if(pretService == null) {
             throw new InvalidServiceException("Le service de prets ne peut être null");
         }
@@ -46,7 +46,7 @@ public class PretFacade extends Facade implements IPretFacade {
      *
      * @return La variable d'instance <code>this.pretService</code>
      */
-    public IPretService getPretService() {
+    private IPretService getPretService() {
         return this.pretService;
     }
 
@@ -55,7 +55,7 @@ public class PretFacade extends Facade implements IPretFacade {
      *
      * @param pretService La valeur à utiliser pour la variable d'instance <code>this.pretService</code>
      */
-    public void setPretService(IPretService pretService) {
+    private void setPretService(IPretService pretService) {
         this.pretService = pretService;
     }
 
