@@ -75,13 +75,13 @@ public interface IPretService extends IService {
      * Trouve les pret à partir d'une date de pret. La liste est classée par ordre croissant sur <code>sortByPropertyName</code>. Si aucun membre
      * n'est trouvé, une {@link List} vide est retournée.
      *
-     * @param session La session utilisé
+     * @param session La session utilisée
      * @param datePret La date de pret à trouver
      * @param sortByPropertyName Le nom de la propriété à utiliser pour classer
      * @return La liste des prets correspondants ; une liste vide sinon
-     * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
-     * @throws InvalidCriterionException Si le titre est <code>null</code>
-     * @throws InvalidCriterionValueException Si la value est <code>null</code>
+     * @throws InvalidHibernateSessionException Si la session Hibernate est <code>null</code>
+     * @throws InvalidCriterionException Si la propriété à utiliser est <code>null</code>
+     * @throws InvalidCriterionValueException Si la valeur à trouver est <code>null</code>
      * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
@@ -97,13 +97,13 @@ public interface IPretService extends IService {
      * Trouve les pret à partir d'une date de pret. La liste est classée par ordre croissant sur <code>sortByPropertyName</code>. Si aucun membre
      * n'est trouvé, une {@link List} vide est retournée.
      *
-     * @param session La session utilisé
+     * @param session La session utilisée
      * @param dateRetour La date de retour à trouver
      * @param sortByPropertyName Le nom de la propriété à utiliser pour classer
      * @return La liste des prets correspondants ; une liste vide sinon
-     * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
-     * @throws InvalidCriterionException Si le titre est <code>null</code>
-     * @throws InvalidCriterionValueException Si la value est <code>null</code>
+     * @throws InvalidHibernateSessionException Si la session Hibernate est <code>null</code>
+     * @throws InvalidCriterionException Si la propriété à utiliser est <code>null</code>
+     * @throws InvalidCriterionValueException Si la valeur à trouver est <code>null</code>
      * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est <code>null</code>
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
@@ -120,12 +120,9 @@ public interface IPretService extends IService {
      *
      * @param session La session utilisé
      * @param pretDTO Le prêt à commencer
-     * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
-     * @throws InvalidDTOException Si le livre est <code>null</code>
-     * @throws InvalidCriterionException Si l'ID du livre est null
-     * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est null
+     * @throws InvalidHibernateSessionException Si la session Hibernate est <code>null</code>
+     * @throws InvalidDTOException Si le prêt est <code>null</code>
      * @throws ExistingLoanException Si le livre a été prêté
-     * @throws InvalidCriterionValueException Si la value est <code>null</code>
      * @throws InvalidLoanLimitException Si le membre a atteint sa limite de prêt
      * @throws ExistingReservationException Si le livre a été réservé
      * @throws ServiceException S'il y a une erreur avec la base de données
@@ -144,13 +141,9 @@ public interface IPretService extends IService {
      *
      * @param session La session utilisé
      * @param pretDTO Le prêt à commencer
-     * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
-     * @throws InvalidDTOException Si le livre est <code>null</code>
-     * @throws InvalidCriterionException Si l'ID du livre est null
-     * @throws InvalidCriterionValueException Si la value est <code>null</code>
-     * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est null
+     * @throws InvalidHibernateSessionException Si la session Hibernate est <code>null</code>
+     * @throws InvalidDTOException Si le prêt est <code>null</code>
      * @throws MissingLoanException Si le livre n'a pas encore été prêté
-     * @throws ExistingLoanException Si le livre a été prêté à quelqu'un d'autre
      * @throws ExistingReservationException Si le livre a été réservé
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
@@ -167,13 +160,9 @@ public interface IPretService extends IService {
      *
      * @param session La session utilisé
      * @param pretDTO Le prêt à commencer
-     * @throws InvalidHibernateSessionException Si la connexion est <code>null</code>
-     * @throws InvalidDTOException Si le livre est <code>null</code>
-     * @throws InvalidCriterionException Si l'ID du livre est null
-     * @throws InvalidSortByPropertyException Si la propriété à utiliser pour classer est null
+     * @throws InvalidHibernateSessionException Si la session Hibernate est <code>null</code>
+     * @throws InvalidDTOException Si le prêt est <code>null</code>
      * @throws MissingLoanException Si le livre n'a pas encore été prêté
-     * @throws InvalidCriterionValueException Si la value est <code>null</code>
-     * @throws ExistingLoanException Si le livre a été prêté à quelqu'un d'autre
      * @throws ServiceException S'il y a une erreur avec la base de données
      */
 

@@ -20,7 +20,6 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionValueExc
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOClassException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.MissingDTOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingLoanException;
@@ -395,8 +394,7 @@ public class ReservationService extends Service implements IReservationService {
             | InvalidPrimaryKeyException
             | InvalidCriterionException
             | InvalidSortByPropertyException
-            | MissingDTOException
-            | InvalidDTOClassException daoException) {
+            | MissingDTOException daoException) {
             throw new ServiceException(daoException);
         }
 
@@ -409,18 +407,20 @@ public class ReservationService extends Service implements IReservationService {
     public void annuler(Session session,
         ReservationDTO reservationDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidPrimaryKeyException,
-        MissingDTOException,
-        InvalidDTOClassException,
         ServiceException {
-        final ReservationDTO uneReservationDTO = (ReservationDTO) get(session,
-            reservationDTO.getIdReservation());
-        if(uneReservationDTO == null) {
-            throw new MissingDTOException("La réservation "
-                + reservationDTO.getIdReservation()
-                + " n'existe pas");
-        }
-        delete(session,
-            uneReservationDTO);
+    	try{
+	        final ReservationDTO uneReservationDTO = (ReservationDTO) get(session,
+	            reservationDTO.getIdReservation());
+	        if(uneReservationDTO == null) {
+	            throw new InvalidDTOException("La réservation "
+	                + reservationDTO.getIdReservation()
+	                + " n'existe pas");
+	        }
+	        delete(session,
+	            uneReservationDTO);
+    	}catch(InvalidPrimaryKeyException e){
+    		//TODO bloc temporaire
+    		throw new ServiceException("BlocTemporaire");
+    	}
     }
 }

@@ -18,7 +18,6 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionValueExc
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOClassException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.MissingDTOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingLoanException;
@@ -160,17 +159,20 @@ public class MembreService extends Service implements IMembreService {
     public void inscrire(Session session,
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
-        InvalidDTOClassException,
-        InvalidPrimaryKeyException,
         ServiceException {
-        if(get(session,
-            membreDTO.getIdMembre()) != null) {
-            throw new InvalidDTOException("Le membre "
-                + membreDTO.getIdMembre()
-                + " existe déjà");
-        }
-        add(session,
-            membreDTO);
+        try {
+			if(get(session,
+			    membreDTO.getIdMembre()) != null) {
+			    throw new InvalidDTOException("Le membre "
+			        + membreDTO.getIdMembre()
+			        + " existe déjà");
+			}
+            add(session,
+                membreDTO);
+		} catch (InvalidPrimaryKeyException e) {
+			// TODO bloc temporaire
+			throw new ServiceException("BlocTemporaire");
+		}
     }
 
     /**
