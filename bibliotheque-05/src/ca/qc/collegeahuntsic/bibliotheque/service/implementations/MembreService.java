@@ -161,18 +161,18 @@ public class MembreService extends Service implements IMembreService {
         InvalidDTOException,
         ServiceException {
         try {
-			if(get(session,
-			    membreDTO.getIdMembre()) != null) {
-			    throw new InvalidDTOException("Le membre "
-			        + membreDTO.getIdMembre()
-			        + " existe déjà");
-			}
+            if(get(session,
+                membreDTO.getIdMembre()) != null) {
+                throw new InvalidDTOException("Le membre "
+                    + membreDTO.getIdMembre()
+                    + " existe déjà");
+            }
             add(session,
                 membreDTO);
-		} catch (InvalidPrimaryKeyException e) {
-			// TODO bloc temporaire
-			throw new ServiceException("BlocTemporaire");
-		}
+        } catch(InvalidPrimaryKeyException e) {
+            // TODO bloc temporaire
+            throw new ServiceException("BlocTemporaire");
+        }
     }
 
     /**

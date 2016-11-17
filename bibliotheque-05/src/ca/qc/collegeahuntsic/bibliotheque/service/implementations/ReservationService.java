@@ -408,19 +408,19 @@ public class ReservationService extends Service implements IReservationService {
         ReservationDTO reservationDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         ServiceException {
-    	try{
-	        final ReservationDTO uneReservationDTO = (ReservationDTO) get(session,
-	            reservationDTO.getIdReservation());
-	        if(uneReservationDTO == null) {
-	            throw new InvalidDTOException("La réservation "
-	                + reservationDTO.getIdReservation()
-	                + " n'existe pas");
-	        }
-	        delete(session,
-	            uneReservationDTO);
-    	}catch(InvalidPrimaryKeyException e){
-    		//TODO bloc temporaire
-    		throw new ServiceException("BlocTemporaire");
-    	}
+        try {
+            final ReservationDTO uneReservationDTO = (ReservationDTO) get(session,
+                reservationDTO.getIdReservation());
+            if(uneReservationDTO == null) {
+                throw new InvalidDTOException("La réservation "
+                    + reservationDTO.getIdReservation()
+                    + " n'existe pas");
+            }
+            delete(session,
+                uneReservationDTO);
+        } catch(InvalidPrimaryKeyException e) {
+            //TODO bloc temporaire
+            throw new ServiceException("BlocTemporaire");
+        }
     }
 }
