@@ -4,7 +4,16 @@
 
 package ca.qc.collegeahuntsic.bibliotheque.facade.implementations;
 
+import java.io.Serializable;
+import ca.qc.collegeahuntsic.bibliotheque.dto.DTO;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.facade.FacadeException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.facade.InvalidServiceException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.service.ServiceException;
 import ca.qc.collegeahuntsic.bibliotheque.facade.interfaces.IFacade;
+import ca.qc.collegeahuntsic.bibliotheque.service.interfaces.IService;
+import org.hibernate.Session;
 
 /**
  * Classe de base pour toutes les façades.
@@ -12,10 +21,62 @@ import ca.qc.collegeahuntsic.bibliotheque.facade.interfaces.IFacade;
  * @author Gilles Bénichou
  */
 public class Facade implements IFacade {
+    private IService service;
+
     /**
      * Crée une façade.
+     *
+     * @param service Le service à utiliser
+     * @throws InvalidServiceException Si le service est <code>null</code>
      */
-    protected Facade() {
+    protected Facade(IService service) throws InvalidServiceException {
         super();
+        if(service == null) {
+            throw new InvalidServiceException("Le service ne peut être null");
+        }
+        setService(service);
+    }
+
+    // Region Getters and Setters
+    /**
+     * Getter de la variable d'instance <code>this.service</code>.
+     *
+     * @return La variable d'instance <code>this.service</code>
+     */
+    protected IService getService() {
+        return this.service;
+    }
+
+    /**
+     * Setter de la variable d'instance <code>this.service</code>.
+     *
+     * @param service La valeur à utiliser pour la variable d'instance <code>this.service</code>
+     */
+    private void setService(IService service) {
+        this.service = service;
+    }
+    // EndRegion Getters and Setters
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public DTO get(Session session,
+        Serializable primaryKey) throws InvalidHibernateSessionException,
+        InvalidPrimaryKeyException,
+        FacadeException {
+        if(session == null) {
+            throw new InvalidHibernateSessionException("La session Hibernate ne peut être null");
+        }
+        if(primaryKey == null) {
+            throw new InvalidPrimaryKeyException("La clef primaire ne peut être null");
+        }
+        try {
+            final DTO dto = getService().get(session,
+                primaryKey);
+            return dto;
+        } catch(ServiceException serviceException) {
+            throw new FacadeException(serviceException);
+        }
     }
 }
