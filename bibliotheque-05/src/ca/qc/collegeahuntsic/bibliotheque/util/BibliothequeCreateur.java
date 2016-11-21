@@ -60,7 +60,10 @@ public class BibliothequeCreateur {
         super();
         try {
             setSessionFactory((SessionFactory) BibliothequeCreateur.APPLICATION_CONTEXT.getBean(BibliothequeCreateur.SESSION_FACTORY_NAME));
-			// Récuppérer les facades
+            setLivreFacade((ILivreFacade) BibliothequeCreateur.APPLICATION_CONTEXT.getBean(BibliothequeCreateur.LIVRE_FACADE_NAME));
+            setMembreFacade((IMembreFacade) BibliothequeCreateur.APPLICATION_CONTEXT.getBean(BibliothequeCreateur.MEMBRE_FACADE_NAME));
+            setPretFacade((IPretFacade) BibliothequeCreateur.APPLICATION_CONTEXT.getBean(BibliothequeCreateur.PRET_FACADE_NAME));
+            setReservationFacade((IReservationFacade) BibliothequeCreateur.APPLICATION_CONTEXT.getBean(BibliothequeCreateur.RESERVATION_FACADE_NAME));
         } catch(BeansException beansException) {
             throw new BibliothequeException(beansException);
         }
