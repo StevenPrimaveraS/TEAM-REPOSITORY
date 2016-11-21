@@ -446,6 +446,8 @@ public final class Bibliotheque {
             InvalidHibernateSessionException
             | InvalidDTOException
             | FacadeException exception) {
+
+            Bibliotheque.gestionnaireBibliotheque.rollbackTransaction();
             throw new BibliothequeException(exception);
         }
     }
