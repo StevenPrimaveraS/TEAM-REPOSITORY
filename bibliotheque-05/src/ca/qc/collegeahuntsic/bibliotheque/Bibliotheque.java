@@ -142,110 +142,96 @@ public final class Bibliotheque {
      * @param tokenizer L'entrée à décoder
      * @throws BibliothequeException Si une erreur survient
      */
-    @SuppressWarnings("resource")
     private static void executerTransaction(StringTokenizer tokenizer) throws BibliothequeException {
         try {
             final String command = tokenizer.nextToken();
 
-            final Connexion connexion = Bibliotheque.gestionnaireBibliotheque.getConnexion();
-
-            /*switch(command) {
+            switch(command) {
                 case "aide":
                     Bibliotheque.afficherAide();
                     break;
                 case "acquerir":
-                    Bibliotheque.acquerir(tokenizer,
-                        connexion);
+                    Bibliotheque.acquerir(tokenizer);
                     break;
                 case "vendre":
-                    Bibliotheque.vendre(tokenizer,
-                        connexion);
+                    Bibliotheque.vendre(tokenizer);
                     break;
                 case "preter":
-                    Bibliotheque.preter(tokenizer,
-                        connexion);
+                    Bibliotheque.preter(tokenizer);
                     break;
                 case "renouveler":
-                    Bibliotheque.renouveler(tokenizer,
-                        connexion);
+                    Bibliotheque.renouveler(tokenizer);
                     break;
                 case "retourner":
-                    Bibliotheque.retourner(tokenizer,
-                        connexion);
+                    Bibliotheque.retourner(tokenizer);
                     break;
                 case "inscrire":
-                    Bibliotheque.inscrire(tokenizer,
-                        connexion);
+                    Bibliotheque.inscrire(tokenizer);
                     break;
                 case "desinscrire":
-                    Bibliotheque.desinscrire(tokenizer,
-                        connexion);
+                    Bibliotheque.desinscrire(tokenizer);
                     break;
                 case "reserver":
-                    Bibliotheque.reserver(tokenizer,
-                        connexion);
+                    Bibliotheque.reserver(tokenizer);
                     break;
                 case "utiliser":
-                    Bibliotheque.utiliser(tokenizer,
-                        connexion);
+                    Bibliotheque.utiliser(tokenizer);
                     break;
                 case "annuler":
-                    Bibliotheque.annuler(tokenizer,
-                        connexion);
+                    Bibliotheque.annuler(tokenizer);
                     break;
                 case "--":
-                    //Ne rien faire
                     break;
                 default:
                     System.out.println("  Transactions non reconnue.  Essayer \"aide\"");
                     break;
-            }*/
-            //******************* ANCIEN ***********************
-            if("aide".equals(command)) {
-                Bibliotheque.afficherAide();
-            } else if("acquerir".equals(command)) {
-                Bibliotheque.acquerir(tokenizer,
-                    connexion);
-            } else if("vendre".equals(command)) {
-                Bibliotheque.vendre(tokenizer,
-                    connexion);
-            } else if("preter".equals(command)) {
-                Bibliotheque.preter(tokenizer,
-                    connexion);
-            } else if("renouveler".equals(command)) {
-                Bibliotheque.renouveler(tokenizer,
-                    connexion);
-            } else if("retourner".equals(command)) {
-                Bibliotheque.retourner(tokenizer,
-                    connexion);
-            } else if("inscrire".equals(command)) {
-                Bibliotheque.inscrire(tokenizer,
-                    connexion);
-            } else if("desinscrire".equals(command)) {
-                Bibliotheque.desinscrire(tokenizer,
-                    connexion);
-            } else if("reserver".equals(command)) {
-                Bibliotheque.reserver(tokenizer,
-                    connexion);
-            } else if("utiliser".equals(command)) {
-                Bibliotheque.utiliser(tokenizer,
-                    connexion);
-            } else if("annuler".equals(command)) {
-                Bibliotheque.annuler(tokenizer,
-                    connexion);
-                // } else if("listerLivres".equals(command)) {
-                //     Bibliotheque.gestionBibliothque.livreDAO.listerLivres();
-                // } else if("listerLivresRetard".equals(command)) {
-                //     Bibliotheque.gestionBibliothque.livreDAO.listerLivresRetard(readString(tokenizer) /* date courante */);
-                // } else if("listerLivresTitre".equals(command)) {
-                //     Bibliotheque.gestionBibliothque.livreDAO.listerLivresTitre(readString(tokenizer) /* mot */);
-            } else if(!"--".equals(command)) {
-                System.out.println("  Transactions non reconnue.  Essayer \"aide\"");
             }
+            //            //******************* ANCIEN ***********************
+            //            if("aide".equals(command)) {
+            //                Bibliotheque.afficherAide();
+            //            } else if("acquerir".equals(command)) {
+            //                Bibliotheque.acquerir(tokenizer,
+            //                    connexion);
+            //            } else if("vendre".equals(command)) {
+            //                Bibliotheque.vendre(tokenizer,
+            //                    connexion);
+            //            } else if("preter".equals(command)) {
+            //                Bibliotheque.preter(tokenizer,
+            //                    connexion);
+            //            } else if("renouveler".equals(command)) {
+            //                Bibliotheque.renouveler(tokenizer,
+            //                    connexion);
+            //            } else if("retourner".equals(command)) {
+            //                Bibliotheque.retourner(tokenizer,
+            //                    connexion);
+            //            } else if("inscrire".equals(command)) {
+            //                Bibliotheque.inscrire(tokenizer,
+            //                    connexion);
+            //            } else if("desinscrire".equals(command)) {
+            //                Bibliotheque.desinscrire(tokenizer,
+            //                    connexion);
+            //            } else if("reserver".equals(command)) {
+            //                Bibliotheque.reserver(tokenizer,
+            //                    connexion);
+            //            } else if("utiliser".equals(command)) {
+            //                Bibliotheque.utiliser(tokenizer,
+            //                    connexion);
+            //            } else if("annuler".equals(command)) {
+            //                Bibliotheque.annuler(tokenizer,
+            //                    connexion);
+            //                // } else if("listerLivres".equals(command)) {
+            //                //     Bibliotheque.gestionBibliothque.livreDAO.listerLivres();
+            //                // } else if("listerLivresRetard".equals(command)) {
+            //                //     Bibliotheque.gestionBibliothque.livreDAO.listerLivresRetard(readString(tokenizer) /* date courante */);
+            //                // } else if("listerLivresTitre".equals(command)) {
+            //                //     Bibliotheque.gestionBibliothque.livreDAO.listerLivresTitre(readString(tokenizer) /* mot */);
+            //            } else if(!"--".equals(command)) {
+            //                System.out.println("  Transactions non reconnue.  Essayer \"aide\"");
+            //            }
         } catch(BibliothequeException bibliothequeException) {
             System.out.println("** "
                 + bibliothequeException.toString());
-            Bibliotheque.gestionnaireBibliotheque.rollback();
+            Bibliotheque.gestionnaireBibliotheque.rollbackTransaction();
         }
     }
 
@@ -292,7 +278,7 @@ public final class Bibliotheque {
             livreDTO.setDateAcquisition(Bibliotheque.readDate(tokenizer));
             Bibliotheque.gestionnaireBibliotheque.getLivreFacade().acquerir(connexion,
                 livreDTO);
-            Bibliotheque.gestionnaireBibliotheque.commit();
+            Bibliotheque.gestionnaireBibliotheque.commitTransaction();
         } catch(
             InvalidHibernateSessionException
             | InvalidDTOException
@@ -316,7 +302,7 @@ public final class Bibliotheque {
             livreDTO.setIdLivre(Bibliotheque.readString(tokenizer));
             Bibliotheque.gestionnaireBibliotheque.getLivreFacade().vendre(connexion,
                 livreDTO);
-            Bibliotheque.gestionnaireBibliotheque.commit();
+            Bibliotheque.gestionnaireBibliotheque.commitTransaction();
         } catch(
             InvalidHibernateSessionException
             | InvalidDTOException
@@ -351,7 +337,7 @@ public final class Bibliotheque {
             pretDTO.setMembreDTO(membreDTO);
             Bibliotheque.gestionnaireBibliotheque.getPretFacade().commencer(connexion,
                 pretDTO);
-            Bibliotheque.gestionnaireBibliotheque.commit();
+            Bibliotheque.gestionnaireBibliotheque.commitTransaction();
         } catch(
             InvalidHibernateSessionException
             | InvalidDTOException
@@ -387,7 +373,7 @@ public final class Bibliotheque {
             pretDTO.setMembreDTO(membreDTO);
             Bibliotheque.gestionnaireBibliotheque.getPretFacade().renouveler(connexion,
                 pretDTO);
-            Bibliotheque.gestionnaireBibliotheque.commit();
+            Bibliotheque.gestionnaireBibliotheque.commitTransaction();
         } catch(
             InvalidHibernateSessionException
             | InvalidDTOException
@@ -423,7 +409,7 @@ public final class Bibliotheque {
             pretDTO.setMembreDTO(membreDTO);
             Bibliotheque.gestionnaireBibliotheque.getPretFacade().terminer(connexion,
                 pretDTO);
-            Bibliotheque.gestionnaireBibliotheque.commit();
+            Bibliotheque.gestionnaireBibliotheque.commitTransaction();
         } catch(
             InvalidHibernateSessionException
             | InvalidDTOException
@@ -444,23 +430,21 @@ public final class Bibliotheque {
      * Transaction pour inscrire un membre.
      *
      * @param tokenizer Données de la transaction
-     * @param connexion La connexion à utiliser
      * @throws BibliothequeException Si une erreur survient au cours du transactionnel
      */
-    private static void inscrire(StringTokenizer tokenizer,
-        Connexion connexion) throws BibliothequeException {
+    private static void inscrire(StringTokenizer tokenizer) throws BibliothequeException {
         try {
+            Bibliotheque.gestionnaireBibliotheque.beginTransaction();
             final MembreDTO membreDTO = new MembreDTO();
             membreDTO.setNom(Bibliotheque.readString(tokenizer));
             membreDTO.setTelephone(Bibliotheque.readString(tokenizer));
             membreDTO.setLimitePret(Bibliotheque.readString(tokenizer));
-            Bibliotheque.gestionnaireBibliotheque.getMembreFacade().inscrire(connexion,
+            Bibliotheque.gestionnaireBibliotheque.getMembreFacade().inscrire(Bibliotheque.gestionnaireBibliotheque.getSession(),
                 membreDTO);
-            Bibliotheque.gestionnaireBibliotheque.commit();
+            Bibliotheque.gestionnaireBibliotheque.commitTransaction();
         } catch(
             InvalidHibernateSessionException
             | InvalidDTOException
-            | InvalidDTOClassException
             | FacadeException exception) {
             throw new BibliothequeException(exception);
         }
@@ -480,7 +464,7 @@ public final class Bibliotheque {
             membreDTO.setIdMembre(Bibliotheque.readString(tokenizer));
             Bibliotheque.gestionnaireBibliotheque.getMembreFacade().desinscrire(connexion,
                 membreDTO);
-            Bibliotheque.gestionnaireBibliotheque.commit();
+            Bibliotheque.gestionnaireBibliotheque.commitTransaction();
         } catch(
             InvalidHibernateSessionException
             | InvalidDTOException
@@ -520,7 +504,7 @@ public final class Bibliotheque {
             livreDTO.setIdLivre(reservationDTO.getLivreDTO().getIdLivre());
             Bibliotheque.gestionnaireBibliotheque.getReservationFacade().placer(connexion,
                 reservationDTO);
-            Bibliotheque.gestionnaireBibliotheque.commit();
+            Bibliotheque.gestionnaireBibliotheque.commitTransaction();
         } catch(
             InterruptedException
             | InvalidHibernateSessionException
@@ -558,7 +542,7 @@ public final class Bibliotheque {
             reservationDTO.setLivreDTO(livreDTO);
             Bibliotheque.gestionnaireBibliotheque.getReservationFacade().utiliser(connexion,
                 reservationDTO);
-            Bibliotheque.gestionnaireBibliotheque.commit();
+            Bibliotheque.gestionnaireBibliotheque.commitTransaction();
         } catch(
             InvalidHibernateSessionException
             | InvalidDTOException
@@ -589,7 +573,7 @@ public final class Bibliotheque {
             reservationDTO.setIdReservation(Bibliotheque.readString(tokenizer));
             Bibliotheque.gestionnaireBibliotheque.getReservationFacade().annuler(connexion,
                 reservationDTO);
-            Bibliotheque.gestionnaireBibliotheque.commit();
+            Bibliotheque.gestionnaireBibliotheque.commitTransaction();
         } catch(
             InvalidHibernateSessionException
             | InvalidDTOException
