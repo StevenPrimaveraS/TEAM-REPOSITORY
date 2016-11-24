@@ -5,6 +5,7 @@
 package ca.qc.collegeahuntsic.bibliotheque.service.implementations;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IPretDAO;
@@ -163,23 +164,11 @@ public class PretService extends Service implements IPretService {
         ExistingReservationException,
         ServiceException {
         try {
-            final MembreDTO unMembreDTO = (MembreDTO) get(session,
-                pretDTO.getMembreDTO().getIdMembre());
-            if(unMembreDTO == null) {
-                throw new InvalidDTOException("Le membre "
-                    + pretDTO.getMembreDTO().getIdMembre()
-                    + " n'existe pas");
-            }
-            final LivreDTO unLivreDTO = (LivreDTO) get(session,
-                pretDTO.getLivreDTO().getIdLivre());
-            if(unLivreDTO == null) {
-                throw new InvalidDTOException("Le livre "
-                    + pretDTO.getLivreDTO().getIdLivre()
-                    + " n'existe pas");
-            }
-            Set<PretDTO> prets = unLivreDTO.getPrets();
+            final MembreDTO unMembreDTO = pretDTO.getMembreDTO();
+            final LivreDTO unLivreDTO = pretDTO.getLivreDTO();
+            List<PretDTO> prets = new ArrayList<>(unLivreDTO.getPrets());
             if(!prets.isEmpty()) {
-                final PretDTO unPretDTO = (PretDTO) prets.toArray()[0];
+                final PretDTO unPretDTO = prets.get(0);
                 final MembreDTO emprunteur = (MembreDTO) get(session,
                     unPretDTO.getMembreDTO().getIdMembre());
                 throw new ExistingLoanException("Le livre "
@@ -192,8 +181,8 @@ public class PretService extends Service implements IPretService {
                     + emprunteur.getIdMembre()
                     + ")");
             }
-            prets = unMembreDTO.getPrets();
-            if(prets.size() == Integer.parseInt(unMembreDTO.getLimitePret())) {
+            prets = new ArrayList<>(unMembreDTO.getPrets());
+            if(prets.size() >= Integer.parseInt(unMembreDTO.getLimitePret())) {
                 throw new InvalidLoanLimitException("Le membre "
                     + unMembreDTO.getNom()
                     + " (ID de membre : "
