@@ -11,10 +11,8 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.dao.DAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionValueException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidSortByPropertyException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOException;
-import ca.qc.collegeahuntsic.bibliotheque.exception.dto.MissingDTOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingLoanException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingReservationException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.InvalidDAOException;
@@ -89,35 +87,22 @@ public class MembreService extends Service implements IMembreService {
         ExistingLoanException,
         ExistingReservationException,
         ServiceException {
-        try {
-            final MembreDTO unMembreDTO = (MembreDTO) get(session,
-                membreDTO.getIdMembre());
-            if(unMembreDTO == null) {
-                throw new MissingDTOException("Le membre "
-                    + membreDTO.getIdMembre()
-                    + " n'existe pas");
-            }
-            if(!unMembreDTO.getPrets().isEmpty()) {
-                throw new ExistingLoanException("Le membre "
-                    + unMembreDTO.getNom()
-                    + " (ID de membre : "
-                    + unMembreDTO.getIdMembre()
-                    + ") a encore des prêts");
-            }
-            if(!unMembreDTO.getReservations().isEmpty()) {
-                throw new ExistingReservationException("Le membre "
-                    + unMembreDTO.getNom()
-                    + " (ID de membre : "
-                    + unMembreDTO.getIdMembre()
-                    + ") a des réservations");
-            }
-            delete(session,
-                unMembreDTO);
-        } catch(
-            InvalidPrimaryKeyException
-            | MissingDTOException daoException) {
-            throw new ServiceException(daoException);
+        if(!membreDTO.getPrets().isEmpty()) {
+            throw new ExistingLoanException("Le membre "
+                + membreDTO.getNom()
+                + " (ID de membre : "
+                + membreDTO.getIdMembre()
+                + ") a encore des prêts");
         }
+        if(!membreDTO.getReservations().isEmpty()) {
+            throw new ExistingReservationException("Le membre "
+                + membreDTO.getNom()
+                + " (ID de membre : "
+                + membreDTO.getIdMembre()
+                + ") a des réservations");
+        }
+        delete(session,
+            membreDTO);
     }
 
     /**
