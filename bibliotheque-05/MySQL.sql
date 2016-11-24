@@ -6,29 +6,29 @@ DROP TABLE IF EXISTS membre CASCADE;
 
 
 CREATE TABLE membre (
-idMembre        varchar(5) AUTO_INCREMENT check(idMembre > 0), 
+idMembre        integer AUTO_INCREMENT check(idMembre > 0), 
 nom             varchar(10) NOT NULL,
-telephone       varchar(10) , 
-limitePret      varchar(3) check(limitePret > 0 and limitePret <= 10),
+telephone       bigint(10) , 
+limitePret      integer(2) check(limitePret > 0 and limitePret <= 10),
 CONSTRAINT cleMembre PRIMARY KEY (idMembre),
 CONSTRAINT limiteNbPret check(nbpret <= limitePret)
 );
 
 CREATE TABLE livre(
-idLivre         varchar(20) AUTO_INCREMENT check(idLivre > 0) , 
+idLivre         integer AUTO_INCREMENT check(idLivre > 0) , 
 titre           varchar(50) NOT NULL, 
 auteur          varchar(50) NOT NULL,
 dateAcquisition timestamp(3) not null, 
-idMembre        varchar(20) , 
+idMembre        integer , 
 datePret        timestamp(3) ,
 CONSTRAINT cleLivre PRIMARY KEY (idLivre),
 CONSTRAINT refPretMembre1 FOREIGN KEY (idMembre) REFERENCES membre(idMembre)
 );
 
 CREATE TABLE pret(
-idPret      varchar(20) AUTO_INCREMENT check(idPret > 0) ,
-idLivre     varchar(20) check(idLivre > 0) ,
-idMembre    varchar(20) check(idMembre > 0) ,
+idPret      integer AUTO_INCREMENT check(idPret > 0) ,
+idLivre     integer check(idLivre > 0) ,
+idMembre    integer check(idMembre > 0) ,
 datePret    timestamp(3) ,
 dateRetour 	timestamp(3) ,
 CONSTRAINT clePret PRIMARY KEY (idPret),
@@ -38,9 +38,9 @@ CONSTRAINT refPretMembre2 FOREIGN KEY (idMembre) REFERENCES membre(idMembre) ON 
 );
 
 CREATE TABLE reservation( 
-idReservation   varchar(20) AUTO_INCREMENT check(idReservation > 0) ,
-idMembre        varchar(20) , 
-idLivre         varchar(20) , 
+idReservation   integer AUTO_INCREMENT check(idReservation > 0) ,
+idMembre        integer , 
+idLivre         integer , 
 dateReservation timestamp(3) , 
 CONSTRAINT cleReservation PRIMARY KEY (idReservation) ,
 CONSTRAINT cleCandidateReservation UNIQUE (idMembre,idLivre) , 
