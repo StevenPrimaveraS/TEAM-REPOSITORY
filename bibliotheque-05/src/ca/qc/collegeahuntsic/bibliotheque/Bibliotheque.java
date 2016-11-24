@@ -18,6 +18,7 @@ import ca.qc.collegeahuntsic.bibliotheque.dto.PretDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.BibliothequeException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidHibernateSessionException;
+import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidPrimaryKeyException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dto.InvalidDTOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.facade.FacadeException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.ExistingLoanException;
@@ -263,6 +264,7 @@ public final class Bibliotheque {
      */
     private static void acquerir(StringTokenizer tokenizer) throws BibliothequeException {
         try {
+            Bibliotheque.gestionnaireBibliotheque.beginTransaction();
             final LivreDTO livreDTO = new LivreDTO();
             livreDTO.setTitre(Bibliotheque.readString(tokenizer));
             livreDTO.setAuteur(Bibliotheque.readString(tokenizer));
@@ -287,6 +289,7 @@ public final class Bibliotheque {
      */
     private static void vendre(StringTokenizer tokenizer) throws BibliothequeException {
         try {
+            Bibliotheque.gestionnaireBibliotheque.beginTransaction();
             final LivreDTO livreDTO = new LivreDTO();
             livreDTO.setIdLivre(Bibliotheque.readString(tokenizer));
             Bibliotheque.gestionnaireBibliotheque.getLivreFacade().vendre(Bibliotheque.gestionnaireBibliotheque.getSession(),
@@ -311,6 +314,7 @@ public final class Bibliotheque {
      */
     private static void preter(StringTokenizer tokenizer) throws BibliothequeException {
         try {
+            Bibliotheque.gestionnaireBibliotheque.beginTransaction();
             final MembreDTO membreDTO = new MembreDTO();
             membreDTO.setIdMembre(Bibliotheque.readString(tokenizer));
             final LivreDTO livreDTO = new LivreDTO();
@@ -341,6 +345,7 @@ public final class Bibliotheque {
      */
     private static void renouveler(StringTokenizer tokenizer) throws BibliothequeException {
         try {
+            Bibliotheque.gestionnaireBibliotheque.beginTransaction();
             final MembreDTO membreDTO = new MembreDTO();
             membreDTO.setIdMembre(Bibliotheque.readString(tokenizer));
             final LivreDTO livreDTO = new LivreDTO();
@@ -370,6 +375,7 @@ public final class Bibliotheque {
      */
     private static void retourner(StringTokenizer tokenizer) throws BibliothequeException {
         try {
+            Bibliotheque.gestionnaireBibliotheque.beginTransaction();
             final MembreDTO membreDTO = new MembreDTO();
             membreDTO.setIdMembre(Bibliotheque.readString(tokenizer));
             final LivreDTO livreDTO = new LivreDTO();
@@ -424,13 +430,22 @@ public final class Bibliotheque {
      */
     private static void desinscrire(StringTokenizer tokenizer) throws BibliothequeException {
         try {
-            final MembreDTO membreDTO = new MembreDTO();
-            membreDTO.setIdMembre(Bibliotheque.readString(tokenizer));
+            Bibliotheque.gestionnaireBibliotheque.beginTransaction();
+            final String idMembre = Bibliotheque.readString(tokenizer);
+            final MembreDTO membreDTO = (MembreDTO) Bibliotheque.gestionnaireBibliotheque.getMembreFacade().get(
+                Bibliotheque.gestionnaireBibliotheque.getSession(),
+                idMembre);
+            if(membreDTO == null) {
+                throw new InvalidDTOException("Le membre d'ID "
+                    + idMembre
+                    + " n'existe pas");
+            }
             Bibliotheque.gestionnaireBibliotheque.getMembreFacade().desinscrire(Bibliotheque.gestionnaireBibliotheque.getSession(),
                 membreDTO);
             Bibliotheque.gestionnaireBibliotheque.commitTransaction();
         } catch(
             InvalidHibernateSessionException
+            | InvalidPrimaryKeyException
             | InvalidDTOException
             | ExistingLoanException
             | ExistingReservationException
@@ -448,6 +463,7 @@ public final class Bibliotheque {
      */
     private static void reserver(StringTokenizer tokenizer) throws BibliothequeException {
         try {
+            Bibliotheque.gestionnaireBibliotheque.beginTransaction();
             // Juste pour éviter deux dates de réservation strictement identiques
             Thread.sleep(1);
             final ReservationDTO reservationDTO = new ReservationDTO();
@@ -484,6 +500,7 @@ public final class Bibliotheque {
      */
     private static void utiliser(StringTokenizer tokenizer) throws BibliothequeException {
         try {
+            Bibliotheque.gestionnaireBibliotheque.beginTransaction();
             final ReservationDTO reservationDTO = new ReservationDTO();
             reservationDTO.setIdReservation(Bibliotheque.readString(tokenizer));
             final MembreDTO membreDTO = new MembreDTO();
@@ -515,6 +532,7 @@ public final class Bibliotheque {
      */
     private static void annuler(StringTokenizer tokenizer) throws BibliothequeException {
         try {
+            Bibliotheque.gestionnaireBibliotheque.beginTransaction();
             final ReservationDTO reservationDTO = new ReservationDTO();
             reservationDTO.setIdReservation(Bibliotheque.readString(tokenizer));
             Bibliotheque.gestionnaireBibliotheque.getReservationFacade().annuler(Bibliotheque.gestionnaireBibliotheque.getSession(),
