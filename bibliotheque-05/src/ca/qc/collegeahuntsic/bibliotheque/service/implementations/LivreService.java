@@ -140,9 +140,7 @@ public class LivreService extends Service implements ILivreService {
             final Set<ReservationDTO> reservations = ((LivreDTO) getLivreDAO().get(session,
                 unLivreDTO.getIdLivre())).getReservations();
             if(!reservations.isEmpty()) {
-                final int lastReservationIndex = reservations.size()
-                    - 1;
-                final ReservationDTO reservationDTO = (ReservationDTO) reservations.toArray()[lastReservationIndex];
+                final ReservationDTO reservationDTO = (ReservationDTO) reservations.toArray()[0];
                 final MembreDTO booker = reservationDTO.getMembreDTO();
                 throw new ExistingReservationException("Le livre "
                     + unLivreDTO.getTitre()
