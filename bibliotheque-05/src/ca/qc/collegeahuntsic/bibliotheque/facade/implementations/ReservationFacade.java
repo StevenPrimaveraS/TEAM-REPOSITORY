@@ -33,7 +33,6 @@ public class ReservationFacade extends Facade implements IReservationFacade {
          * @throws InvalidServiceException Si le service de livres est <code>null</code>
          */
     ReservationFacade(IReservationService reservationService) throws InvalidServiceException {
-        // TODO: Change the constructor visibility to package when switching to Spring
         super(reservationService);
         if(reservationService == null) {
             throw new InvalidServiceException("Le service de réservations ne peut être null");

@@ -53,11 +53,10 @@ public class LivreService extends Service implements ILivreService {
      * @throws InvalidDAOException Si le DAO de livre est <code>null</code>, si le DAO de membre est <code>null</code>, si le DAO de prêt est
      *         <code>null</code> ou si le DAO de réservation est <code>null</code>
      */
-    public LivreService(ILivreDAO livreDAO,
+    LivreService(ILivreDAO livreDAO,
         IMembreDAO membreDAO,
         IPretDAO pretDAO,
         IReservationDAO reservationDAO) throws InvalidDAOException {
-        // TODO: Change the constructor visibility to package when switching to Spring
         super(livreDAO);
         if(livreDAO == null) {
             throw new InvalidDAOException("Le DAO de livre ne peut être null");
@@ -89,7 +88,6 @@ public class LivreService extends Service implements ILivreService {
 
     /**
      * Setter de la variable d'instance <code>this.livreDAO</code>.
-     *
      * @param livreDAO La valeur à utiliser pour la variable d'instance <code>this.livreDAO</code>
      */
     private void setLivreDAO(ILivreDAO livreDAO) {
@@ -98,7 +96,6 @@ public class LivreService extends Service implements ILivreService {
 
     /**
      * Getter de la variable d'instance <code>this.membreDAO</code>.
-     *
      * @return La variable d'instance <code>this.membreDAO</code>
      */
     private IMembreDAO getMembreDAO() {
@@ -107,7 +104,6 @@ public class LivreService extends Service implements ILivreService {
 
     /**
      * Setter de la variable d'instance <code>this.membreDAO</code>.
-     *
      * @param membreDAO La valeur à utiliser pour la variable d'instance <code>this.membreDAO</code>
      */
     private void setMembreDAO(IMembreDAO membreDAO) {
@@ -116,7 +112,6 @@ public class LivreService extends Service implements ILivreService {
 
     /**
      * Setter de la variable d'instance <code>this.pretDAO</code>.
-     *
      * @param pretDAO La valeur à utiliser pour la variable d'instance <code>this.pretDAO</code>
      */
     public void setPretDAO(IPretDAO pretDAO) {

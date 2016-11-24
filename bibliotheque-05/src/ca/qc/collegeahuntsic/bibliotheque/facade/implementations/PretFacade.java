@@ -33,7 +33,6 @@ public class PretFacade extends Facade implements IPretFacade {
      * @throws InvalidServiceException Si le service de pret est <code>null</code>
      */
     PretFacade(IPretService pretService) throws InvalidServiceException {
-        // TODO: Change the constructor visibility to package when switching to Spring
         super(pretService);
         if(pretService == null) {
             throw new InvalidServiceException("Le service de prets ne peut être null");
