@@ -83,11 +83,12 @@ public final class Bibliotheque {
                 Bibliotheque.gestionnaireBibliotheque = new BibliothequeCreateur();
                 Bibliotheque.traiterTransactions(reader);
             }
-        } catch(Exception exception) {
+        } catch(IOException ioException) {
             Bibliotheque.gestionnaireBibliotheque.rollbackTransaction();
-            exception.printStackTrace(System.out);
-        } finally {
-            Bibliotheque.gestionnaireBibliotheque.close();
+            ioException.printStackTrace(System.out);
+        } catch(BibliothequeException bibliothequeException) {
+            Bibliotheque.gestionnaireBibliotheque.rollbackTransaction();
+            bibliothequeException.printStackTrace(System.out);
         }
     }
 
