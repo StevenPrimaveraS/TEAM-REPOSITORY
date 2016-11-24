@@ -67,8 +67,8 @@ public final class Bibliotheque {
      */
     public static void main(String[] arguments) throws Exception {
         // Validation du nombre de paramètres
-        if(arguments.length < 5) {
-            System.out.println("Usage: java Bibliotheque <serveur> <bd> <user> <password> <fichier-transactions>");
+        if(arguments.length < 1) {
+            System.out.println("Usage: java Bibliotheque <fichier-transactions>");
             System.out.println(Connexion.getServeursSupportes());
             return;
         }
@@ -76,18 +76,15 @@ public final class Bibliotheque {
         try {
             // Ouverture du fichier de transactions
             final InputStream sourceTransaction = Bibliotheque.class.getResourceAsStream("/"
-                + arguments[4]);
+                + arguments[0]);
             try(
                 BufferedReader reader = new BufferedReader(new InputStreamReader(sourceTransaction))) {
 
-                Bibliotheque.gestionnaireBibliotheque = new BibliothequeCreateur(arguments[0],
-                    arguments[1],
-                    arguments[2],
-                    arguments[3]);
+                Bibliotheque.gestionnaireBibliotheque = new BibliothequeCreateur();
                 Bibliotheque.traiterTransactions(reader);
             }
         } catch(Exception exception) {
-            Bibliotheque.gestionnaireBibliotheque.rollback();
+            Bibliotheque.gestionnaireBibliotheque.rollbackTransaction();
             exception.printStackTrace(System.out);
         } finally {
             Bibliotheque.gestionnaireBibliotheque.close();
