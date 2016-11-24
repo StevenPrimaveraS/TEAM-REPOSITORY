@@ -5,13 +5,8 @@
 package ca.qc.collegeahuntsic.bibliotheque.service.implementations;
 
 import java.util.List;
-import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.ILivreDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IMembreDAO;
-import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IPretDAO;
-import ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IReservationDAO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
-import ca.qc.collegeahuntsic.bibliotheque.dto.PretDTO;
-import ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.DAOException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionException;
 import ca.qc.collegeahuntsic.bibliotheque.exception.dao.InvalidCriterionValueException;
@@ -37,61 +32,19 @@ public class MembreService extends Service implements IMembreService {
 
     private IMembreDAO membreDAO;
 
-    private IReservationDAO reservationDAO;
-
-    private IPretDAO pretDAO;
-
-    private ILivreDAO livreDAO;
-
     /**
      * Crée le service de la table <code>membre</code>.
      *
      * @param membreDAO Le DAO de la table <code>membre</code>
-     * @param livreDAO Le DAO de la table <code>livre</code>
-     * @param reservationDAO Le DAO de la table <code>reservation</code>
-     * @param pretDAO Le DAO de la table <code>pret</code>
      * @throws InvalidDAOException Si le DAO de livre est <code>null</code>, si le DAO de membre est <code>null</code>, si le DAO de prêt est
      *         <code>null</code> ou si le DAO de réservation est <code>null</code>
      */
-    public MembreService(IMembreDAO membreDAO,
-        ILivreDAO livreDAO,
-        IReservationDAO reservationDAO,
-        IPretDAO pretDAO) throws InvalidDAOException {
+    public MembreService(IMembreDAO membreDAO) throws InvalidDAOException {
         super(membreDAO);
-        if(livreDAO == null) {
-            throw new InvalidDAOException("Le DAO de livre ne peut être null");
-        }
         if(membreDAO == null) {
             throw new InvalidDAOException("Le DAO de membre ne peut être null");
         }
-        if(pretDAO == null) {
-            throw new InvalidDAOException("Le DAO de prêt ne peut être null");
-        }
-        if(reservationDAO == null) {
-            throw new InvalidDAOException("Le DAO de réservation ne peut être null");
-        }
         setMembreDAO(membreDAO);
-        setLivreDAO(livreDAO);
-        setReservationDAO(reservationDAO);
-        setPretDAO(pretDAO);
-    }
-
-    /**
-     * Getter de la variable d'instance <code>this.pretDAO</code>.
-     *
-     * @return La variable d'instance <code>this.pretDAO</code>
-     */
-    public IPretDAO getPretDAO() {
-        return this.pretDAO;
-    }
-
-    /**
-     * Setter de la variable d'instance <code>this.pretDAO</code>.
-     *
-     * @param pretDAO La valeur à utiliser pour la variable d'instance <code>this.pretDAO</code>
-     */
-    public void setPretDAO(IPretDAO pretDAO) {
-        this.pretDAO = pretDAO;
     }
 
     /**
@@ -110,44 +63,6 @@ public class MembreService extends Service implements IMembreService {
      */
     private void setMembreDAO(IMembreDAO membreDAO) {
         this.membreDAO = membreDAO;
-    }
-
-    /**
-     * Getter de la variable d'instance <code>this.livreDAO</code>.
-     *
-     * @return La variable d'instance <code>this.livreDAO</code>
-     */
-    public ILivreDAO getLivreDAO() {
-        return this.livreDAO;
-    }
-
-    /**
-     * Setter de la variable d'instance <code>this.livreDAO</code>.
-     *
-     * @param livreDAO La valeur à utiliser pour la variable d'instance <code>this.livreDAO</code>
-     */
-    private void setLivreDAO(ILivreDAO livreDAO) {
-        this.livreDAO = livreDAO;
-    }
-
-    /**
-     * Getter de la variable d'instance <code>this.reservationDAO</code>.
-     *
-     * @return La variable d'instance <code>this.reservationDAO</code>
-     */
-    private IReservationDAO getReservationDAO() {
-        return this.reservationDAO;
-    }
-
-    /**
-     * Setter de la variable d'instance <code>this.reservationDAO</code>.
-     *
-     * @param reservationDAO
-     *            La valeur à utiliser pour la variable d'instance
-     *            <code>this.reservationDAO</code>
-     */
-    private void setReservationDAO(IReservationDAO reservationDAO) {
-        this.reservationDAO = reservationDAO;
     }
 
     // EndRegion Getters and Setters
@@ -193,18 +108,14 @@ public class MembreService extends Service implements IMembreService {
                     + membreDTO.getIdMembre()
                     + " n'existe pas");
             }
-            if(!getPretDAO().findByMembre(session,
-                membreDTO.getIdMembre(),
-                PretDTO.DATE_PRET_COLUMN_NAME).isEmpty()) {
+            if(!unMembreDTO.getPrets().isEmpty()) {
                 throw new ExistingLoanException("Le membre "
                     + unMembreDTO.getNom()
                     + " (ID de membre : "
                     + unMembreDTO.getIdMembre()
                     + ") a encore des prêts");
             }
-            if(!getReservationDAO().findByMembre(session,
-                unMembreDTO.getIdMembre(),
-                ReservationDTO.DATE_RESERVATION_COLUMN_NAME).isEmpty()) {
+            if(!unMembreDTO.getReservations().isEmpty()) {
                 throw new ExistingReservationException("Le membre "
                     + unMembreDTO.getNom()
                     + " (ID de membre : "
@@ -214,11 +125,7 @@ public class MembreService extends Service implements IMembreService {
             delete(session,
                 unMembreDTO);
         } catch(
-            DAOException
-            | InvalidPrimaryKeyException
-            | InvalidCriterionException
-            | InvalidCriterionValueException
-            | InvalidSortByPropertyException
+            InvalidPrimaryKeyException
             | MissingDTOException daoException) {
             throw new ServiceException(daoException);
         }
