@@ -75,10 +75,8 @@ public class MembreService extends Service implements IMembreService {
         MembreDTO membreDTO) throws InvalidHibernateSessionException,
         InvalidDTOException,
         ServiceException {
-
         add(session,
             membreDTO);
-
     }
 
     /**
