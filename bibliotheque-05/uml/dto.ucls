@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.9" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
   realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
-  <class id="1" language="java" name="ca.qc.collegeahuntsic.bibliotheque.dto.DTO" project="bibliotheque-04-MySQL" 
-    file="/bibliotheque-04-MySQL/src/ca/qc/collegeahuntsic/bibliotheque/dto/DTO.java" binary="false" 
+  <class id="1" language="java" name="ca.qc.collegeahuntsic.bibliotheque.dto.DTO" project="bibliotheque-05" 
+    file="/bibliotheque-05/src/ca/qc/collegeahuntsic/bibliotheque/dto/DTO.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="560" y="427"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -11,8 +11,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO" project="bibliotheque-04-MySQL" 
-    file="/bibliotheque-04-MySQL/src/ca/qc/collegeahuntsic/bibliotheque/dto/MembreDTO.java" binary="false" 
+  <class id="2" language="java" name="ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO" project="bibliotheque-05" 
+    file="/bibliotheque-05/src/ca/qc/collegeahuntsic/bibliotheque/dto/MembreDTO.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="72" y="427"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -21,8 +21,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO" project="bibliotheque-04-MySQL" 
-    file="/bibliotheque-04-MySQL/src/ca/qc/collegeahuntsic/bibliotheque/dto/LivreDTO.java" binary="false" 
+  <class id="3" language="java" name="ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO" project="bibliotheque-05" 
+    file="/bibliotheque-05/src/ca/qc/collegeahuntsic/bibliotheque/dto/LivreDTO.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1076" y="427"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -31,8 +31,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="ca.qc.collegeahuntsic.bibliotheque.dto.PretDTO" project="bibliotheque-04-MySQL" 
-    file="/bibliotheque-04-MySQL/src/ca/qc/collegeahuntsic/bibliotheque/dto/PretDTO.java" binary="false" 
+  <class id="4" language="java" name="ca.qc.collegeahuntsic.bibliotheque.dto.PretDTO" project="bibliotheque-05" 
+    file="/bibliotheque-05/src/ca/qc/collegeahuntsic/bibliotheque/dto/PretDTO.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="562" y="82"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -42,8 +42,8 @@
     </display>  
   </class>  
   <class id="5" language="java" name="ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO" 
-    project="bibliotheque-04-MySQL" 
-    file="/bibliotheque-04-MySQL/src/ca/qc/collegeahuntsic/bibliotheque/dto/ReservationDTO.java" binary="false" 
+    project="bibliotheque-05" 
+    file="/bibliotheque-05/src/ca/qc/collegeahuntsic/bibliotheque/dto/ReservationDTO.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="560" y="751"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

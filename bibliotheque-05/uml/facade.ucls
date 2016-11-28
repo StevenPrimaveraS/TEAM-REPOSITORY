@@ -2,8 +2,8 @@
 <class-diagram version="1.1.9" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
   realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
   <interface id="1" language="java" name="ca.qc.collegeahuntsic.bibliotheque.facade.interfaces.IFacade" 
-    project="bibliotheque-04-MySQL" 
-    file="/bibliotheque-04-MySQL/src/ca/qc/collegeahuntsic/bibliotheque/facade/interfaces/IFacade.java" binary="false" 
+    project="bibliotheque-05" 
+    file="/bibliotheque-05/src/ca/qc/collegeahuntsic/bibliotheque/facade/interfaces/IFacade.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="70" width="297" x="366" y="-126"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -13,8 +13,8 @@
     </display>  
   </interface>  
   <interface id="2" language="java" name="ca.qc.collegeahuntsic.bibliotheque.facade.interfaces.IPretFacade" 
-    project="bibliotheque-04-MySQL" 
-    file="/bibliotheque-04-MySQL/src/ca/qc/collegeahuntsic/bibliotheque/facade/interfaces/IPretFacade.java" 
+    project="bibliotheque-05" 
+    file="/bibliotheque-05/src/ca/qc/collegeahuntsic/bibliotheque/facade/interfaces/IPretFacade.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="124" width="297" x="-140" y="-16"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -24,8 +24,8 @@
     </display>  
   </interface>  
   <interface id="3" language="java" name="ca.qc.collegeahuntsic.bibliotheque.facade.interfaces.ILivreFacade" 
-    project="bibliotheque-04-MySQL" 
-    file="/bibliotheque-04-MySQL/src/ca/qc/collegeahuntsic/bibliotheque/facade/interfaces/ILivreFacade.java" 
+    project="bibliotheque-05" 
+    file="/bibliotheque-05/src/ca/qc/collegeahuntsic/bibliotheque/facade/interfaces/ILivreFacade.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="106" width="297" x="197" y="-16"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -35,8 +35,8 @@
     </display>  
   </interface>  
   <interface id="4" language="java" name="ca.qc.collegeahuntsic.bibliotheque.facade.interfaces.IMembreFacade" 
-    project="bibliotheque-04-MySQL" 
-    file="/bibliotheque-04-MySQL/src/ca/qc/collegeahuntsic/bibliotheque/facade/interfaces/IMembreFacade.java" 
+    project="bibliotheque-05" 
+    file="/bibliotheque-05/src/ca/qc/collegeahuntsic/bibliotheque/facade/interfaces/IMembreFacade.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="106" width="297" x="534" y="-16"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -46,8 +46,8 @@
     </display>  
   </interface>  
   <interface id="5" language="java" name="ca.qc.collegeahuntsic.bibliotheque.facade.interfaces.IReservationFacade" 
-    project="bibliotheque-04-MySQL" 
-    file="/bibliotheque-04-MySQL/src/ca/qc/collegeahuntsic/bibliotheque/facade/interfaces/IReservationFacade.java" 
+    project="bibliotheque-05" 
+    file="/bibliotheque-05/src/ca/qc/collegeahuntsic/bibliotheque/facade/interfaces/IReservationFacade.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="124" width="297" x="871" y="-16"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
