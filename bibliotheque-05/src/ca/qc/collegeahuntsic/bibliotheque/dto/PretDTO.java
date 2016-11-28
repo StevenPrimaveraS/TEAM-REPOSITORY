@@ -13,7 +13,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  *
  * @author Gilles Bénichou
  */
-public class PretDTO extends DTO {
+public final class PretDTO extends DTO {
     public static final String ID_PRET_COLUMN_NAME = "idPret";
 
     public static final String ID_LIVRE_COLUMN_NAME = "idLivre";
