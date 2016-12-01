@@ -11,7 +11,6 @@ import java.io.InputStreamReader;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.StringTokenizer;
-import ca.qc.collegeahuntsic.bibliotheque.db.Connexion;
 import ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO;
 import ca.qc.collegeahuntsic.bibliotheque.dto.PretDTO;
@@ -27,6 +26,8 @@ import ca.qc.collegeahuntsic.bibliotheque.exception.service.InvalidLoanLimitExce
 import ca.qc.collegeahuntsic.bibliotheque.exception.service.MissingLoanException;
 import ca.qc.collegeahuntsic.bibliotheque.util.BibliothequeCreateur;
 import ca.qc.collegeahuntsic.bibliotheque.util.FormatteurDate;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Interface du système de gestion d'une bibliothèque.<br /><br />
@@ -53,6 +54,8 @@ import ca.qc.collegeahuntsic.bibliotheque.util.FormatteurDate;
 public final class Bibliotheque {
     private static BibliothequeCreateur gestionnaireBibliotheque;
 
+    private static final Log LOGGER = LogFactory.getLog(Bibliotheque.class);
+
     /**
      * Constructeur privé pour empêcher toute instanciation.
      */
@@ -69,8 +72,8 @@ public final class Bibliotheque {
     public static void main(String[] arguments) throws Exception {
         // Validation du nombre de paramètres
         if(arguments.length < 1) {
-            System.out.println("Usage: java Bibliotheque <fichier-transactions>");
-            System.out.println(Connexion.getServeursSupportes());
+            Bibliotheque.LOGGER.info("Usage: java Bibliotheque <fichier-transactions>");
+            //            System.out.println(Connexion.getServeursSupportes());
             return;
         }
 
@@ -85,11 +88,11 @@ public final class Bibliotheque {
                 Bibliotheque.traiterTransactions(reader);
             }
         } catch(IOException ioException) {
-            Bibliotheque.gestionnaireBibliotheque.rollbackTransaction();
-            ioException.printStackTrace(System.out);
+            Bibliotheque.LOGGER.error(" **** "
+                + ioException.getMessage());
         } catch(BibliothequeException bibliothequeException) {
-            Bibliotheque.gestionnaireBibliotheque.rollbackTransaction();
-            bibliothequeException.printStackTrace(System.out);
+            Bibliotheque.LOGGER.error(" **** "
+                + bibliothequeException.getMessage());
         }
     }
 
@@ -101,7 +104,7 @@ public final class Bibliotheque {
      */
     private static void traiterTransactions(BufferedReader reader) throws Exception {
         Bibliotheque.afficherAide();
-        System.out.println("\n\n\n");
+        Bibliotheque.LOGGER.info("\n\n\n");
         String transaction = Bibliotheque.lireTransaction(reader);
         while(!Bibliotheque.finTransaction(transaction)) {
             // Découpage de la transaction en mots
