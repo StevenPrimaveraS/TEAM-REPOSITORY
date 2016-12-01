@@ -73,7 +73,6 @@ public final class Bibliotheque {
         // Validation du nombre de paramètres
         if(arguments.length < 1) {
             Bibliotheque.LOGGER.info("Usage: java Bibliotheque <fichier-transactions>");
-            //            System.out.println(Connexion.getServeursSupportes());
             return;
         }
 
@@ -127,7 +126,7 @@ public final class Bibliotheque {
     private static String lireTransaction(BufferedReader reader) throws IOException {
         final String transaction = reader.readLine();
         if(transaction != null) {
-            System.out.println("> "
+            Bibliotheque.LOGGER.info("> "
                 + transaction);
         }
         return transaction;
@@ -180,53 +179,11 @@ public final class Bibliotheque {
                 case "--":
                     break;
                 default:
-                    System.out.println("  Transactions non reconnue.  Essayer \"aide\"");
+                    Bibliotheque.LOGGER.info("  Transactions non reconnue.  Essayer \"aide\"");
                     break;
             }
-            //            //******************* ANCIEN ***********************
-            //            if("aide".equals(command)) {
-            //                Bibliotheque.afficherAide();
-            //            } else if("acquerir".equals(command)) {
-            //                Bibliotheque.acquerir(tokenizer,
-            //                    connexion);
-            //            } else if("vendre".equals(command)) {
-            //                Bibliotheque.vendre(tokenizer,
-            //                    connexion);
-            //            } else if("preter".equals(command)) {
-            //                Bibliotheque.preter(tokenizer,
-            //                    connexion);
-            //            } else if("renouveler".equals(command)) {
-            //                Bibliotheque.renouveler(tokenizer,
-            //                    connexion);
-            //            } else if("retourner".equals(command)) {
-            //                Bibliotheque.retourner(tokenizer,
-            //                    connexion);
-            //            } else if("inscrire".equals(command)) {
-            //                Bibliotheque.inscrire(tokenizer,
-            //                    connexion);
-            //            } else if("desinscrire".equals(command)) {
-            //                Bibliotheque.desinscrire(tokenizer,
-            //                    connexion);
-            //            } else if("reserver".equals(command)) {
-            //                Bibliotheque.reserver(tokenizer,
-            //                    connexion);
-            //            } else if("utiliser".equals(command)) {
-            //                Bibliotheque.utiliser(tokenizer,
-            //                    connexion);
-            //            } else if("annuler".equals(command)) {
-            //                Bibliotheque.annuler(tokenizer,
-            //                    connexion);
-            //                // } else if("listerLivres".equals(command)) {
-            //                //     Bibliotheque.gestionBibliothque.livreDAO.listerLivres();
-            //                // } else if("listerLivresRetard".equals(command)) {
-            //                //     Bibliotheque.gestionBibliothque.livreDAO.listerLivresRetard(readString(tokenizer) /* date courante */);
-            //                // } else if("listerLivresTitre".equals(command)) {
-            //                //     Bibliotheque.gestionBibliothque.livreDAO.listerLivresTitre(readString(tokenizer) /* mot */);
-            //            } else if(!"--".equals(command)) {
-            //                System.out.println("  Transactions non reconnue.  Essayer \"aide\"");
-            //            }
         } catch(BibliothequeException bibliothequeException) {
-            System.out.println("** "
+            Bibliotheque.LOGGER.error("** "
                 + bibliothequeException.toString());
             Bibliotheque.gestionnaireBibliotheque.rollbackTransaction();
         }
@@ -236,27 +193,24 @@ public final class Bibliotheque {
      * Affiche le menu des transactions acceptées par le système.
      */
     private static void afficherAide() {
-        System.out.println();
-        System.out.println("Chaque transaction comporte un nom et une liste d'arguments");
-        System.out.println("séparés par des espaces. La liste peut être vide.");
-        System.out.println(" Les dates sont en format yyyy-mm-dd.");
-        System.out.println("");
-        System.out.println("Les transactions sont :");
-        System.out.println("  aide");
-        System.out.println("  exit");
-        System.out.println("  acquerir <idLivre> <titre> <auteur> <dateAcquisition>");
-        System.out.println("  preter <idMembre> <idLivre>");
-        System.out.println("  renouveler <idLivre>");
-        System.out.println("  retourner <idLivre>");
-        System.out.println("  vendre <idLivre>");
-        System.out.println("  inscrire <idMembre> <nom> <telephone> <limitePret>");
-        System.out.println("  desinscrire <idMembre>");
-        System.out.println("  reserver <idReservation> <idMembre> <idLivre>");
-        System.out.println("  utiliser <idReservation>");
-        System.out.println("  annuler <idReservation>");
-        // System.out.println("  listerLivresRetard <dateCourante>");
-        // System.out.println("  listerLivresTitre <mot>");
-        // System.out.println("  listerLivres");
+        Bibliotheque.LOGGER.info("");
+        Bibliotheque.LOGGER.info("Chaque transaction comporte un nom et une liste d'arguments");
+        Bibliotheque.LOGGER.info("séparés par des espaces. La liste peut être vide.");
+        Bibliotheque.LOGGER.info(" Les dates sont en format yyyy-mm-dd.");
+        Bibliotheque.LOGGER.info("");
+        Bibliotheque.LOGGER.info("Les transactions sont :");
+        Bibliotheque.LOGGER.info("  aide");
+        Bibliotheque.LOGGER.info("  exit");
+        Bibliotheque.LOGGER.info("  acquerir <idLivre> <titre> <auteur> <dateAcquisition>");
+        Bibliotheque.LOGGER.info("  preter <idMembre> <idLivre>");
+        Bibliotheque.LOGGER.info("  renouveler <idLivre>");
+        Bibliotheque.LOGGER.info("  retourner <idLivre>");
+        Bibliotheque.LOGGER.info("  vendre <idLivre>");
+        Bibliotheque.LOGGER.info("  inscrire <idMembre> <nom> <telephone> <limitePret>");
+        Bibliotheque.LOGGER.info("  desinscrire <idMembre>");
+        Bibliotheque.LOGGER.info("  reserver <idReservation> <idMembre> <idLivre>");
+        Bibliotheque.LOGGER.info("  utiliser <idReservation>");
+        Bibliotheque.LOGGER.info("  annuler <idReservation>");
     }
 
     /**
@@ -280,6 +234,8 @@ public final class Bibliotheque {
             | InvalidDTOException
             | FacadeException exception) {
             Bibliotheque.gestionnaireBibliotheque.rollbackTransaction();
+            Bibliotheque.LOGGER.error(" **** "
+                + exception.getMessage());
             throw new BibliothequeException(exception);
         }
     }
@@ -307,6 +263,8 @@ public final class Bibliotheque {
             | FacadeException
             | InvalidPrimaryKeyException exception) {
             Bibliotheque.gestionnaireBibliotheque.rollbackTransaction();
+            Bibliotheque.LOGGER.error(" **** "
+                + exception.getMessage());
             throw new BibliothequeException(exception);
         }
     }
@@ -338,6 +296,8 @@ public final class Bibliotheque {
             | ExistingReservationException
             | FacadeException exception) {
             Bibliotheque.gestionnaireBibliotheque.rollbackTransaction();
+            Bibliotheque.LOGGER.error(" **** "
+                + exception.getMessage());
             throw new BibliothequeException(exception);
         }
     }
@@ -370,6 +330,8 @@ public final class Bibliotheque {
             | MissingLoanException
             | InvalidPrimaryKeyException exception) {
             Bibliotheque.gestionnaireBibliotheque.rollbackTransaction();
+            Bibliotheque.LOGGER.error(" **** "
+                + exception.getMessage());
             throw new BibliothequeException(exception);
         }
     }
@@ -401,6 +363,8 @@ public final class Bibliotheque {
             | MissingLoanException
             | InvalidPrimaryKeyException exception) {
             Bibliotheque.gestionnaireBibliotheque.rollbackTransaction();
+            Bibliotheque.LOGGER.error(" **** "
+                + exception.getMessage());
             throw new BibliothequeException(exception);
         }
     }
@@ -425,8 +389,9 @@ public final class Bibliotheque {
             InvalidHibernateSessionException
             | InvalidDTOException
             | FacadeException exception) {
-
             Bibliotheque.gestionnaireBibliotheque.rollbackTransaction();
+            Bibliotheque.LOGGER.error(" **** "
+                + exception.getMessage());
             throw new BibliothequeException(exception);
         }
     }
@@ -460,6 +425,8 @@ public final class Bibliotheque {
             | ExistingReservationException
             | FacadeException exception) {
             Bibliotheque.gestionnaireBibliotheque.rollbackTransaction();
+            Bibliotheque.LOGGER.error(" **** "
+                + exception.getMessage());
             throw new BibliothequeException(exception);
         }
     }
@@ -497,6 +464,8 @@ public final class Bibliotheque {
             | ExistingReservationException
             | FacadeException exception) {
             Bibliotheque.gestionnaireBibliotheque.rollbackTransaction();
+            Bibliotheque.LOGGER.error(" **** "
+                + exception.getMessage());
             throw new BibliothequeException(exception);
         }
     }
@@ -531,6 +500,8 @@ public final class Bibliotheque {
             | FacadeException
             | InvalidPrimaryKeyException exception) {
             Bibliotheque.gestionnaireBibliotheque.rollbackTransaction();
+            Bibliotheque.LOGGER.error(" **** "
+                + exception.getMessage());
             throw new BibliothequeException(exception);
         }
     }
@@ -562,6 +533,8 @@ public final class Bibliotheque {
             | FacadeException
             | InvalidPrimaryKeyException exception) {
             Bibliotheque.gestionnaireBibliotheque.rollbackTransaction();
+            Bibliotheque.LOGGER.error(" **** "
+                + exception.getMessage());
             throw new BibliothequeException(exception);
         }
     }
@@ -600,49 +573,6 @@ public final class Bibliotheque {
         }
         throw new BibliothequeException("Autre paramètre attendu");
     }
-
-    //      ****** readInt et readLong ******
-    //    /**
-    //     * Lit un integer de la transaction.
-    //     *
-    //     * @param tokenizer La transaction à décoder
-    //     * @return Le integer lu
-    //     * @throws BibliothequeException Si l'élément lu est manquant ou n'est pas un integer
-    //     */
-    //    private static int readInt(StringTokenizer tokenizer) throws BibliothequeException {
-    //        if(tokenizer.hasMoreElements()) {
-    //            final String token = tokenizer.nextToken();
-    //            try {
-    //                return Integer.valueOf(token).intValue();
-    //            } catch(NumberFormatException numberFormatException) {
-    //                throw new BibliothequeException("Nombre attendu à la place de \""
-    //                    + token
-    //                    + "\"");
-    //            }
-    //        }
-    //        throw new BibliothequeException("Autre paramètre attendu");
-    //    }
-    //
-    //    /**
-    //     * Lit un long de la transaction.
-    //     *
-    //     * @param tokenizer La transaction à décoder
-    //     * @return Le long lu
-    //     * @throws BibliothequeException Si l'élément lu est manquant ou n'est pas un long
-    //     */
-    //    private static long readLong(StringTokenizer tokenizer) throws BibliothequeException {
-    //        if(tokenizer.hasMoreElements()) {
-    //            final String token = tokenizer.nextToken();
-    //            try {
-    //                return Long.valueOf(token).longValue();
-    //            } catch(NumberFormatException numberFormatException) {
-    //                throw new BibliothequeException("Nombre attendu à la place de \""
-    //                    + token
-    //                    + "\"");
-    //            }
-    //        }
-    //        throw new BibliothequeException("Autre paramètre attendu");
-    //    }
 
     /**
      * Lit une date au format YYYY-MM-DD de la transaction.
