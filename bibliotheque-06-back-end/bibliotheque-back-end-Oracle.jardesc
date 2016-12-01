@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jardesc>
+    <jar path="//v-ficahper.ca.intra/MesDocuments/Etudiants/2014/201480345/git/TEAM-REPOSITORY/bibliotheque-06-back-end/bibliotheque-back-end-Oracle.jar"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/bibliotheque-06-back-end/bibliotheque-back-end-Oracle.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="false" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+    <selectedProjects/>
+    <manifest generateManifest="true" manifestLocation="" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
+        <sealing sealJar="false">
+            <packagesToSeal/>
+            <packagesToUnSeal/>
+        </sealing>
+    </manifest>
+    <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
+        <javaElement handleIdentifier="=bibliotheque-06-back-end/src&lt;ca.qc.collegeahuntsic.bibliothequeBackEnd.dto{LivreDTO.java"/>
+        <javaElement handleIdentifier="=bibliotheque-06-back-end/src&lt;ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao"/>
+        <file path="/bibliotheque-06-back-end/src/ca/qc/collegeahuntsic/bibliothequeBackEnd/dto/PretDTO-Oracle.hbm.xml"/>
+        <javaElement handleIdentifier="=bibliotheque-06-back-end/src&lt;ca.qc.collegeahuntsic.bibliothequeBackEnd.service"/>
+        <javaElement handleIdentifier="=bibliotheque-06-back-end/src&lt;ca.qc.collegeahuntsic.bibliothequeBackEnd.dto{MembreDTO.java"/>
+        <javaElement handleIdentifier="=bibliotheque-06-back-end/src&lt;ca.qc.collegeahuntsic.bibliothequeBackEnd.util"/>
+        <javaElement handleIdentifier="=bibliotheque-06-back-end/src&lt;ca.qc.collegeahuntsic.bibliothequeBackEnd.dto{DTO.java"/>
+        <javaElement handleIdentifier="=bibliotheque-06-back-end/src&lt;ca.qc.collegeahuntsic.bibliothequeBackEnd.dao.interfaces"/>
+        <javaElement handleIdentifier="=bibliotheque-06-back-end/src&lt;ca.qc.collegeahuntsic.bibliothequeBackEnd.dto{ReservationDTO.java"/>
+        <javaElement handleIdentifier="=bibliotheque-06-back-end/src&lt;ca.qc.collegeahuntsic.bibliothequeBackEnd.service.implementations"/>
+        <javaElement handleIdentifier="=bibliotheque-06-back-end/src&lt;ca.qc.collegeahuntsic.bibliothequeBackEnd.facade.implementations"/>
+        <javaElement handleIdentifier="=bibliotheque-06-back-end/src&lt;ca.qc.collegeahuntsic.bibliothequeBackEnd"/>
+        <file path="/bibliotheque-06-back-end/src/ca/qc/collegeahuntsic/bibliothequeBackEnd/dto/ReservationDTO-Oracle.hbm.xml"/>
+        <javaElement handleIdentifier="=bibliotheque-06-back-end/src&lt;ca.qc.collegeahuntsic.bibliothequeBackEnd.service.interfaces"/>
+        <javaElement handleIdentifier="=bibliotheque-06-back-end/src&lt;ca.qc.collegeahuntsic.bibliothequeBackEnd.dao.implementations"/>
+        <javaElement handleIdentifier="=bibliotheque-06-back-end/src&lt;ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dto"/>
+        <file path="/bibliotheque-06-back-end/src/ca/qc/collegeahuntsic/bibliothequeBackEnd/dto/LivreDTO-Oracle.hbm.xml"/>
+        <javaElement handleIdentifier="=bibliotheque-06-back-end/src&lt;ca.qc.collegeahuntsic.bibliothequeBackEnd.dto{PretDTO.java"/>
+        <file path="/bibliotheque-06-back-end/conf/spring/applicationContext-service.xml"/>
+        <javaElement handleIdentifier="=bibliotheque-06-back-end/src&lt;ca.qc.collegeahuntsic.bibliothequeBackEnd.facade.interfaces"/>
+        <javaElement handleIdentifier="=bibliotheque-06-back-end/src&lt;ca.qc.collegeahuntsic.bibliothequeBackEnd.dto{package-info.java"/>
+        <file path="/bibliotheque-06-back-end/conf/spring/applicationContext-jdbc-Oracle.xml"/>
+        <javaElement handleIdentifier="=bibliotheque-06-back-end/src&lt;ca.qc.collegeahuntsic.bibliothequeBackEnd.facade"/>
+        <javaElement handleIdentifier="=bibliotheque-06-back-end/src&lt;ca.qc.collegeahuntsic.bibliothequeBackEnd.dao"/>
+        <javaElement handleIdentifier="=bibliotheque-06-back-end/src&lt;ca.qc.collegeahuntsic.bibliothequeBackEnd.exception"/>
+        <javaElement handleIdentifier="=bibliotheque-06-back-end/src&lt;ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.service"/>
+        <file path="/bibliotheque-06-back-end/src/ca/qc/collegeahuntsic/bibliothequeBackEnd/dto/DTO.hbm.xml"/>
+        <javaElement handleIdentifier="=bibliotheque-06-back-end/src&lt;ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.facade"/>
+        <file path="/bibliotheque-06-back-end/src/ca/qc/collegeahuntsic/bibliothequeBackEnd/dto/MembreDTO-Oracle.hbm.xml"/>
+        <file path="/bibliotheque-06-back-end/conf/spring/applicationContext-dao.xml"/>
+        <file path="/bibliotheque-06-back-end/conf/spring/applicationContext-facade.xml"/>
+        <file path="/bibliotheque-06-back-end/conf/spring/applicationContext-dto-Oracle.xml"/>
+    </selectedElements>
+</jardesc>
