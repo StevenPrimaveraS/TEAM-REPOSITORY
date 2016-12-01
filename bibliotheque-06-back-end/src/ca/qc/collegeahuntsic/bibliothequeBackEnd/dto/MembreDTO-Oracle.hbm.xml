@@ -1,0 +1,57 @@
+<?xml version="1.0"
+      encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+          
+<hibernate-mapping>
+  <class name="ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO"
+         table="MEMBRE">
+         <id name="idMembre"
+             type="string">
+             <column name="IDMEMBRE">
+             </column>
+             <generator class="sequence">
+                        <param name="sequence">seqIdMembre</param>
+             </generator>
+         </id>
+
+         <property name="nom"
+                   type="string"
+                   length="100">
+                   <column name="NOM">
+                   </column>
+         </property>
+         <property name="telephone"
+                   type="string"
+                   length="100">
+                   <column name="TELEPHONE">
+                   </column>
+         </property>
+         <property name="limitePret"
+                   type="string"
+                   length="100">
+                   <column name="LIMITEPRET">
+                   </column>
+         </property>
+
+         <set name="prets"
+              order-by="DATEPRET ASC"
+              where="DATERETOUR IS NULL">
+              <key>
+                <column name="IDMEMBRE">
+                </column>
+              </key>
+              <one-to-many class="ca.qc.collegeahuntsic.bibliotheque.dto.PretDTO"/>
+         </set>
+         <set name="reservations"
+              order-by="DATERESERVATION ASC">
+              <key>
+                <column name="IDMEMBRE">
+                </column>
+              </key>
+              <one-to-many class="ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO"/>
+         </set>
+  </class>
+</hibernate-mapping>
