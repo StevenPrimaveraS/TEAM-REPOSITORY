@@ -5,7 +5,7 @@
 package ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao;
 
 /**
- * Cette exception est utilisée en cas de problème avec un objet {@link ca.qc.collegeahuntsic.bibliotheque.db.Connexion}.
+ * Cette exception est utilisée en cas de problème avec un objet {@link org.hibernate.Session}.
  *
  * @author Gilles Bénichou
  */

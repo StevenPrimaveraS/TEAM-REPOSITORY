@@ -5,7 +5,7 @@
 package ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.facade;
 
 /**
- * Cette exception est utilisée en cas de problème avec un objet {@link ca.qc.collegeahuntsic.bibliotheque.facade.interfaces.IFacade}.
+ * Cette exception est utilisée en cas de problème avec un objet {@link ca.qc.collegeahuntsic.bibliothequeBackEnd.facade.interfaces.IFacade}.
  *
  * @author Gilles Bénichou
  */

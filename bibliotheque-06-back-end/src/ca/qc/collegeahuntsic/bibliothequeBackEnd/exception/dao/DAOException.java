@@ -5,7 +5,7 @@
 package ca.qc.collegeahuntsic.bibliothequeBackEnd.exception.dao;
 
 /**
- * Cette exception est utilisée en cas de problème avec un objet {@link ca.qc.collegeahuntsic.bibliotheque.dao.interfaces.IDAO}.
+ * Cette exception est utilisée en cas de problème avec un objet {@link ca.qc.collegeahuntsic.bibliothequeBackEnd.dao.interfaces.IDAO}.
  *
  * @author Gilles Bénichou
  */
