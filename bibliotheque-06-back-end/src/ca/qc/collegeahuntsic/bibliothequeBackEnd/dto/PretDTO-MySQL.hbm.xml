@@ -12,7 +12,7 @@
 -->
 
 <hibernate-mapping>
-  <class name="ca.qc.collegeahuntsic.bibliotheque.dto.PretDTO"
+  <class name="ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.PretDTO"
          table="PRET">
          <id name="idPret"
              type="string">
@@ -34,13 +34,13 @@
          </property>
 
          <many-to-one name="membreDTO"
-                      class="ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO"
+                      class="ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.MembreDTO"
                       not-null="true">
                       <column name="IDMEMBRE">
                       </column>
          </many-to-one>
          <many-to-one name="livreDTO"
-                      class="ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO"
+                      class="ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.LivreDTO"
                       not-null="true">
                       <column name="IDLIVRE">
                       </column>
