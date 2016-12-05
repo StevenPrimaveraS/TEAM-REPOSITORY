@@ -12,7 +12,7 @@
 -->
 
 <hibernate-mapping>
-  <class name="ca.qc.collegeahuntsic.bibliotheque.dto.LivreDTO"
+  <class name="ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.LivreDTO"
          table="LIVRE">
          <id name="idLivre"
              type="string">
@@ -47,7 +47,7 @@
                 <column name="IDLIVRE">
                 </column>
               </key>
-              <one-to-many class="ca.qc.collegeahuntsic.bibliotheque.dto.PretDTO"/>
+              <one-to-many class="ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.PretDTO"/>
          </set>
          <set name="reservations"
               order-by="DATERESERVATION ASC">
@@ -55,7 +55,7 @@
                 <column name="IDLIVRE">
                 </column>
               </key>
-              <one-to-many class="ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO"/>
+              <one-to-many class="ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.ReservationDTO"/>
          </set>
   </class>
 </hibernate-mapping>
