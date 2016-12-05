@@ -5,7 +5,7 @@
           "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
           "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-  <class name="ca.qc.collegeahuntsic.bibliotheque.dto.MembreDTO"
+  <class name="ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.MembreDTO"
 table="MEMBRE">
         <id name="idMembre"
              type="string">
@@ -40,7 +40,7 @@ table="MEMBRE">
                 <column name="IDMEMBRE">
                 </column>
               </key>
-              <one-to-many class="ca.qc.collegeahuntsic.bibliotheque.dto.PretDTO"/>
+              <one-to-many class="ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.PretDTO"/>
          </set>
          <set name="reservations"
               order-by="DATERESERVATION ASC">
@@ -48,7 +48,7 @@ table="MEMBRE">
                 <column name="IDMEMBRE">
                 </column>
               </key>
-              <one-to-many class="ca.qc.collegeahuntsic.bibliotheque.dto.ReservationDTO"/>
+              <one-to-many class="ca.qc.collegeahuntsic.bibliothequeBackEnd.dto.ReservationDTO"/>
          </set>
     </class>
 </hibernate-mapping>
