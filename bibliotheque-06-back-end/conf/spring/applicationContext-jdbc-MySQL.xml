@@ -14,27 +14,10 @@
 <beans>
   <!-- ========== Data source ==================================================== -->
   <bean name="dataSource"
-        class="com.mchange.v2.c3p0.ComboPooledDataSource"
+        class="org.springframework.jndi.JndiObjectFactorybean"
         destroy-method="close">
-        <property name="driverClass">
-                  <value>com.mysql.jdbc.Driver</value>
-        </property>
         <property name="jndiName">
                   <value>java:comp/env/jdbc/bibliotheque</value>
-        </property>
-        <property name="jdbcUrl">
-                  <value>jdbc:mysql://localhost:3306/bibliotheque</value>
-        </property>
-        <property name="properties">
-                  <props>
-                    <prop key="c3p0.acquire_increment">1</prop>
-                    <prop key="c3p0.idle_test_period">10</prop>
-                    <prop key="c3p0.max_size">1</prop>
-                    <prop key="c3p0.max_statements">0</prop>
-                    <prop key="c3p0.min_size">1</prop>
-                    <prop key="user">bibliotheque</prop>
-                    <prop key="password">123456</prop>
-                  </props>
         </property>
   </bean>
 
