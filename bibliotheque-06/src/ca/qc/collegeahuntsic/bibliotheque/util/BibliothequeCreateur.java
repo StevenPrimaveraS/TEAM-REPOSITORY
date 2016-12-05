@@ -23,7 +23,17 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @author Gilles Bénichou
  */
 public class BibliothequeCreateur {
-    private static final String SPRING_CONFIGURATION_FILE_NAME = "applicationContext-MySQL.xml";
+    private static final String APPLICATION_CONTEXT_JDBC_FILENAME = "testApplicationContext-MySQL.xml";
+
+    private static final String APPLICATION_CONTEXT_DTO_FILENAME = "applicationContext-dto-MySQL.xml";
+
+    private static final String APPLICATION_CONTEXT_DAO_FILENAME = "applicationContext-dao.xml";
+
+    private static final String APPLICATION_CONTEXT_SERVICE_FILENAME = "applicationContext-service.xml";
+
+    private static final String APPLICATION_CONTEXT_FACADE_FILENAME = "applicationContext-facade.xml";
+
+    private static final String APPLICATION_CONTEXT_FILENAME = "testApplicationContext.xml";
 
     private static final String SESSION_FACTORY_NAME = "sessionFactory";
 
@@ -35,7 +45,14 @@ public class BibliothequeCreateur {
 
     private static final String RESERVATION_FACADE_NAME = "reservationFacade";
 
-    private static final ApplicationContext APPLICATION_CONTEXT = new ClassPathXmlApplicationContext(BibliothequeCreateur.SPRING_CONFIGURATION_FILE_NAME);
+    private static final String[] APPLICATION_CONTEXT_FILENAMES = new String[] {BibliothequeCreateur.APPLICATION_CONTEXT_JDBC_FILENAME,
+        BibliothequeCreateur.APPLICATION_CONTEXT_DTO_FILENAME,
+        BibliothequeCreateur.APPLICATION_CONTEXT_DAO_FILENAME,
+        BibliothequeCreateur.APPLICATION_CONTEXT_SERVICE_FILENAME,
+        BibliothequeCreateur.APPLICATION_CONTEXT_FACADE_FILENAME,
+        BibliothequeCreateur.APPLICATION_CONTEXT_FILENAME};
+
+    private static final ApplicationContext APPLICATION_CONTEXT = new ClassPathXmlApplicationContext(BibliothequeCreateur.APPLICATION_CONTEXT_FILENAMES);
 
     private SessionFactory sessionFactory;
 
