@@ -16,7 +16,7 @@
   <bean name="livreService"
         parent="transactionProxy">
         <property name="target">
-                  <bean class="ca.qc.collegeahuntsic.bibliotheque.service.implementations.LivreService">
+                  <bean class="ca.qc.collegeahuntsic.bibliothequeBackEnd.service.implementations.LivreService">
                         <constructor-arg>
                           <ref bean="livreDAO"/>
                         </constructor-arg>
@@ -26,7 +26,7 @@
   <bean name="membreService"
         parent="transactionProxy">
         <property name="target">
-                  <bean class="ca.qc.collegeahuntsic.bibliotheque.service.implementations.MembreService">
+                  <bean class="ca.qc.collegeahuntsic.bibliothequeBackEnd.service.implementations.MembreService">
                         <constructor-arg>
                           <ref bean="membreDAO"/>
                         </constructor-arg>
@@ -36,7 +36,7 @@
   <bean name="pretService"
         parent="transactionProxy">
         <property name="target">
-                  <bean class="ca.qc.collegeahuntsic.bibliotheque.service.implementations.PretService">
+                  <bean class="ca.qc.collegeahuntsic.bibliothequeBackEnd.service.implementations.PretService">
                         <constructor-arg>
                           <ref bean="pretDAO"/>
                         </constructor-arg>
@@ -46,7 +46,7 @@
   <bean name="reservationService"
         parent="transactionProxy">
         <property name="target">
-                  <bean class="ca.qc.collegeahuntsic.bibliotheque.service.implementations.ReservationService">
+                  <bean class="ca.qc.collegeahuntsic.bibliothequeBackEnd.service.implementations.ReservationService">
                         <constructor-arg>
                           <ref bean="reservationDAO"/>
                         </constructor-arg>
