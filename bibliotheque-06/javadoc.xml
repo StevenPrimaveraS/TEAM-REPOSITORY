@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project default="javadoc">
     <target name="javadoc">
-        <javadoc access="public" additionalparam="-encoding UTF-8 -docencoding UTF-8 -charset UTF-8 -Xdoclint:none " author="true" classpath="lib/mysql-connector-java-5.1.35-bin.jar;lib/commons-lang3-3.3.2.jar" destdir="javadoc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="ca.qc.collegeahuntsic.bibliotheque.exception.db,ca.qc.collegeahuntsic.bibliotheque.exception.dto,ca.qc.collegeahuntsic.bibliotheque.dao.implementations,ca.qc.collegeahuntsic.bibliotheque.facade.implementations,ca.qc.collegeahuntsic.bibliotheque.util,ca.qc.collegeahuntsic.bibliotheque.service.interfaces,ca.qc.collegeahuntsic.bibliotheque.exception.service,ca.qc.collegeahuntsic.bibliotheque.db,ca.qc.collegeahuntsic.bibliotheque.exception,ca.qc.collegeahuntsic.bibliotheque.dto,ca.qc.collegeahuntsic.bibliotheque.exception.util,ca.qc.collegeahuntsic.bibliotheque.exception.facade,ca.qc.collegeahuntsic.bibliotheque.facade.interfaces,ca.qc.collegeahuntsic.bibliotheque.dao.interfaces,ca.qc.collegeahuntsic.bibliotheque.exception.dao,ca.qc.collegeahuntsic.bibliotheque,ca.qc.collegeahuntsic.bibliotheque.service.implementations" source="1.8" sourcepath="src" splitindex="true" use="true" version="true">
-            <link href="http://commons.apache.org/proper/commons-lang/javadocs/api-3.1/"/>
+        <javadoc access="public" additionalparam="-encoding UTF-8 -docencoding UTF-8 -charset UTF-8 " author="true" classpath="lib/jta-1.0.1B.jar;lib/c3p0-0.9.1-pre6.jar;lib/xml-apis.jar;lib/hibernate3.jar;lib/antlr-2.7.5.jar;lib/commons-collections-3.2.jar;lib/spring.jar;lib/bibliotheque-back-end-MySQL.jar;lib/bibliotheque-back-end-Oracle.jar;lib/commons-lang3-3.3.2.jar;lib/ehcache-1.2.3.jar;lib/dom4j-1.4.jar;lib/log4j-1.2.13.jar;lib/commons-logging-1.2.jar;lib/ojdbc7.jar;lib/mysql-connector-java-5.1.35-bin.jar;lib/xercesImpl.jar;lib/junit.jar;lib/cglib-nodep-2.1_3.jar" destdir="javadoc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="ca.qc.collegeahuntsic.bibliotheque.util,ca.qc.collegeahuntsic.bibliotheque.exception,ca.qc.collegeahuntsic.bibliotheque" source="1.7" sourcepath="src" splitindex="true" use="true" version="true">
+        	<link href="jar:file:/M:/git/TEAM-REPOSITORY/bibliotheque-06/docs/bibliotheque-back-end-javadoc.jar!/javadoc"/>
             <link href="https://docs.oracle.com/javase/8/docs/api/"/>
+            <link href="https://commons.apache.org/proper/commons-logging/apidocs/"/>
+            <link href="https://logging.apache.org/log4j/1.2/apidocs/"/>
+            <link href="http://docs.jboss.org/hibernate/orm/3.5/api/"/>
+            <link href="http://docs.spring.io/spring/docs/current/javadoc-api/"/>
         </javadoc>
     </target>
 </project>
