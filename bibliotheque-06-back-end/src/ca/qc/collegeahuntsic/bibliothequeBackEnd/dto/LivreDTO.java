@@ -5,6 +5,7 @@
 package ca.qc.collegeahuntsic.bibliothequeBackEnd.dto;
 
 import java.sql.Timestamp;
+import java.util.Collections;
 import java.util.Set;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -33,9 +34,9 @@ public final class LivreDTO extends DTO {
 
     private Timestamp dateAcquisition;
 
-    private Set<ReservationDTO> reservations;
+    private Set<ReservationDTO> reservations = Collections.emptySet();
 
-    private Set<PretDTO> prets;
+    private Set<PretDTO> prets = Collections.emptySet();
 
     /**
      * Constructeur par défaut.

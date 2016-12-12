@@ -153,7 +153,10 @@ public class ReservationService extends Service implements IReservationService {
         ServiceException {
         final MembreDTO unMembreDTO = reservationDTO.getMembreDTO();
         final LivreDTO unLivreDTO = reservationDTO.getLivreDTO();
-        final MembreDTO emprunteur = new ArrayList<>(unLivreDTO.getPrets()).get(0).getMembreDTO();
+        MembreDTO emprunteur = null;
+        if(new ArrayList<>(unLivreDTO.getPrets()).size() > 0) {
+            emprunteur = new ArrayList<>(unLivreDTO.getPrets()).get(0).getMembreDTO();
+        }
         if(emprunteur == null) {
             throw new MissingLoanException("Le livre "
                 + unLivreDTO.getTitre()
