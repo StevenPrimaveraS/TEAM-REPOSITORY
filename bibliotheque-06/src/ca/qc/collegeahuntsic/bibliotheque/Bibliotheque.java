@@ -138,7 +138,7 @@ public final class Bibliotheque {
      * @param tokenizer L'entrée à décoder
      * @throws BibliothequeException Si une erreur survient
      */
-    private static void executerTransaction(StringTokenizer tokenizer) throws BibliothequeException {
+    private static void executerTransaction(StringTokenizer tokenizer) {
         try {
             final String command = tokenizer.nextToken();
 
@@ -185,7 +185,7 @@ public final class Bibliotheque {
         } catch(BibliothequeException bibliothequeException) {
             Bibliotheque.LOGGER.error("** "
                 + bibliothequeException.toString());
-            Bibliotheque.gestionnaireBibliotheque.rollbackTransaction();
+            //Bibliotheque.gestionnaireBibliotheque.rollbackTransaction();
         }
     }
 
@@ -278,11 +278,24 @@ public final class Bibliotheque {
     private static void preter(StringTokenizer tokenizer) throws BibliothequeException {
         try {
             Bibliotheque.gestionnaireBibliotheque.beginTransaction();
-            final MembreDTO membreDTO = new MembreDTO();
-            membreDTO.setIdMembre(Bibliotheque.readString(tokenizer));
-            final LivreDTO livreDTO = new LivreDTO();
-            livreDTO.setIdLivre(Bibliotheque.readString(tokenizer));
+            final String idMembre = Bibliotheque.readString(tokenizer);
+            final String idLivre = Bibliotheque.readString(tokenizer);
+            final MembreDTO membreDTO = (MembreDTO) Bibliotheque.gestionnaireBibliotheque.getMembreFacade().get(
+                Bibliotheque.gestionnaireBibliotheque.getSession(),
+                idLivre);
+            final LivreDTO livreDTO = (LivreDTO) Bibliotheque.gestionnaireBibliotheque.getLivreFacade().get(Bibliotheque.gestionnaireBibliotheque.getSession(),
+                idLivre);
             final PretDTO pretDTO = new PretDTO();
+            if(membreDTO == null) {
+                throw new InvalidDTOException("Le membre d'ID "
+                    + idMembre
+                    + " n'existe pas");
+            }
+            if(livreDTO == null) {
+                throw new InvalidDTOException("Le livre d'ID "
+                    + idLivre
+                    + " n'existe pas");
+            }
             pretDTO.setLivreDTO(livreDTO);
             pretDTO.setMembreDTO(membreDTO);
             Bibliotheque.gestionnaireBibliotheque.getPretFacade().commencer(Bibliotheque.gestionnaireBibliotheque.getSession(),
@@ -294,7 +307,8 @@ public final class Bibliotheque {
             | ExistingLoanException
             | InvalidLoanLimitException
             | ExistingReservationException
-            | FacadeException exception) {
+            | FacadeException
+            | InvalidPrimaryKeyException exception) {
             Bibliotheque.gestionnaireBibliotheque.rollbackTransaction();
             Bibliotheque.LOGGER.error(" **** "
                 + exception.getMessage());
@@ -442,16 +456,26 @@ public final class Bibliotheque {
             Bibliotheque.gestionnaireBibliotheque.beginTransaction();
             // Juste pour éviter deux dates de réservation strictement identiques
             Thread.sleep(1);
+            final String idMembre = Bibliotheque.readString(tokenizer);
+            final String idLivre = Bibliotheque.readString(tokenizer);
+            final MembreDTO membreDTO = (MembreDTO) Bibliotheque.gestionnaireBibliotheque.getMembreFacade().get(
+                Bibliotheque.gestionnaireBibliotheque.getSession(),
+                idLivre);
+            final LivreDTO livreDTO = (LivreDTO) Bibliotheque.gestionnaireBibliotheque.getLivreFacade().get(Bibliotheque.gestionnaireBibliotheque.getSession(),
+                idLivre);
             final ReservationDTO reservationDTO = new ReservationDTO();
-            reservationDTO.setIdReservation(Bibliotheque.readString(tokenizer));
-            final MembreDTO membreDTO = new MembreDTO();
-            membreDTO.setIdMembre(Bibliotheque.readString(tokenizer));
-            reservationDTO.setMembreDTO(membreDTO);
-            final LivreDTO livreDTO = new LivreDTO();
-            livreDTO.setIdLivre(Bibliotheque.readString(tokenizer));
+            if(membreDTO == null) {
+                throw new InvalidDTOException("Le membre d'ID "
+                    + idMembre
+                    + " n'existe pas");
+            }
+            if(livreDTO == null) {
+                throw new InvalidDTOException("Le livre d'ID "
+                    + idLivre
+                    + " n'existe pas");
+            }
             reservationDTO.setLivreDTO(livreDTO);
-            membreDTO.setIdMembre(reservationDTO.getMembreDTO().getIdMembre());
-            livreDTO.setIdLivre(reservationDTO.getLivreDTO().getIdLivre());
+            reservationDTO.setMembreDTO(membreDTO);
             Bibliotheque.gestionnaireBibliotheque.getReservationFacade().placer(Bibliotheque.gestionnaireBibliotheque.getSession(),
                 reservationDTO);
             Bibliotheque.gestionnaireBibliotheque.commitTransaction();
@@ -462,7 +486,8 @@ public final class Bibliotheque {
             | MissingLoanException
             | ExistingLoanException
             | ExistingReservationException
-            | FacadeException exception) {
+            | FacadeException
+            | InvalidPrimaryKeyException exception) {
             Bibliotheque.gestionnaireBibliotheque.rollbackTransaction();
             Bibliotheque.LOGGER.error(" **** "
                 + exception.getMessage());
